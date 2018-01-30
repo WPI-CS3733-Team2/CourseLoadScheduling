@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService
     	List<String> userInsertColumnNameList = new ArrayList<>();
     	List<String> userKeyHolderColumnNameList = new ArrayList<>();
     	
-    	userInsertColumnNameList.add(user.getColumnName(User.Columns.WPI_ID));		//
+    	userInsertColumnNameList.add(User.getColumnName(User.Columns.WPI_ID));		//
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.USER_NAME));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.FIRST_NAME));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.LAST_NAME));

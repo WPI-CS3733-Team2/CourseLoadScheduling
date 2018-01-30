@@ -62,6 +62,30 @@ CREATE TABLE faculty
 	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
 );
 
+--DROP TABLE user_roles
+CREATE TABLE user_roles
+(
+	id serial PRIMARY KEY,
+	role_name varchar(255) NOT NULL,
+	created_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+	updated_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+	deleted boolean NOT NULL DEFAULT(FALSE),
+	UNIQUE(role_name, deleted)
+);
+
+
+--DROP TABLE users_roles_links
+CREATE TABLE users_roles_links
+(
+	id serial PRIMARY KEY,
+	user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	role_id integer NOT NULL REFERENCES user_roles(id) ON DELETE CASCADE,
+	created_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+	deleted boolean NOT NULL DEFAULT(FALSE),
+	UNIQUE(user_id, role_id, deleted)
+);
+
+
 
 --DROP TABLE user_faculty_association;
 CREATE TABLE user_faculty_association
