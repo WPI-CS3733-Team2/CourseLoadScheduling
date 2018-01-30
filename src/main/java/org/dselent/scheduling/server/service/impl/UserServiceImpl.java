@@ -55,24 +55,27 @@ public class UserServiceImpl implements UserService
 		String encryptedPassword = passwordEncorder.encode(saltedPassword);
 		
 		User user = new User();
+		user.setWpi_id(dto.getWPIid());
 		user.setUserName(dto.getUserName());
 		user.setFirstName(dto.getFirstName());
 		user.setLastName(dto.getLastName());
 		user.setEmail(dto.getEmail());
 		user.setEncryptedPassword(encryptedPassword);
 		user.setSalt(salt);
-    	user.setUserStateId(1);
+		user.setAccountState("Active");										//
     	
     	List<String> userInsertColumnNameList = new ArrayList<>();
     	List<String> userKeyHolderColumnNameList = new ArrayList<>();
     	
+    	userInsertColumnNameList.add(user.getColumnName(User.Columns.WPI_ID));		//
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.USER_NAME));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.FIRST_NAME));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.LAST_NAME));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.EMAIL));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
     	userInsertColumnNameList.add(User.getColumnName(User.Columns.SALT));
-    	userInsertColumnNameList.add(User.getColumnName(User.Columns.USER_STATE_ID));
+    	userInsertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE)); //
+    	userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED));		//
     	
     	userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
     	userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
