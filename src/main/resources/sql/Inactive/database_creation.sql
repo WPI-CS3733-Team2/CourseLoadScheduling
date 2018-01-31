@@ -271,8 +271,8 @@ CREATE TABLE course_load
 	created_at timestamp with time zone NOT NULL DEFAULT (CURRENT_TIMESTAMP)
 );
 
---DROP TABLE course_load_assosciation;
-CREATE TABLE course_load_assosciation
+--DROP TABLE course_load_association;
+CREATE TABLE course_load_association
 (
 	id serial PRIMARY KEY,
 	faculty_id integer NOT NULL REFERENCES faculty(id) ON DELETE CASCADE,
