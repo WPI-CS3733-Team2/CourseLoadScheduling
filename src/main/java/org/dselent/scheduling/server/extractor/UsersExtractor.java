@@ -35,10 +35,10 @@ public class UsersExtractor extends Extractor<List<User>>
 			
 			//result.setUserStateId(rs.getInt(User.getColumnName(User.Columns.USER_STATE_ID)));
 			result.setAccountState(rs.getString(User.getColumnName(User.Columns.ACCOUNT_STATE)));			//
-			if(rs.wasNull())																				//
-			{
-				result.setAccountState(null);
-			}
+//			if(rs.wasNull())																				//
+//			{
+//				result.setAccountState(null);
+//			}
 			
 			
 			result.setDeleted(rs.getBoolean(User.getColumnName(User.Columns.DELETED)));
