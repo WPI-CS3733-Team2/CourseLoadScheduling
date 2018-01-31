@@ -3,8 +3,10 @@ package org.dselent.scheduling.server.dao.impl;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
+import org.dselent.scheduling.server.extractor.ScheduleExtractor;
 import org.dselent.scheduling.server.extractor.UsersExtractor;
 import org.dselent.scheduling.server.miscellaneous.QueryPathConstants;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -29,6 +31,16 @@ public class CustomDaoImpl implements CustomDao
 	    parameters.addValue("roleId", roleId);
 	    List<User> usersWithRoleList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return usersWithRoleList;
+	}
+
+	@Override
+	public List<Schedule> searchScheduleByFaculty(int faculty_id) {
+		ScheduleExtractor extractor = new ScheduleExtractor();
+		String queryTemplate = new String(QueryPathConstants.SCHEDULE_BY_FACULTY_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("facultyId", faculty_id);
+		List<Schedule> scheduleByFacultyList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return scheduleByFacultyList;
 	}
 	
 }

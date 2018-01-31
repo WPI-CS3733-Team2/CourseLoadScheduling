@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.dselent.scheduling.server.config.AppConfig;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,11 +28,12 @@ public class CustomDaoTest
     @Test
     public void testCustomDao() throws SQLException
     {
-    	@SuppressWarnings("unused")
+    	//@SuppressWarnings("unused")
     	
-		List<User> userList = customDao.getAllUsersWithRole(1);
+		//List<User> userList = customDao.getAllUsersWithRole(1);
+    	List<Schedule> scheduleList = customDao.searchScheduleByFaculty(1);
     	
     	// see things in debugger
-    	System.out.println();
+    	System.out.println(scheduleList);
     }
 }
