@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.dao.ScheduleDao;
-import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
-import org.dselent.scheduling.server.extractor.UsersExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.miscellaneous.QueryStringBuilder;
 import org.dselent.scheduling.server.model.Schedule;

@@ -6,12 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.dao.CoursesHistoryDao;
-import org.dselent.scheduling.server.dao.UsersDao;
-import org.dselent.scheduling.server.extractor.CoursesExtractor;
 import org.dselent.scheduling.server.extractor.CoursesHistoryExtractor;
-import org.dselent.scheduling.server.extractor.UsersExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.miscellaneous.QueryStringBuilder;
 import org.dselent.scheduling.server.model.Course;
