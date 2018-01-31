@@ -96,7 +96,7 @@ public class User extends Model
 		return columnNameList;
 	}
 	
-	//
+	//getters and setters
 	
 	public Integer getId()
 	{

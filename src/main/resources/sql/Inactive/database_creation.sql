@@ -50,17 +50,7 @@ BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE PROCEDURE insert_user_history();
 
---DROP TABLE faculty;
-CREATE TABLE faculty
-(
-	id serial PRIMARY KEY,
-	--user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-	rank integer NOT NULL,
-	--schedule_id integer REFERENCES schedule(id),
-	assigned boolean NOT NULL DEFAULT(FALSE),
-	deleted boolean NOT NULL DEFAULT(FALSE),
-	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
-);
+
 
 --DROP TABLE user_roles
 CREATE TABLE user_roles
@@ -85,13 +75,25 @@ CREATE TABLE users_roles_links
 	UNIQUE(user_id, role_id, deleted)
 );
 
+--DROP TABLE faculty;
+CREATE TABLE faculty
+(
+	id serial PRIMARY KEY,
+	--user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	rank integer NOT NULL,
+	--schedule_id integer REFERENCES schedule(id),
+	assigned boolean NOT NULL DEFAULT(FALSE),
+	deleted boolean NOT NULL DEFAULT(FALSE),
+	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
+);
+
 
 
 --DROP TABLE user_faculty_association;
 CREATE TABLE user_faculty_association
 (
 	id serial PRIMARY KEY,
-	user_id varchar(255) UNIQUE NOT NULL REFERENCES users(wpi_id) ON DELETE CASCADE,
+	user_id integer UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 	faculty_id integer UNIQUE NOT NULL REFERENCES faculty(id) ON DELETE CASCADE,
 	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
 );
