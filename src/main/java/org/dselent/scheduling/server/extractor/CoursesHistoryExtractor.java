@@ -5,9 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.CourseHistory;
-import org.dselent.scheduling.server.model.User;
 
 public class CoursesHistoryExtractor extends Extractor<List<CourseHistory>>
 {
