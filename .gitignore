@@ -6,3 +6,5 @@
 /vpproject
 /gradle
 .classpath
+src/main/resources/application.properties
+src/main/resources/application.properties

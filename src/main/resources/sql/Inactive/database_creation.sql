@@ -1,4 +1,9 @@
---DROP TABLE users;
+-- DROP TABLE users CASCADE;
+-- DROP TABLE user_roles CASCADE;
+-- DROP TABLE faculty_history;
+-- DROP TABLE faculty_ranks;
+-- DROP TABLE user_states CASCADE;
+-- DROP TABLE users_roles_links;
 CREATE TABLE users
 (
 	id serial PRIMARY KEY,
@@ -16,7 +21,7 @@ CREATE TABLE users
 );
 
 
---DROP TABLE users_history;
+-- DROP TABLE users_history;
 CREATE TABLE users_history
 (
 	id serial PRIMARY KEY,
@@ -51,7 +56,6 @@ FOR EACH ROW
 EXECUTE PROCEDURE insert_user_history();
 
 
-
 --DROP TABLE user_roles
 CREATE TABLE user_roles
 (
@@ -76,6 +80,7 @@ CREATE TABLE users_roles_links
 );
 
 --DROP TABLE faculty;
+
 CREATE TABLE faculty
 (
 	id serial PRIMARY KEY,
