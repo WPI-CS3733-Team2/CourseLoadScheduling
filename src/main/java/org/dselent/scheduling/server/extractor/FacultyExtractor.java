@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.scheduling.server.model.Faculty;
-import org.dselent.scheduling.server.model.User;
 
 public class FacultyExtractor extends Extractor<List<Faculty>> {
 

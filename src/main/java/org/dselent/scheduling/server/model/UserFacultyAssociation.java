@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.dselent.scheduling.server.model.UserRole.Columns;
-
 public class UserFacultyAssociation extends Model{
 	public static final String TABLE_NAME = "user_faculty_association";
 	
