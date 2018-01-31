@@ -377,7 +377,7 @@ public class User extends Model
 		{
 			return false;
 		}
-		if(deleted = null) {							//
+		if(deleted == null) {							//
 			if(other.deleted != null) {
 				return false;
 			}
