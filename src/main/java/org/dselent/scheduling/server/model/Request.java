@@ -355,6 +355,8 @@ public class Request extends Model {
 			builder.append(state);
 			builder.append(", course=");
 			builder.append(course);
+			builder.append(", section=");
+			builder.append(section);
 			builder.append(", data=");
 			builder.append(data);
 			builder.append("]");
