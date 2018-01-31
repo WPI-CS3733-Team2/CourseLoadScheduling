@@ -12,6 +12,7 @@ import javax.annotation.Generated;
  */
 public class RegisterUserDto
 {
+	private final String wpi_id;
 	private final String userName;
 	private final String firstName;
 	private final String lastName;
@@ -23,7 +24,7 @@ public class RegisterUserDto
 	private RegisterUserDto(Builder builder)
 	{
 		// can add defaults if null for other places where the builder pattern is used
-		
+		this.wpi_id = builder.wpi_id;
 		this.userName = builder.userName;
 		this.firstName = builder.firstName;
 		this.lastName = builder.lastName;
@@ -32,8 +33,10 @@ public class RegisterUserDto
 		
 		// making claim that none of these can be null
 		// add other state checks here as necessary
-		
-		if(this.userName == null)
+		if(this.wpi_id == null) {
+			throw new IllegalStateException("wpi_id cannot be null");
+		}
+		else if(this.userName == null)
 		{
 			throw new IllegalStateException("userName cannot be null");
 		}
@@ -55,6 +58,9 @@ public class RegisterUserDto
 		}
 	}
 	
+	public String getWPIid() {
+		return wpi_id;
+	}
 	public String getUserName()
 	{
 		return userName;
@@ -90,6 +96,7 @@ public class RegisterUserDto
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result +((wpi_id == null) ? 0 : wpi_id.hashCode());
 		return result;
 	}
 
@@ -201,6 +208,7 @@ public class RegisterUserDto
 	@Generated("SparkTools")
 	public static final class Builder
 	{
+		private String wpi_id;
 		private String userName;
 		private String firstName;
 		private String lastName;
@@ -210,7 +218,12 @@ public class RegisterUserDto
 		private Builder()
 		{
 		}
-
+		
+		public Builder withWPIid(String wpi_id) {				//
+			this.wpi_id = wpi_id;
+			return this;
+		}
+		
 		public Builder withUserName(String userName)
 		{
 			this.userName = userName;

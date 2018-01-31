@@ -34,7 +34,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 	public int insert(User userModel, List<String> insertColumnNameList, List<String> keyHolderColumnNameList) throws SQLException
 	{
 		
-		validateColumnNames(insertColumnNameList);
+		validateColumnNames(insertColumnNameList); 				//check if the provided columns are included in the columns
 		validateColumnNames(keyHolderColumnNameList);
 
 		String queryTemplate = QueryStringBuilder.generateInsertString(User.TABLE_NAME, insertColumnNameList);
@@ -161,6 +161,10 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     	{
     		parameters.addValue(parameterName, userModel.getId());
     	}
+    	else if(insertColumnName.equals(User.getColumnName(User.Columns.WPI_ID)))			//
+    	{
+    		parameters.addValue(parameterName, userModel.getWpi_id());
+    	}
     	else if(insertColumnName.equals(User.getColumnName(User.Columns.USER_NAME)))
     	{
     		parameters.addValue(parameterName, userModel.getUserName());
@@ -185,9 +189,12 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     	{
     		parameters.addValue(parameterName, userModel.getSalt());
     	}
-    	else if(insertColumnName.equals(User.getColumnName(User.Columns.USER_STATE_ID)))
+    	else if(insertColumnName.equals(User.getColumnName(User.Columns.ACCOUNT_STATE)))		//
     	{
-    		parameters.addValue(parameterName, userModel.getUserStateId());
+    		parameters.addValue(parameterName, userModel.getAccountState());
+    	}
+    	else if(insertColumnName.equals(User.getColumnName(User.Columns.DELETED))) {			//
+    		parameters.addValue(parameterName, userModel.getDeleted());
     	}
     	else if(insertColumnName.equals(User.getColumnName(User.Columns.CREATED_AT)))
     	{
@@ -210,6 +217,9 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     	if(keyHolderColumnName.equals(User.getColumnName(User.Columns.ID)))
     	{
     		userModel.setId((Integer) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.WPI_ID))) {		//
+    		userModel.setWpi_id((String) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.USER_NAME)))
     	{
@@ -235,9 +245,12 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     	{
     		userModel.setSalt((String) keyMap.get(keyHolderColumnName));
     	}
-    	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.USER_STATE_ID)))
+    	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.ACCOUNT_STATE)))		//
     	{
-    		userModel.setUserStateId((Integer) keyMap.get(keyHolderColumnName));
+    		userModel.setAccountState((String) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.DELETED))) {			//
+    		userModel.setDeleted((Boolean) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.CREATED_AT)))
     	{

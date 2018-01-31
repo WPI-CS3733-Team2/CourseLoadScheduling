@@ -18,13 +18,15 @@ public class User extends Model
 	public static enum Columns
 	{
 		ID,
+		WPI_ID,
 		USER_NAME,
 		FIRST_NAME,
 		LAST_NAME,
 		EMAIL,
 		ENCRYPTED_PASSWORD,
 		SALT,
-		USER_STATE_ID,
+		ACCOUNT_STATE,
+		DELETED,
 		CREATED_AT,
 		UPDATED_AT
 	}
@@ -43,12 +45,14 @@ public class User extends Model
 		}
 		
 		COLUMN_TYPE_MAP.put(Columns.ID, JDBCType.INTEGER);
+		COLUMN_TYPE_MAP.put(Columns.WPI_ID, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.USER_NAME, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.FIRST_NAME, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.LAST_NAME, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.ENCRYPTED_PASSWORD, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.SALT, JDBCType.VARCHAR);
-		COLUMN_TYPE_MAP.put(Columns.USER_STATE_ID, JDBCType.INTEGER);
+		COLUMN_TYPE_MAP.put(Columns.ACCOUNT_STATE, JDBCType.VARCHAR);
+		COLUMN_TYPE_MAP.put(Columns.DELETED, JDBCType.BOOLEAN);
 		COLUMN_TYPE_MAP.put(Columns.CREATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 		COLUMN_TYPE_MAP.put(Columns.UPDATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 	};
@@ -56,13 +60,15 @@ public class User extends Model
 	// attributes
 	
 	private Integer id;
+	private String wpiId;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String encryptedPassword;
 	private String salt;
-	private Integer userStateId;
+	private String accountState;
+	private Boolean deleted;
 	private Instant createdAt;
 	private Instant updatedAt;
 
@@ -90,7 +96,7 @@ public class User extends Model
 		return columnNameList;
 	}
 	
-	//
+	//getters and setters
 	
 	public Integer getId()
 	{
@@ -100,6 +106,14 @@ public class User extends Model
 	public void setId(Integer id)
 	{
 		this.id = id;
+	}
+
+	public String getWpi_id() {									//
+		return wpiId;
+	}
+
+	public void setWpi_id(String wpi_id) {						//
+		this.wpiId = wpi_id;
 	}
 
 	public String getUserName()
@@ -163,14 +177,22 @@ public class User extends Model
 		this.salt = salt;
 	}
 
-	public Integer getUserStateId()
+	public String getAccountState()
 	{
-		return userStateId;
+		return accountState;
 	}
 
-	public void setUserStateId(Integer userStateId)
+	public void setAccountState(String accountState)
 	{
-		this.userStateId = userStateId;
+		this.accountState = accountState;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Instant getCreatedAt()
@@ -223,7 +245,9 @@ public class User extends Model
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-		result = prime * result + ((userStateId == null) ? 0 : userStateId.hashCode());
+		result = prime * result + ((accountState == null) ? 0 : accountState.hashCode()); 	//
+		result = prime * result + ((deleted == null) ? 0 : deleted.hashCode()); 				//
+		result = prime * result + ((wpiId == null) ? 0 : wpiId.hashCode());					//
 		return result;
 	}
 
@@ -342,15 +366,31 @@ public class User extends Model
 		{
 			return false;
 		}
-		if (userStateId == null)
+		if (accountState == null)					//
 		{
-			if (other.userStateId != null)
+			if (other.accountState != null)
 			{
 				return false;
 			}
 		}
-		else if (!userStateId.equals(other.userStateId))
+		else if (!accountState.equals(other.accountState))
 		{
+			return false;
+		}
+		if(deleted = null) {							//
+			if(other.deleted != null) {
+				return false;
+			}
+		}
+		else if(!deleted.equals(other.deleted)) {
+			return false;
+		}
+		if(wpiId == null) {							//
+			if(other.wpiId != null) {
+				return false;
+			}
+		}
+		else if(!wpiId.equals(other.wpiId)) {
 			return false;
 		}
 		return true;
@@ -363,6 +403,8 @@ public class User extends Model
 		StringBuilder builder = new StringBuilder();
 		builder.append("Users [id=");
 		builder.append(id);
+		builder.append(", wpi_id=");				//
+		builder.append(wpiId);					//
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", firstName=");
@@ -375,8 +417,10 @@ public class User extends Model
 		builder.append(encryptedPassword);
 		builder.append(", salt=");
 		builder.append(salt);
-		builder.append(", userStateId=");
-		builder.append(userStateId);
+		builder.append(", accountState=");		//
+		builder.append(accountState);			//
+		builder.append(", deleted=");			//
+		builder.append(deleted);					//
 		builder.append(", createdAt=");
 		builder.append(createdAt);
 		builder.append(", updatedAt=");

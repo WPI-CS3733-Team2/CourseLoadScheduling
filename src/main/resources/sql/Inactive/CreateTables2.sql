@@ -100,7 +100,7 @@ CREATE TABLE faculty
 	first_name varchar(255) NOT NULL,
 	last_name varchar(255) NOT NULL,
 	email varchar(255) NOT NULL,
-	rank_id integer
+	rank_id integer,
 	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
 	updated_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
 	deleted boolean NOT NULL DEFAULT(FALSE),
@@ -111,11 +111,11 @@ CREATE TABLE faculty
 CREATE TABLE faculty_history
 (
 	id serial PRIMARY KEY NOT NULL,
-	faculty_information_id integer NOT NULL REFERENCES faculty(id) ON DELETE CASCADE
+	faculty_information_id integer NOT NULL REFERENCES faculty(id) ON DELETE CASCADE,
 	first_name varchar(255) NOT NULL,
 	last_name varchar(255) NOT NULL,
 	email varchar(255) UNIQUE NOT NULL,
-	rank_id integer
+	rank_id integer,
 	created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
 	deleted boolean NOT NULL DEFAULT(FALSE)
 );
