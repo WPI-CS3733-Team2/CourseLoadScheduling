@@ -137,11 +137,11 @@ CREATE UNIQUE INDEX error_logs_user_id ON error_logs(user_id);
 
 --------------------------------------
 
-/*DROP TRIGGER update_users ON users;
+DROP TRIGGER update_users ON users;
 DROP FUNCTION insert_users_history();
 
 DROP TABLE users_roles_links;
 DROP TABLE user_roles;
 DROP TABLE users_history;
 DROP TABLE users;
-DROP TABLE user_states;*/
+DROP TABLE user_states;
