@@ -60,7 +60,7 @@ public class User extends Model
 	// attributes
 	
 	private Integer id;
-	private String wpi_id;
+	private String wpiId;
 	private String userName;
 	private String firstName;
 	private String lastName;
@@ -109,11 +109,11 @@ public class User extends Model
 	}
 
 	public String getWpi_id() {									//
-		return wpi_id;
+		return wpiId;
 	}
 
 	public void setWpi_id(String wpi_id) {						//
-		this.wpi_id = wpi_id;
+		this.wpiId = wpi_id;
 	}
 
 	public String getUserName()
@@ -247,7 +247,7 @@ public class User extends Model
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((accountState == null) ? 0 : accountState.hashCode()); 	//
 		result = prime * result + ((deleted == null) ? 0 : deleted.hashCode()); 				//
-		result = prime * result + ((wpi_id == null) ? 0 : wpi_id.hashCode());					//
+		result = prime * result + ((wpiId == null) ? 0 : wpiId.hashCode());					//
 		return result;
 	}
 
@@ -385,12 +385,12 @@ public class User extends Model
 		else if(!deleted.equals(other.deleted)) {
 			return false;
 		}
-		if(wpi_id == null) {							//
-			if(other.wpi_id != null) {
+		if(wpiId == null) {							//
+			if(other.wpiId != null) {
 				return false;
 			}
 		}
-		else if(!wpi_id.equals(other.wpi_id)) {
+		else if(!wpiId.equals(other.wpiId)) {
 			return false;
 		}
 		return true;
@@ -404,7 +404,7 @@ public class User extends Model
 		builder.append("Users [id=");
 		builder.append(id);
 		builder.append(", wpi_id=");				//
-		builder.append(wpi_id);					//
+		builder.append(wpiId);					//
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", firstName=");
