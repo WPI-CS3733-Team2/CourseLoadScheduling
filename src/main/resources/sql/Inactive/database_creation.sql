@@ -188,7 +188,7 @@ CREATE TABLE public.course_history
 	"number" varchar(255) NOT NULL,
 	name varchar(255) NOT NULL,
 	frequency integer NOT NULL,
-	created_at timestamp with time zone NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+	created_at timestamp with time zone NOT NULL DEFAULT (CURRENT_TIMESTAMP)
 	-- CONSTRAINT course_history_pkey PRIMARY KEY (id)
 );
 
@@ -223,7 +223,7 @@ CREATE TABLE public.sections
     course_id integer NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
     calendar_id integer NOT NULL REFERENCES calendar(id),
     schedule_id integer NULL,
-    created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
+    created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
     CONSTRAINT FK_schedule_id FOREIGN KEY (schedule_id) REFERENCES schedule(id)
     --CONSTRAINT sections_pkey PRIMARY KEY (id),
     -- CONSTRAINT sections_course_id_fkey FOREIGN KEY (course_id)

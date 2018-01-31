@@ -6,6 +6,6 @@ WHERE faculty_id IN
 (
 	SELECT id 
 	FROM faculty
-	WHERE id = :facultyID
+	WHERE id = :facultyId
 )
 ORDER BY schedule.id ASC;

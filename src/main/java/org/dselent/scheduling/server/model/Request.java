@@ -27,7 +27,7 @@ public class Request extends Model {
 		UPDATED_AT
 	}
 	
-	// enum list
+		// enum list
 		private static final List<Columns> COLUMN_LIST = new ArrayList<>();
 		
 		// type mapping
