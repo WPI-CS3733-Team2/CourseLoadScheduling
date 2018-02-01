@@ -67,4 +67,14 @@ public class CustomDaoImpl implements CustomDao
 		return calendarsInScheduleList;
 	}
 	
+	@Override
+	public List<Faculty> getFacultiesTeachingACourse(int course_id) {
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTIES_TEACHING_A_COURSE_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("courseId", course_id);
+		List<Faculty> facultiesTeachingACourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return facultiesTeachingACourseList;
+	}
+	
 }

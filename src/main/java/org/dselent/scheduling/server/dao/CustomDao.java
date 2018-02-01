@@ -23,4 +23,5 @@ public interface CustomDao
 	public List<Schedule> searchScheduleByFaculty(int faculty_id);
 	public List<Faculty> getFacultiesWithUserName(String userName);
 	public List<Calendar> getCalendarsInSchedule(int schedule_id);
+	public List<Faculty> getFacultiesTeachingACourse(int course_id);
 }
