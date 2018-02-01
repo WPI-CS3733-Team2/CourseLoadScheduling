@@ -21,6 +21,7 @@ public class QueryPathConstants
 
 	private static String USERS_WITH_ROLE_PATH = BASE_QUERY_PATH + "CustomUsersWithRole" + SQL_EXTENSION;
 	private static String SCHEDULE_BY_FACULTY_PATH = BASE_QUERY_PATH + "SearchScheduleByFaculty" + SQL_EXTENSION;
+	private static String FACULTIES_WITH_USER_NAME_PATH = BASE_QUERY_PATH + "GetFacultiesWithUserName" + SQL_EXTENSION;
 
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +29,7 @@ public class QueryPathConstants
 
 	public static String USERS_WITH_ROLE_QUERY = readFile(USERS_WITH_ROLE_PATH);
 	public static String SCHEDULE_BY_FACULTY_QUERY = readFile(SCHEDULE_BY_FACULTY_PATH);
+	public static String FACULTIES_WITH_USER_NAME_QUERY = readFile(FACULTIES_WITH_USER_NAME_PATH);
 
 	
 	private QueryPathConstants()
