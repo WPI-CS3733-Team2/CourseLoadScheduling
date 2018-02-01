@@ -114,11 +114,12 @@ CREATE TABLE calendar(
 	-- start_time integer NOT NULL,
 	start_time varchar(255) NOT NULL,
 	-- end_time integer NOT NULL
-	end_time varchar(255) NOT NULL
+	end_time varchar(255) NOT NULL,
 	-- CHECK(start_time >= 0),
 	-- CHECK(start_time < 23),
 	-- CHECK(end_time >= 0),
-	-- CHECK(end_time < 23)
+	-- CHECK(end_time < 23),
+	created_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP)
 );
 --DROP TABLE calendar_history;
 CREATE TABLE calendar_history(
