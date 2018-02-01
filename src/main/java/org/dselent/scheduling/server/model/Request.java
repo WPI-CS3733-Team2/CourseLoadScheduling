@@ -27,7 +27,7 @@ public class Request extends Model {
 		UPDATED_AT
 	}
 	
-		// enum list
+	// enum list
 		private static final List<Columns> COLUMN_LIST = new ArrayList<>();
 		
 		// type mapping
@@ -250,18 +250,6 @@ public class Request extends Model {
 				}
 			}
 			else if(!id.equals(other.id))
-			{
-				return false;
-			}
-			//**********
-			if(facultyId == null)
-			{
-				if(other.facultyId != null)
-				{
-					return false;
-				}
-			}
-			else if(!facultyId.equals(other.facultyId))
 			{
 				return false;
 			}
