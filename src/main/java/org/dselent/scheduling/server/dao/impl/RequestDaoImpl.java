@@ -48,7 +48,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 	    	addParameterMapValue(parameters, insertColumnName, requestModel);
 	    }
 	    // new way, but unfortunately unnecessary class creation is slow and wasteful (i.e. wrong)
-	    // insertColumnNames.forEach(insertColumnName -> addParameterMap(parameters, insertColumnName, userModel));
+	    // insertColumnNames.forEach(insertColumnName -> addParameterMap(parameters, insertColumnName, requestModel));
 	    
 	    int rowsAffected = namedParameterJdbcTemplate.update(queryTemplate, parameters, keyHolder);
 	    
@@ -201,41 +201,41 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
     	}
 	}	
 
-	private void addObjectValue(Map<String, Object> keyMap, String keyHolderColumnName, Request userModel)
+	private void addObjectValue(Map<String, Object> keyMap, String keyHolderColumnName, Request requestModel)
 	{
     	if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.ID))){
-    		userModel.setId((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.FACULTY_ID))) {		//
-    		userModel.setFacultyId((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setFacultyId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.TYPE)))
     	{
-    		userModel.setType((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setType((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.STATE)))
     	{
-    		userModel.setState((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setState((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.COURSE)))
     	{
-    		userModel.setCourse((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setCourse((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.SECTION)))
     	{
-    		userModel.setSection((Integer) keyMap.get(keyHolderColumnName));
+    		requestModel.setSection((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.DATA)))
     	{
-    		userModel.setData((String) keyMap.get(keyHolderColumnName));
+    		requestModel.setData((String) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.CREATED_AT)))
     	{
-    		userModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
+    		requestModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Request.getColumnName(Request.Columns.UPDATED_AT)))
     	{
-    		userModel.setUpdatedAt((Timestamp) keyMap.get(keyHolderColumnName));
+    		requestModel.setUpdatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
     	else
     	{
