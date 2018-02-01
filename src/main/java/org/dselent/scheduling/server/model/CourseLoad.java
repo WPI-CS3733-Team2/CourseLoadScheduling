@@ -177,7 +177,7 @@ public class CourseLoad extends Model
 		{
 			return false;
 		}
-		if(deleted = null) {							//
+		if(deleted == null) {							//
 			if(other.deleted != null) {
 				return false;
 			}
@@ -188,12 +188,12 @@ public class CourseLoad extends Model
 		return true;
 	}
 	
-
+	
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("Users [id=");
+		builder.append("CourseLoad [id=");
 		builder.append(id);
 		builder.append(", type=");				//
 		builder.append(type);					//

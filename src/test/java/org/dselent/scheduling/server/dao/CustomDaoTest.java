@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.dselent.scheduling.server.config.AppConfig;
+import org.dselent.scheduling.server.dao.impl.CustomDaoImpl;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.User;
 import org.junit.Test;

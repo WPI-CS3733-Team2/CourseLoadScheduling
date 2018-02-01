@@ -5,12 +5,6 @@ WHERE id IN
 (
 	SELECT sections.calendar_id
 	FROM sections
-	WHERE schedule_id IN
-	(
-		SELECT schedules.id
-		FROM schedules
-		WHERE faculty_id = :facultyId
-	)
-	
+	WHERE schedule_id = :scheduleId
 )
 ORDER BY calendar.id ASC;

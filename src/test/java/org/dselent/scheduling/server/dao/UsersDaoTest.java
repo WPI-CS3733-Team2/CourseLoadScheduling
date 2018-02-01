@@ -35,7 +35,7 @@ public class UsersDaoTest
     {
     	// INSERT
     	
-    /*	User user1 = new User();
+    	/*User user1 = new User();
     	user1.setWpi_id("?????????x");
     	user1.setUserName("user1x");
     	user1.setFirstName("userx");
@@ -69,8 +69,8 @@ public class UsersDaoTest
     	// UPDATE
     	
     	String updateColumnName = User.getColumnName(User.Columns.USER_NAME);
-    	String oldUserName = "user1";
-    	String newUserName = "newUserName";
+    	String oldUserName = "user1xxxx";
+    	String newUserName = "newUserNamexxxxx";
     	List<QueryTerm> updateQueryTermList = new ArrayList<>();
     	
     	QueryTerm updateUseNameTerm = new QueryTerm();
