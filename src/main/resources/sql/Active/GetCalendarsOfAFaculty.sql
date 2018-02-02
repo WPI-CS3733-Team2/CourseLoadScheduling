@@ -7,8 +7,8 @@ WHERE id IN
 	FROM sections
 	WHERE schedule_id IN
 	(
-		SELECT schedules.id
-		FROM schedules
+		SELECT schedule.id
+		FROM schedule
 		WHERE faculty_id = :facultyId
 	)
 	
