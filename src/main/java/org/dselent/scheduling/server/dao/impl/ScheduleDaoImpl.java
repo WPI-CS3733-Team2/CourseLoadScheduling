@@ -69,7 +69,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 	public List<Schedule> select(List<String> selectColumnNameList, List<QueryTerm> queryTermList, List<Pair<String, ColumnOrder>> orderByList) throws SQLException
 	{
 		ScheduleExtractor extractor = new ScheduleExtractor();
-		String queryTemplate = QueryStringBuilder.generateSelectString(User.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
+		String queryTemplate = QueryStringBuilder.generateSelectString(Schedule.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
 
 		List<Object> objectList = new ArrayList<Object>();
 		
@@ -208,7 +208,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 	@Override
 	public void validateColumnNames(List<String> columnNameList)
 	{
-		List<String> actualColumnNames = User.getColumnNameList();
+		List<String> actualColumnNames = Schedule.getColumnNameList();
 		boolean valid = actualColumnNames.containsAll(columnNameList);
 		
 		if(!valid)

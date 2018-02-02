@@ -35,8 +35,8 @@ public class UsersDaoTest
     {
     	// INSERT
     	
-    	/*User user1 = new User();
-    	user1.setWpi_id("?????????x");
+    	User user1 = new User();
+    	user1.setWpiId("?????????x");
     	user1.setUserName("user1x");
     	user1.setFirstName("userx");
     	user1.setLastName("onex");
@@ -63,30 +63,30 @@ public class UsersDaoTest
     	keyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
     	keyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
    	
-    	usersDao.insert(user1, insertColumnNameList, keyHolderColumnNameList);*/
+    	usersDao.insert(user1, insertColumnNameList, keyHolderColumnNameList);
     	
     	
     	// UPDATE
-    	
-    	String updateColumnName = User.getColumnName(User.Columns.USER_NAME);
-    	String oldUserName = "user1xxxx";
-    	String newUserName = "newUserNamexxxxx";
-    	List<QueryTerm> updateQueryTermList = new ArrayList<>();
-    	
-    	QueryTerm updateUseNameTerm = new QueryTerm();
-    	updateUseNameTerm.setColumnName(updateColumnName);
-    	updateUseNameTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-    	updateUseNameTerm.setValue(oldUserName);
-    	updateQueryTermList.add(updateUseNameTerm);
-    	
-    	usersDao.update(updateColumnName, newUserName, updateQueryTermList);
-    	
-    	
-//    	// SELECT
-//    	// by user name
+//    	
+//    	String updateColumnName = User.getColumnName(User.Columns.WPI_ID);
+//    	String oldUserName = "1";
+//    	String newUserName = "???????????";
+//    	List<QueryTerm> updateQueryTermList = new ArrayList<>();
+//    	
+//    	QueryTerm updateUseNameTerm = new QueryTerm();
+//    	updateUseNameTerm.setColumnName(updateColumnName);
+//    	updateUseNameTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+//    	updateUseNameTerm.setValue(oldUserName);
+//    	updateQueryTermList.add(updateUseNameTerm);
+//    	
+//    	usersDao.update(updateColumnName, newUserName, updateQueryTermList);
+//    	
+//    	
+    	// SELECT
+    	// by user name
 //    	
 //    	String selectColumnName = User.getColumnName(User.Columns.USER_NAME);
-//    	String selectUserName = newUserName;
+//    	String selectUserName = "???????????";
 //    	
 //    	List<QueryTerm> selectQueryTermList = new ArrayList<>();
 //    	

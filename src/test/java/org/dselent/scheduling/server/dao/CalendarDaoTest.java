@@ -33,34 +33,34 @@ public class CalendarDaoTest
     @Test
     public void testCalendarDao() throws SQLException
     {
-    	// INSERT
-    	
-    	Calendar calendar1 = new Calendar();
-    	calendar1.setYear(2018);
-    	calendar1.setSemester("D");
-    	calendar1.setDays("MTRF");
-    	calendar1.setStartTime("1400");
-    	calendar1.setEndTime("1450");
-    	//calendar1.setSalt("11111111"); // also simplified for now
-    	//calendar1.setUserStateId(1); // assumes 1 = activated
-    	
-    	List<String> insertColumnNameList = new ArrayList<>();
-    	List<String> keyHolderColumnNameList = new ArrayList<>();
-    	
-    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.YEAR));
-    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.SEMESTER));
-    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.DAYS));
-    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.START_TIME));
-    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.END_TIME));
-    	//insertColumnNameList.add(User.getColumnName(User.Columns.SALT));
-    	//insertColumnNameList.add(User.getColumnName(User.Columns.USER_STATE_ID));
-    	
-    	keyHolderColumnNameList.add(Calendar.getColumnName(Calendar.Columns.ID));
-    	keyHolderColumnNameList.add(Calendar.getColumnName(Calendar.Columns.CREATED_AT));
-    	//keyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
-   	
-    	calendarDao.insert(calendar1, insertColumnNameList, keyHolderColumnNameList);
-    	
+//    	// INSERT
+//    	
+//    	Calendar calendar1 = new Calendar();
+//    	calendar1.setYear(2018);
+//    	calendar1.setSemester("D");
+//    	calendar1.setDays("MTRF");
+//    	calendar1.setStartTime("1400");
+//    	calendar1.setEndTime("1450");
+//    	//calendar1.setSalt("11111111"); // also simplified for now
+//    	//calendar1.setUserStateId(1); // assumes 1 = activated
+//    	
+//    	List<String> insertColumnNameList = new ArrayList<>();
+//    	List<String> keyHolderColumnNameList = new ArrayList<>();
+//    	
+//    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.YEAR));
+//    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.SEMESTER));
+//    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.DAYS));
+//    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.START_TIME));
+//    	insertColumnNameList.add(Calendar.getColumnName(Calendar.Columns.END_TIME));
+//    	//insertColumnNameList.add(User.getColumnName(User.Columns.SALT));
+//    	//insertColumnNameList.add(User.getColumnName(User.Columns.USER_STATE_ID));
+//    	
+//    	keyHolderColumnNameList.add(Calendar.getColumnName(Calendar.Columns.ID));
+//    	keyHolderColumnNameList.add(Calendar.getColumnName(Calendar.Columns.CREATED_AT));
+//    	//keyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
+//   	
+//    	calendarDao.insert(calendar1, insertColumnNameList, keyHolderColumnNameList);
+//    	
     	
     	// UPDATE
     	

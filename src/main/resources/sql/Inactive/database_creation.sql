@@ -62,7 +62,7 @@ CREATE TABLE user_roles
 	id serial PRIMARY KEY,
 	role_name varchar(255) NOT NULL,
 	created_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
-	updated_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+	--updated_at timestamp with time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
 	deleted boolean NOT NULL DEFAULT(FALSE),
 	UNIQUE(role_name, deleted)
 );

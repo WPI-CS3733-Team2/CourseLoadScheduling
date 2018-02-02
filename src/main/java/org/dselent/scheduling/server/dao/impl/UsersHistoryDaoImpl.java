@@ -19,7 +19,9 @@ import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements UsersHistoryDao {
 
 	@Override
@@ -59,7 +61,7 @@ public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements Us
 	public List<UsersHistory> select(List<String> selectColumnNameList, List<QueryTerm> queryTermList,
 			List<Pair<String, ColumnOrder>> orderByList) throws SQLException {
 		UsersHistoryExtractor extractor = new UsersHistoryExtractor();
-		String queryTemplate = QueryStringBuilder.generateSelectString(UserRole.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
+		String queryTemplate = QueryStringBuilder.generateSelectString(UsersHistory.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
 
 		List<Object> objectList = new ArrayList<Object>();
 		

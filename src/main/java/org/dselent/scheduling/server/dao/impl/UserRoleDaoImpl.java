@@ -19,7 +19,9 @@ import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRoleDaoImpl extends BaseDaoImpl<UserRole> implements UserRoleDao {
 
 	@Override
@@ -102,6 +104,7 @@ public class UserRoleDaoImpl extends BaseDaoImpl<UserRole> implements UserRoleDa
 
 	@Override
 	public int update(String columnName, Object newValue, List<QueryTerm> queryTermList) throws SQLException {
+		//String queryTemplate0 = QueryStringBuilder.generateUpdateString(UserRole.TABLE_NAME, UserRole.getColumnName(UserRole.Columns.UPDATED_AT), queryTermList);
 		String queryTemplate = QueryStringBuilder.generateUpdateString(UserRole.TABLE_NAME, columnName, queryTermList);
 
 		List<Object> objectList = new ArrayList<Object>();
@@ -159,10 +162,10 @@ public class UserRoleDaoImpl extends BaseDaoImpl<UserRole> implements UserRoleDa
     	{
     		parameters.addValue(parameterName, model.getCreatedAt());
     	}
-    	else if(insertColumnName.equals(UserRole.getColumnName(UserRole.Columns.UPDATED_AT)))
-    	{
-    		parameters.addValue(parameterName, model.getUpdatedAt());
-    	}
+//    	else if(insertColumnName.equals(UserRole.getColumnName(UserRole.Columns.UPDATED_AT)))
+//    	{
+//    		parameters.addValue(parameterName, model.getUpdatedAt());
+//    	}
     	else
     	{
     		// should never end up here
@@ -187,10 +190,10 @@ public class UserRoleDaoImpl extends BaseDaoImpl<UserRole> implements UserRoleDa
     	{
     		model.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
-    	else if(keyHolderColumnName.equals(UserRole.getColumnName(UserRole.Columns.UPDATED_AT)))
-    	{
-    		model.setUpdatedAt((Timestamp) keyMap.get(keyHolderColumnName));
-    	}
+//    	else if(keyHolderColumnName.equals(UserRole.getColumnName(UserRole.Columns.UPDATED_AT)))
+//    	{
+//    		model.setUpdatedAt((Timestamp) keyMap.get(keyHolderColumnName));
+//    	}
     	else
     	{
     		// should never end up here
