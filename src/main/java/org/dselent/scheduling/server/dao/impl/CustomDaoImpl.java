@@ -76,5 +76,25 @@ public class CustomDaoImpl implements CustomDao
 		List<Faculty> facultiesTeachingACourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 		return facultiesTeachingACourseList;
 	}
+
+	@Override
+	public List<Calendar> getCalendarsOfACourse(int course_id) {
+		CalendarExtractor extractor = new CalendarExtractor();
+		String queryTemplate = new String(QueryPathConstants.CALENDAR_OF_COURSE_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("courseId", course_id);
+	    List<Calendar> calendarsOfACourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return calendarsOfACourseList;
+	}
+
+	@Override
+	public List<Calendar> getCalendarsOfAFaculty(int faculty_id) {
+		CalendarExtractor extractor = new CalendarExtractor();
+		String queryTemplate = new String(QueryPathConstants.CALENDAR_OF_FACULTY_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("facultyId", faculty_id);
+	    List<Calendar> calendarsOfAFacultyList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return calendarsOfAFacultyList;
+	}
 	
 }

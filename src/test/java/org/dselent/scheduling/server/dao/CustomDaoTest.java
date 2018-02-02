@@ -36,8 +36,9 @@ public class CustomDaoTest
 		//List<User> userList = customDao.getAllUsersWithRole(1);
     	//List<Schedule> scheduleList = customDao.searchScheduleByFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsInSchedule(3);
-    	List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(2);
+    	List<Calendar> calendarList = customDao.getCalendarsOfACourse(1);
+    	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(2);
     	// see things in debugger
-    	System.out.println(facultyListInOneCourse);
+    	System.out.println(calendarList);
     }
 }

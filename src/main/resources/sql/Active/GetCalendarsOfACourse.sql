@@ -1,4 +1,5 @@
---get course section times:
+--Get course section times:
+
 SELECT calendar.*
 FROM calendar
 WHERE id IN

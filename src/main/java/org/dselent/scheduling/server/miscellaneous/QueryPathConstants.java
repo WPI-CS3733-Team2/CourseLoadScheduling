@@ -24,6 +24,8 @@ public class QueryPathConstants
 	private static String FACULTIES_WITH_USER_NAME_PATH = BASE_QUERY_PATH + "GetFacultiesWithUserName" + SQL_EXTENSION;
 	private static String CALENDARS_IN_SCHEDULE_PATH = BASE_QUERY_PATH + "GetCalendarsInSchedule" + SQL_EXTENSION;
 	private static String FACULTIES_TEACHING_A_COURSE_PATH = BASE_QUERY_PATH + "GetFacultiesTeachingACourse" + SQL_EXTENSION;
+	private static String CALENDAR_OF_COURSE_PATH = BASE_QUERY_PATH + "GetCalendarsOfACourse" + SQL_EXTENSION;
+	private static String CALENDAR_OF_FACULTY_PATH = BASE_QUERY_PATH + "GetCalendarsOfAFaculty" + SQL_EXTENSION;
 
 
 	
@@ -35,6 +37,8 @@ public class QueryPathConstants
 	public static String FACULTIES_WITH_USER_NAME_QUERY = readFile(FACULTIES_WITH_USER_NAME_PATH);
 	public static String CALENDARS_IN_SCHEDULE_QUERY = readFile(CALENDARS_IN_SCHEDULE_PATH);
 	public static String FACULTIES_TEACHING_A_COURSE_QUERY = readFile(FACULTIES_TEACHING_A_COURSE_PATH);
+	public static String CALENDAR_OF_COURSE_QUERY = readFile(CALENDAR_OF_COURSE_PATH);
+	public static String CALENDAR_OF_FACULTY_QUERY = readFile(CALENDAR_OF_FACULTY_PATH);
 
 	
 	private QueryPathConstants()
