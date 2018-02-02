@@ -1,6 +1,7 @@
 package org.dselent.scheduling.server.dao.impl;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.dselent.scheduling.server.extractor.CoursesExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.miscellaneous.QueryStringBuilder;
 import org.dselent.scheduling.server.model.Course;
+import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryTerm;
@@ -166,6 +168,14 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
     	{
     		parameters.addValue(parameterName, courseModel.getFrequency());
     	}
+    	else if(insertColumnName.equals(Course.getColumnName(Course.Columns.CREATED_AT)))
+    	{
+    		parameters.addValue(parameterName, courseModel.getCreatedAt());
+    	}
+    	else if(insertColumnName.equals(Course.getColumnName(Course.Columns.UPDATED_AT)))
+    	{
+    		parameters.addValue(parameterName, courseModel.getUpdatedAt());
+    	}
     	else
     	{
     		// should never end up here
@@ -191,6 +201,14 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
     	else if(keyHolderColumnName.equals(Course.getColumnName(Course.Columns.FREQUENCY)))
     	{
     		courseModel.setFrequency((Integer) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(Course.getColumnName(Course.Columns.CREATED_AT)))
+    	{
+    		courseModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(Course.getColumnName(Course.Columns.UPDATED_AT)))
+    	{
+    		courseModel.setUpdatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
     	else
     	{

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.scheduling.server.model.Course;
+import org.dselent.scheduling.server.model.User;
 
 public class CoursesExtractor extends Extractor<List<Course>>
 {
@@ -37,6 +38,9 @@ public class CoursesExtractor extends Extractor<List<Course>>
 			}
 			
 			result.setFrequency(rs.getInt(Course.getColumnName(Course.Columns.FREQUENCY)));
+			
+			result.setCreatedAt(rs.getTimestamp(User.getColumnName(User.Columns.CREATED_AT)));
+			result.setUpdatedAt(rs.getTimestamp(User.getColumnName(User.Columns.UPDATED_AT)));
 			
 			resultList.add(result);
 		}

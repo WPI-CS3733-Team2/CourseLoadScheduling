@@ -1,10 +1,14 @@
 package org.dselent.scheduling.server.model;
 
 import java.sql.JDBCType;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.dselent.scheduling.server.model.CourseHistory.Columns;
 
 
 public class Course extends Model
@@ -19,6 +23,8 @@ public class Course extends Model
 		NUMBER,
 		NAME,
 		FREQUENCY,
+		CREATED_AT,
+		UPDATED_AT
 	}
 	
 	// enum list
@@ -38,6 +44,8 @@ public class Course extends Model
 		COLUMN_TYPE_MAP.put(Columns.NUMBER, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.NAME, JDBCType.VARCHAR);
 		COLUMN_TYPE_MAP.put(Columns.FREQUENCY, JDBCType.INTEGER);
+		COLUMN_TYPE_MAP.put(Columns.CREATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
+		COLUMN_TYPE_MAP.put(Columns.UPDATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 	};
 	
 	// attributes
@@ -46,6 +54,8 @@ public class Course extends Model
 	private String number;
 	private String name;
 	private Integer frequency;
+	private Instant createdAt;
+	private Instant updatedAt;
 
 	// methods
 		
@@ -106,6 +116,41 @@ public class Course extends Model
 	{
 		this.frequency = frequency;
 	}
+	public Instant getCreatedAt()
+	{
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt)
+	{
+		this.createdAt = createdAt;
+	}
+	
+	public void setCreatedAt(Timestamp createdAt)
+	{
+		if(createdAt != null)
+		{
+			this.createdAt = createdAt.toInstant();
+		}
+	}
+
+	public Instant getUpdatedAt()
+	{
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Instant updatedAt)
+	{
+		this.updatedAt = updatedAt;
+	}
+	
+	public void setUpdatedAt(Timestamp updatedAt)
+	{
+		if(updatedAt != null)
+		{
+			this.updatedAt = updatedAt.toInstant();
+		}
+	}
 
 	@Override
 	public int hashCode()
@@ -116,6 +161,8 @@ public class Course extends Model
 		result = prime * result + ((number == null) ? 0 : number.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((frequency == null) ? 0 : frequency.hashCode());
+		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
 		return result;
 	}
 
@@ -179,6 +226,28 @@ public class Course extends Model
 		{
 			return false;
 		}
+		if (createdAt == null)
+		{
+			if (other.createdAt != null)
+			{
+				return false;
+			}
+		}
+		else if (!createdAt.equals(other.createdAt))
+		{
+			return false;
+		}
+		if (updatedAt == null)
+		{
+			if (other.updatedAt != null)
+			{
+				return false;
+			}
+		}
+		else if (!updatedAt.equals(other.updatedAt))
+		{
+			return false;
+		}
 		return true;
 	}
 	
@@ -195,6 +264,10 @@ public class Course extends Model
 		builder.append(name);
 		builder.append(", frequency=");
 		builder.append(frequency);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
 		return builder.toString();
 	}
 	
