@@ -58,6 +58,16 @@ public class CustomDaoImpl implements CustomDao
 	}
 	
 	@Override
+	public List<Faculty> getFacultiesWithUserEmail(String userEmail){
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTIES_WITH_USER_EMAIL_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("email", userEmail);
+		List<Faculty> facultiesWithUserEmailList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return facultiesWithUserEmailList;
+	}
+	
+	@Override
 	public List<Calendar> getCalendarsInSchedule(int schedule_id) {
 		CalendarExtractor extractor = new CalendarExtractor();
 		String queryTemplate = new String(QueryPathConstants.CALENDARS_IN_SCHEDULE_QUERY);
@@ -95,6 +105,16 @@ public class CustomDaoImpl implements CustomDao
 	    parameters.addValue("facultyId", faculty_id);
 	    List<Calendar> calendarsOfAFacultyList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return calendarsOfAFacultyList;
+	}
+	
+	@Override
+	public List<Faculty> getFacultiesWithUserWPIID(String wpi_id) {
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTIES_WITH_USER_WPI_ID_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("wpiId", wpi_id);
+	    List<Faculty> facultiesWithUserWPIIDList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return facultiesWithUserWPIIDList;
 	}
 	
 }
