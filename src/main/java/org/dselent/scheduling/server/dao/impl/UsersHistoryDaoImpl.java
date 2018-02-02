@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.dao.UsersHistoryDao;
+import org.dselent.scheduling.server.extractor.UserRoleExtractor;
+import org.dselent.scheduling.server.extractor.UsersHistoryExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.miscellaneous.QueryStringBuilder;
+import org.dselent.scheduling.server.model.UserRole;
 import org.dselent.scheduling.server.model.UsersHistory;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -55,8 +58,21 @@ public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements Us
 	@Override
 	public List<UsersHistory> select(List<String> selectColumnNameList, List<QueryTerm> queryTermList,
 			List<Pair<String, ColumnOrder>> orderByList) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UsersHistoryExtractor extractor = new UsersHistoryExtractor();
+		String queryTemplate = QueryStringBuilder.generateSelectString(UserRole.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
+
+		List<Object> objectList = new ArrayList<Object>();
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    List<UsersHistory> usersHistoryList = jdbcTemplate.query(queryTemplate, extractor, parameters);
+	    
+	    return usersHistoryList;
 	}
 
 	@Override
