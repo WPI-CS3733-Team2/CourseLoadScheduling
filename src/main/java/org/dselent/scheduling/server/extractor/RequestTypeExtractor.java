@@ -27,6 +27,7 @@ public class RequestTypeExtractor extends Extractor<List<RequestType>>{
 			
 			result.setId(rs.getInt(RequestType.getColumnName(RequestType.Columns.ID)));
 			result.setType(rs.getString(RequestType.getColumnName(RequestType.Columns.TYPE)));
+			result.setCreatedAt(rs.getTimestamp(RequestType.getColumnName(RequestType.Columns.CREATED_AT)));
 		
 			resultList.add(result);
 		}

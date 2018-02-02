@@ -17,7 +17,8 @@ public class RequestState extends Model{
 	public static enum Columns
 	{
 		ID,
-		STATE
+		STATE,
+		CREATED_AT
 	}
 		// enum list
 		private static final List<Columns> COLUMN_LIST = new ArrayList<>();
@@ -34,12 +35,14 @@ public class RequestState extends Model{
 			
 			COLUMN_TYPE_MAP.put(Columns.ID, JDBCType.INTEGER);
 			COLUMN_TYPE_MAP.put(Columns.STATE, JDBCType.VARCHAR);
+			COLUMN_TYPE_MAP.put(Columns.CREATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 		};
 		
 		// attributes
 		
 		private Integer id;
 		private String state;
+		private Instant createdAt;
 		
 		// methods
 		
@@ -85,6 +88,24 @@ public class RequestState extends Model{
 		{
 			this.state = state;
 		}
+		public Instant getCreatedAt()
+		{
+			return createdAt;
+		}
+
+		public void setCreatedAt(Instant createdAt)
+		{
+			this.createdAt = createdAt;
+		}
+		
+		public void setCreatedAt(Timestamp createdAt)
+		{
+			if(createdAt != null)
+			{
+				this.createdAt = createdAt.toInstant();
+			}
+		}
+
 		
 		
 		@Override
@@ -92,6 +113,7 @@ public class RequestState extends Model{
 		{
 			final int prime = 31;
 			int result = 1;
+			result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 			result = prime * result + ((state == null) ? 0 : state.hashCode());
 			result = prime * result + ((id == null) ? 0 : id.hashCode());
 			return result;
@@ -113,6 +135,18 @@ public class RequestState extends Model{
 				return false;
 			}
 			RequestState other = (RequestState) obj;
+			//**********
+			if (createdAt == null)
+			{
+				if (other.createdAt != null)
+				{
+					return false;
+				}
+			}
+			else if (!createdAt.equals(other.createdAt))
+			{
+				return false;
+			}
 			//**********
 			if (state == null)
 			{

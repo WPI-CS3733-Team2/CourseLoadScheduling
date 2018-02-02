@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class RequestType extends Model{
 
 	// table name
@@ -17,7 +16,8 @@ public class RequestType extends Model{
 	public static enum Columns
 	{
 		ID,
-		TYPE
+		TYPE,
+		CREATED_AT
 	}
 		// enum list
 		private static final List<Columns> COLUMN_LIST = new ArrayList<>();
@@ -34,12 +34,14 @@ public class RequestType extends Model{
 			
 			COLUMN_TYPE_MAP.put(Columns.ID, JDBCType.INTEGER);
 			COLUMN_TYPE_MAP.put(Columns.TYPE, JDBCType.VARCHAR);
+			COLUMN_TYPE_MAP.put(Columns.CREATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
 		};
 		
 		// attributes
 		
 		private Integer id;
 		private String type;
+		private Instant createdAt;
 		
 		// methods
 		
@@ -86,12 +88,31 @@ public class RequestType extends Model{
 			this.type = type;
 		}
 		
+		public Instant getCreatedAt()
+		{
+			return createdAt;
+		}
+
+		public void setCreatedAt(Instant createdAt)
+		{
+			this.createdAt = createdAt;
+		}
+		
+		public void setCreatedAt(Timestamp createdAt)
+		{
+			if(createdAt != null)
+			{
+				this.createdAt = createdAt.toInstant();
+			}
+		}
+		
 		
 		@Override
 		public int hashCode()
 		{
 			final int prime = 31;
 			int result = 1;
+			result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			result = prime * result + ((id == null) ? 0 : id.hashCode());
 			return result;
@@ -113,6 +134,18 @@ public class RequestType extends Model{
 				return false;
 			}
 			RequestType other = (RequestType) obj;
+			//**********
+			if (createdAt == null)
+			{
+				if (other.createdAt != null)
+				{
+					return false;
+				}
+			}
+			else if (!createdAt.equals(other.createdAt))
+			{
+				return false;
+			}
 			//**********
 			if (type == null)
 			{

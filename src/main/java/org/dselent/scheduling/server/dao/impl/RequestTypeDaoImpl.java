@@ -164,6 +164,10 @@ public class RequestTypeDaoImpl extends BaseDaoImpl<RequestType> implements Requ
     	{
     		parameters.addValue(parameterName, requestTypeModel.getType());
     	}
+    	else if(insertColumnName.equals(RequestType.getColumnName(RequestType.Columns.CREATED_AT)))
+    	{
+    		parameters.addValue(parameterName, requestTypeModel.getType());
+    	}
     	else
     	{
     		// should never end up here
@@ -179,6 +183,9 @@ public class RequestTypeDaoImpl extends BaseDaoImpl<RequestType> implements Requ
     	}
     	else if(keyHolderColumnName.equals(RequestType.getColumnName(RequestType.Columns.TYPE))) {		//
     		requestTypeModel.setType((String) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(RequestType.getColumnName(RequestType.Columns.CREATED_AT))) {		//
+    		requestTypeModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
     	else
     	{

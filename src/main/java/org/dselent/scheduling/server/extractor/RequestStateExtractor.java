@@ -27,6 +27,7 @@ public class RequestStateExtractor extends Extractor<List<RequestState>>{
 			
 			result.setId(rs.getInt(RequestState.getColumnName(RequestState.Columns.ID)));
 			result.setState(rs.getString(RequestState.getColumnName(RequestState.Columns.STATE)));
+			result.setCreatedAt(rs.getTimestamp(RequestState.getColumnName(RequestState.Columns.CREATED_AT)));
 		
 			resultList.add(result);
 		}

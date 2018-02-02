@@ -164,6 +164,10 @@ public class RequestStateDaoImpl extends BaseDaoImpl<RequestState> implements Re
     	{
     		parameters.addValue(parameterName, requestStateModel.getState());
     	}
+    	else if(insertColumnName.equals(RequestState.getColumnName(RequestState.Columns.CREATED_AT)))
+    	{
+    		parameters.addValue(parameterName, requestStateModel.getCreatedAt());
+    	}
     	else
     	{
     		// should never end up here
@@ -179,6 +183,9 @@ public class RequestStateDaoImpl extends BaseDaoImpl<RequestState> implements Re
     	}
     	else if(keyHolderColumnName.equals(RequestState.getColumnName(RequestState.Columns.STATE))) {		//
     		requestStateModel.setState((String) keyMap.get(keyHolderColumnName));
+    	}
+    	else if(keyHolderColumnName.equals(RequestState.getColumnName(RequestState.Columns.CREATED_AT))) {		//
+    		requestStateModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
     	else
     	{

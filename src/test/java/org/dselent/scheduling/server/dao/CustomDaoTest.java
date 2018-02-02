@@ -32,15 +32,14 @@ public class CustomDaoTest
     public void testCustomDao() throws SQLException
     {
     	//@SuppressWarnings("unused")
-    	
+    		
 		//List<User> userList = customDao.getAllUsersWithRole(1);
     	//List<Schedule> scheduleList = customDao.searchScheduleByFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsInSchedule(3);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(2);
-    	//List<Faculty> facultyList = customDao.getFacultiesTeachingACourse(2);
-    	List<Faculty> facultyList = customDao.getFacultiesWithUserEmail("dselent@wpi.edu");
+    	List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
     	// see things in debugger
-    	System.out.println(facultyList);
+    	System.out.println(facultyListInOneCourse);
     }
 }
