@@ -25,7 +25,7 @@ public class UsersExtractor extends Extractor<List<User>>
 				result.setId(null);
 			}
 			
-			result.setWpi_id(rs.getString(User.getColumnName(User.Columns.WPI_ID)));						//
+			result.setWpiId(rs.getString(User.getColumnName(User.Columns.WPI_ID)));						//
 			result.setUserName(rs.getString(User.getColumnName(User.Columns.USER_NAME)));
 			result.setFirstName(rs.getString(User.getColumnName(User.Columns.FIRST_NAME)));
 			result.setLastName(rs.getString(User.getColumnName(User.Columns.LAST_NAME)));
