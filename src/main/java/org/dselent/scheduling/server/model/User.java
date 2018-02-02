@@ -108,12 +108,18 @@ public class User extends Model
 		this.id = id;
 	}
 
-	public String getWpi_id() {									//
+	/**
+	 * @return the wpiId
+	 */
+	public String getWpiId() {
 		return wpiId;
 	}
 
-	public void setWpi_id(String wpi_id) {						//
-		this.wpiId = wpi_id;
+	/**
+	 * @param wpiId the wpiId to set
+	 */
+	public void setWpiId(String wpiId) {
+		this.wpiId = wpiId;
 	}
 
 	public String getUserName()

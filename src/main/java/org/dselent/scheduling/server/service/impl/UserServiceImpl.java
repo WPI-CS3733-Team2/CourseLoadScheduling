@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService
 		String encryptedPassword = passwordEncorder.encode(saltedPassword);
 		
 		User user = new User();
-		user.setWpi_id(dto.getWPIid());
+		user.setWpiId(dto.getWPIid());
 		user.setUserName(dto.getUserName());
 		user.setFirstName(dto.getFirstName());
 		user.setLastName(dto.getLastName());

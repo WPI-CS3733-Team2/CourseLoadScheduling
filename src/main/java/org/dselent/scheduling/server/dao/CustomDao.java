@@ -27,4 +27,5 @@ public interface CustomDao
 	public List<Faculty> getFacultiesTeachingACourse(int course_id);
 	public List<Calendar> getCalendarsOfACourse(int course_id);
 	public List<Calendar> getCalendarsOfAFaculty(int faculty_id);
+	public List<Faculty> getFacultiesWithUserWPIID(String wpi_id);
 }

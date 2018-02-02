@@ -107,4 +107,14 @@ public class CustomDaoImpl implements CustomDao
 	    return calendarsOfAFacultyList;
 	}
 	
+	@Override
+	public List<Faculty> getFacultiesWithUserWPIID(String wpi_id) {
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTIES_WITH_USER_WPI_ID_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("wpiId", wpi_id);
+	    List<Faculty> facultiesWithUserWPIIDList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return facultiesWithUserWPIIDList;
+	}
+	
 }

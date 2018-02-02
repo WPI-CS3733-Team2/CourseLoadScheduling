@@ -163,7 +163,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     	}
     	else if(insertColumnName.equals(User.getColumnName(User.Columns.WPI_ID)))			//
     	{
-    		parameters.addValue(parameterName, userModel.getWpi_id());
+    		parameters.addValue(parameterName, userModel.getWpiId());
     	}
     	else if(insertColumnName.equals(User.getColumnName(User.Columns.USER_NAME)))
     	{
@@ -219,7 +219,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
     		userModel.setId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.WPI_ID))) {		//
-    		userModel.setWpi_id((String) keyMap.get(keyHolderColumnName));
+    		userModel.setWpiId((String) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.USER_NAME)))
     	{
