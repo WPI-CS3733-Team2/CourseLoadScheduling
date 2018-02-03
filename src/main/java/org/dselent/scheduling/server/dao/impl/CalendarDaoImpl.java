@@ -269,4 +269,134 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public Calendar findByYear(int year) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.YEAR), false);
+		List<String> selectColumnNames = Calendar.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, year, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Calendar> calendarList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Calendar calendar = null;
+	    
+	    if(!calendarList.isEmpty())
+	    {
+	    	calendar = calendarList.get(0);
+	    }
+	    
+	    return calendar;
+	}
+
+
+	@Override
+	public Calendar findBySemester(String semester) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.SEMESTER), false);
+		List<String> selectColumnNames = Calendar.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, semester, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Calendar> calendarList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Calendar calendar = null;
+	    
+	    if(!calendarList.isEmpty())
+	    {
+	    	calendar = calendarList.get(0);
+	    }
+	    
+	    return calendar;
+	}
+
+
+	@Override
+	public Calendar findByDay(String day) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.DAYS), false);
+		List<String> selectColumnNames = Calendar.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, day, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Calendar> calendarList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Calendar calendar = null;
+	    
+	    if(!calendarList.isEmpty())
+	    {
+	    	calendar = calendarList.get(0);
+	    }
+	    
+	    return calendar;
+	}
+
+
+	@Override
+	public Calendar findByStartingTime(String startTime) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.START_TIME), false);
+		List<String> selectColumnNames = Calendar.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, startTime, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Calendar> calendarList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Calendar calendar = null;
+	    
+	    if(!calendarList.isEmpty())
+	    {
+	    	calendar = calendarList.get(0);
+	    }
+	    
+	    return calendar;
+	}
+
+
+	@Override
+	public Calendar findByEndingTime(String endTime) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.END_TIME), false);
+		List<String> selectColumnNames = Calendar.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, endTime, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Calendar> calendarList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Calendar calendar = null;
+	    
+	    if(!calendarList.isEmpty())
+	    {
+	    	calendar = calendarList.get(0);
+	    }
+	    
+	    return calendar;
+	}
 }

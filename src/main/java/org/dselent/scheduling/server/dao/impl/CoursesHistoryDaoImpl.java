@@ -222,7 +222,7 @@ public class CoursesHistoryDaoImpl extends BaseDaoImpl<CourseHistory> implements
 	@Override
 	public void validateColumnNames(List<String> columnNameList)
 	{
-		List<String> actualColumnNames = User.getColumnNameList();
+		List<String> actualColumnNames = CourseHistory.getColumnNameList();
 		boolean valid = actualColumnNames.containsAll(columnNameList);
 		
 		if(!valid)
