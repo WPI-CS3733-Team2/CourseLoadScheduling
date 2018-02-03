@@ -89,7 +89,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 	public Schedule findById(int id) throws SQLException
 	{
 		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.ID), false);
-		List<String> selectColumnNames = User.getColumnNameList();
+		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
 		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
@@ -173,10 +173,11 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
     	else if(insertColumnName.equals(Schedule.getColumnName(Schedule.Columns.CREATED_AT)))
     	{
     		parameters.addValue(parameterName, scheduleModel.getCreatedAt());
-    	}
+    	} 
+    	else {
     		// should never end up here
     		// lists should have already been validated
-    		throw new IllegalArgumentException("Invalid column name provided: " + insertColumnName);
+    		throw new IllegalArgumentException("Invalid column name provided(AddParameterMapValue): " + insertColumnName);}
     	}	
 
 	private void addObjectValue(Map<String, Object> keyMap, String keyHolderColumnName, Schedule scheduleModel)
@@ -193,7 +194,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
     	{
     		scheduleModel.setScheduleName((String) keyMap.get(keyHolderColumnName));
     	}
-    	else if(keyHolderColumnName.equals(User.getColumnName(User.Columns.CREATED_AT)))
+    	else if(keyHolderColumnName.equals(Schedule.getColumnName(Schedule.Columns.CREATED_AT)))
     	{
     		scheduleModel.setCreatedAt((Timestamp) keyMap.get(keyHolderColumnName));
     	}
@@ -201,7 +202,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
     	{
     		// should never end up here
     		// lists should have already been validated
-    		throw new IllegalArgumentException("Invalid column name provided: " + keyHolderColumnName);
+    		throw new IllegalArgumentException("Invalid column name provided(Add Object Value): " + keyHolderColumnName);
     	}
 	}
 	
@@ -211,12 +212,14 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 		List<String> actualColumnNames = Schedule.getColumnNameList();
 		boolean valid = actualColumnNames.containsAll(columnNameList);
 		
+		System.out.print(actualColumnNames);
+		
 		if(!valid)
 		{
 			List<String> invalidColumnNames = new ArrayList<>(columnNameList);
 			invalidColumnNames.removeAll(actualColumnNames);
 			
-			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
+			throw new IllegalArgumentException("Invalid column names provided(Validate): " + invalidColumnNames + actualColumnNames);
 		}
 	}
 }

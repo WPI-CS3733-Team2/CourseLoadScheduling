@@ -277,4 +277,30 @@ public class CalendarHistoryDaoImpl extends BaseDaoImpl<CalendarHistory> impleme
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public CalendarHistory findByCalendarId(int calendar_id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CalendarHistory.getColumnName(CalendarHistory.Columns.CALENDAR_ID), false);
+		List<String> selectColumnNames = CalendarHistory.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, calendar_id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CalendarHistory> calendarHistoryList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    CalendarHistory calendarHistory = null;
+	    
+	    if(!calendarHistoryList.isEmpty())
+	    {
+	    	calendarHistory = calendarHistoryList.get(0);
+	    }
+	    
+	    return calendarHistory;
+	}
 }

@@ -226,4 +226,56 @@ public class CourseLoadAssociationDaoImpl extends BaseDaoImpl<CourseLoadAssociat
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public CourseLoadAssociation findByFacultyId(int faculty_id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID), false);
+		List<String> selectColumnNames = CourseLoadAssociation.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, faculty_id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CourseLoadAssociation> courseLoadAssociationList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    CourseLoadAssociation courseLoadAssociation = null;
+	    
+	    if(!courseLoadAssociationList.isEmpty())
+	    {
+	    	courseLoadAssociation = courseLoadAssociationList.get(0);
+	    }
+	    
+	    return courseLoadAssociation;
+	}
+
+
+	@Override
+	public CourseLoadAssociation findByCourseLoadId(int courseLoad_id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.COURSE_LOAD_ID), false);
+		List<String> selectColumnNames = CourseLoadAssociation.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, courseLoad_id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CourseLoadAssociation> courseLoadAssociationList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    CourseLoadAssociation courseLoadAssociation = null;
+	    
+	    if(!courseLoadAssociationList.isEmpty())
+	    {
+	    	courseLoadAssociation = courseLoadAssociationList.get(0);
+	    }
+	    
+	    return courseLoadAssociation;
+	}
 }
