@@ -37,7 +37,7 @@ public class CourseLoadDaoTest
 		courseLoad1.setDeleted(false);
 		
 		List<String> insertColumnNameList = new ArrayList<>();
-    	List<String> keyHolderColumnNameList = new ArrayList<>();
+		List<String> keyHolderColumnNameList = new ArrayList<>();
 
 		
 		insertColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.TYPE));
@@ -47,7 +47,7 @@ public class CourseLoadDaoTest
 		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.ID));
 		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.CREATED_AT));
 		
-		// courseLoadDao.insert(courseLoad1, insertColumnNameList, keyHolderColumnNameList);
+		courseLoadDao.insert(courseLoad1, insertColumnNameList, keyHolderColumnNameList);
 	}
 	
 
