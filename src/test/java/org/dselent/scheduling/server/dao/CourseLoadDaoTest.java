@@ -26,6 +26,7 @@ public class CourseLoadDaoTest
 	@Autowired
 	private CourseLoadDao courseLoadDao;
 	
+	@Test
 	public void testCourseLoadDao() throws SQLException
 	{
 		// Insert
@@ -43,9 +44,8 @@ public class CourseLoadDaoTest
 		insertColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT));
 		insertColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.DELETED));
 		
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.TYPE));
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT));
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.DELETED));
+		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.ID));
+		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.CREATED_AT));
 		
 		// courseLoadDao.insert(courseLoad1, insertColumnNameList, keyHolderColumnNameList);
 	}
