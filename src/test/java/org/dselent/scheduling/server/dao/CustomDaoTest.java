@@ -38,7 +38,7 @@ public class CustomDaoTest
     	//List<Calendar> calendarList = customDao.getCalendarsInSchedule(3);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(2);
-    	List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
+    	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
     	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
     	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(2);
     	//List<Faculty> facultyListWPIID = customDao.getFacultiesWithUserWPIID("2");
