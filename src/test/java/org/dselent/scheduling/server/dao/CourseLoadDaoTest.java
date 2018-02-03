@@ -20,8 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {AppConfig.class})
 @WebAppConfiguration
 
-public class CourseLoadDaoTest
-{
+public class CourseLoadDaoTest{
 	
 	@Autowired
 	private CourseLoadDao courseLoadDao;
