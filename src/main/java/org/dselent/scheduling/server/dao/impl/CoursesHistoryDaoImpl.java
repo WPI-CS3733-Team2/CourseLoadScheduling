@@ -11,7 +11,6 @@ import org.dselent.scheduling.server.extractor.CoursesHistoryExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.CourseHistory;
-import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryStringBuilder;

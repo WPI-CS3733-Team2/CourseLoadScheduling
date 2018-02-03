@@ -8,9 +8,7 @@ import java.util.Map;
 
 import org.dselent.scheduling.server.dao.UserRoleDao;
 import org.dselent.scheduling.server.extractor.UserRoleExtractor;
-import org.dselent.scheduling.server.extractor.UsersExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
-import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UserRole;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;

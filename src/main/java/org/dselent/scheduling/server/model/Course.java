@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.dselent.scheduling.server.model.CourseHistory.Columns;
-
 
 public class Course extends Model
 {
