@@ -55,13 +55,13 @@ public class Section extends Model
 	// attributes
 	
 	private Integer id;
-	private String crn;
+	private Integer crn;
 	private String name;
 	private String type;
-	private String expectedPopulation;
-	private String courseId;
-	private String calendarId;
-	private String scheduleId;
+	private Integer expectedPopulation;
+	private Integer courseId;
+	private Integer calendarId;
+	private Integer scheduleId;
 	private Instant createdAt;
 
 	// methods
@@ -100,13 +100,13 @@ public class Section extends Model
 		this.id = id;
 	}
 
-	public String getCRN() {									
-		return crn;
-	}
-
-	public void setCRN(String crn) {						
-		this.crn = crn;
-	}
+//	public String getCRN() {									
+//		return crn;
+//	}
+//
+//	public void setCRN(String crn) {						
+//		this.crn = crn;
+//	}
 
 	public String getName()
 	{
@@ -118,11 +118,11 @@ public class Section extends Model
 		this.name = name;
 	}
 	
-	public String getCrn() {
+	public Integer getCrn() {
 		return crn;
 	}
 
-	public void setCrn(String crn) {
+	public void setCrn(Integer crn) {
 		this.crn = crn;
 	}
 
@@ -134,35 +134,35 @@ public class Section extends Model
 		this.type = type;
 	}
 
-	public String getExpectedPopulation() {
+	public Integer getExpectedPopulation() {
 		return expectedPopulation;
 	}
 
-	public void setExpectedPopulation(String expectedPopulation) {
+	public void setExpectedPopulation(Integer expectedPopulation) {
 		this.expectedPopulation = expectedPopulation;
 	}
 
-	public String getCourseId() {
+	public Integer getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(String courseId) {
+	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}
 
-	public String getCalendarId() {
+	public Integer getCalendarId() {
 		return calendarId;
 	}
 
-	public void setCalendarId(String calendarId) {
+	public void setCalendarId(Integer calendarId) {
 		this.calendarId = calendarId;
 	}
 
-	public String getScheduleId() {
+	public Integer getScheduleId() {
 		return scheduleId;
 	}
 
-	public void setScheduleId(String scheduleId) {
+	public void setScheduleId(Integer scheduleId) {
 		this.scheduleId = scheduleId;
 	}
 

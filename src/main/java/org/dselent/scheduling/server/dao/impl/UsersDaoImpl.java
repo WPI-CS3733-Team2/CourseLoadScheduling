@@ -282,4 +282,186 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public User findByWpiId(String wpiid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.WPI_ID), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, wpiid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByUserName(String userName) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.USER_NAME), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, userName, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByFirstName(String firstName) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.FIRST_NAME), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, firstName, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByLastName(String lastName) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.LAST_NAME), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, lastName, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByEmail(String email) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.EMAIL), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, email, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByState(String state) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.ACCOUNT_STATE), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, state, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
+
+
+	@Override
+	public User findByIfDeleted(Boolean ifDeleted) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.DELETED), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, ifDeleted, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<User> usersList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    User user = null;
+	    
+	    if(!usersList.isEmpty())
+	    {
+	    	user = usersList.get(0);
+	    }
+	    
+	    return user;
+	}
 }

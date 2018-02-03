@@ -31,24 +31,24 @@ public class CourseDaoTest {
 	 */
     @Test
     public void testUsersDao() throws SQLException{
-//    		Course course1 = new Course();
-//    		course1.setName("Hello, world");
-//    		course1.setFrequency(6666666);
-//    		course1.setNumber("aloha3733");
-//    		
-//    	
-//    		List<String> insertColumnNameList = new ArrayList<>();
-//    		List<String> keyHolderColumnNameList = new ArrayList<>();
-//    	
-//    		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
-//    		insertColumnNameList.add(Course.getColumnName(Course.Columns.FREQUENCY));
-//    		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
-//    		
-//    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.ID));
-//    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.CREATED_AT));
-//    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.UPDATED_AT));
-//
-//    		courseDao.insert(course1, insertColumnNameList, keyHolderColumnNameList);
+    		Course course1 = new Course();
+    		course1.setName("Hello, world");
+    		course1.setFrequency(6666666);
+    		course1.setNumber("aloha3733");
+    		
+    	
+    		List<String> insertColumnNameList = new ArrayList<>();
+    		List<String> keyHolderColumnNameList = new ArrayList<>();
+    	
+    		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
+    		insertColumnNameList.add(Course.getColumnName(Course.Columns.FREQUENCY));
+    		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
+    		
+    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.ID));
+    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.CREATED_AT));
+    		keyHolderColumnNameList.add(Course.getColumnName(Course.Columns.UPDATED_AT));
+
+    		courseDao.insert(course1, insertColumnNameList, keyHolderColumnNameList);
     	
 //    		String updateColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
 //    		Integer frequency = 6666666;

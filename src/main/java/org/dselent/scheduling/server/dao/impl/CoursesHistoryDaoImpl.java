@@ -233,4 +233,30 @@ public class CoursesHistoryDaoImpl extends BaseDaoImpl<CourseHistory> implements
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public CourseHistory findByCourseId(int course_id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CourseHistory.getColumnName(CourseHistory.Columns.COURSE_ID), false);
+		List<String> selectColumnNames = Course.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, course_id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CourseHistory> coursesHistoryList = select(selectColumnNames, queryTermList, orderByList);
+	
+		CourseHistory coursesHistory = null;
+	    
+	    if(!coursesHistoryList.isEmpty())
+	    {
+	    coursesHistory = coursesHistoryList.get(0);
+	    }
+	    
+	    return coursesHistory;
+	}
 }

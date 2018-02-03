@@ -219,4 +219,79 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	}
 
+	@Override
+	public Faculty findByRank(int rank) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.RANK), false);
+		List<String> selectColumnNames = Faculty.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, rank, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Faculty> facultiesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Faculty faculty = null;
+	    
+	    if(!facultiesList.isEmpty())
+	    {
+	    	faculty = facultiesList.get(0);
+	    }
+	    
+	    return faculty;
+	}
+
+	@Override
+	public Faculty findByIfAssigned(Boolean ifAssigned) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.ASSIGNED), false);
+		List<String> selectColumnNames = Faculty.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, ifAssigned, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Faculty> facultiesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Faculty faculty = null;
+	    
+	    if(!facultiesList.isEmpty())
+	    {
+	    	faculty = facultiesList.get(0);
+	    }
+	    
+	    return faculty;
+	}
+
+	@Override
+	public Faculty findByIfDeleted(Boolean ifDeleted) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.DELETED), false);
+		List<String> selectColumnNames = Faculty.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, ifDeleted, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Faculty> facultiesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Faculty faculty = null;
+	    
+	    if(!facultiesList.isEmpty())
+	    {
+	    	faculty = facultiesList.get(0);
+	    }
+	    
+	    return faculty;
+	}
+
 }

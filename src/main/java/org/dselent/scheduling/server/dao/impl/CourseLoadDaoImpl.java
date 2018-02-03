@@ -226,4 +226,56 @@ public class CourseLoadDaoImpl extends BaseDaoImpl<CourseLoad> implements Course
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public CourseLoad findBytype(String type) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoad.getColumnName(CourseLoad.Columns.TYPE), false);
+		List<String> selectColumnNames = CourseLoad.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, type, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CourseLoad> courseLoadList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    CourseLoad courseLoad = null;
+	    
+	    if(!courseLoadList.isEmpty())
+	    {
+	    	courseLoad = courseLoadList.get(0);
+	    }
+	    
+	    return courseLoad;
+	}
+
+
+	@Override
+	public CourseLoad findByAmount(Integer amount) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT), false);
+		List<String> selectColumnNames = CourseLoad.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, amount, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<CourseLoad> courseLoadList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    CourseLoad courseLoad = null;
+	    
+	    if(!courseLoadList.isEmpty())
+	    {
+	    	courseLoad = courseLoadList.get(0);
+	    }
+	    
+	    return courseLoad;
+	}
 }
