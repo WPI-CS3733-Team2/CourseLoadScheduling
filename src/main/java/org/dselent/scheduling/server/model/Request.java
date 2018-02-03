@@ -12,7 +12,7 @@ import java.util.Map;
 public class Request extends Model {
 	
 	// table name
-	public static final String TABLE_NAME = "request";
+	public static final String TABLE_NAME = "requests";
 	
 	public static enum Columns
 	{
