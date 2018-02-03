@@ -222,4 +222,56 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 			throw new IllegalArgumentException("Invalid column names provided(Validate): " + invalidColumnNames + actualColumnNames);
 		}
 	}
+
+
+	@Override
+	public Schedule findByFacultyId(int faculty_id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.FACULTY_ID), false);
+		List<String> selectColumnNames = Schedule.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, faculty_id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Schedule schedule = null;
+	    
+	    if(!scheduleList.isEmpty())
+	    {
+	    	schedule = scheduleList.get(0);
+	    }
+	    
+	    return schedule;
+	}
+
+
+	@Override
+	public Schedule findByName(String name) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME), false);
+		List<String> selectColumnNames = Schedule.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, name, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Schedule schedule = null;
+	    
+	    if(!scheduleList.isEmpty())
+	    {
+	    	schedule = scheduleList.get(0);
+	    }
+	    
+	    return schedule;
+	}
 }

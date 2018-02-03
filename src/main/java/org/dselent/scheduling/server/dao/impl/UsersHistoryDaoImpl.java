@@ -251,4 +251,29 @@ public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements Us
 		}
 	}
 
+	@Override
+	public UsersHistory findByUserId(int uid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UsersHistory.getColumnName(UsersHistory.Columns.USER_ID), false);
+		List<String> selectColumnNames = UsersHistory.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, uid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UsersHistory> usersHistoryList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UsersHistory usersHistory = null;
+	    
+	    if(!usersHistoryList.isEmpty())
+	    {
+	    	usersHistory = usersHistoryList.get(0);
+	    }
+	    
+	    return usersHistory;
+	}
+
 }

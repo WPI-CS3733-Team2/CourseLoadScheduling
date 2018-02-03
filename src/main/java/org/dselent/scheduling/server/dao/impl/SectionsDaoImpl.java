@@ -208,7 +208,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
     		sectionModel.setId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.CRN))) {		//
-    		sectionModel.setCrn((String) keyMap.get(keyHolderColumnName));
+    		sectionModel.setCrn((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.NAME)))
     	{
@@ -220,19 +220,19 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.EXPECTED_POPULATION)))
     	{
-    		sectionModel.setExpectedPopulation((String) keyMap.get(keyHolderColumnName));
+    		sectionModel.setExpectedPopulation((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.COURSE_ID)))
     	{
-    		sectionModel.setCourseId((String) keyMap.get(keyHolderColumnName));
+    		sectionModel.setCourseId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.CALENDAR_ID)))
     	{
-    		sectionModel.setCalendarId((String) keyMap.get(keyHolderColumnName));
+    		sectionModel.setCalendarId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.SCHEDULE_ID)))
     	{
-    		sectionModel.setScheduleId((String) keyMap.get(keyHolderColumnName));
+    		sectionModel.setScheduleId((Integer) keyMap.get(keyHolderColumnName));
     	}
     	else if(keyHolderColumnName.equals(Section.getColumnName(Section.Columns.CREATED_AT)))
     	{
@@ -259,5 +259,161 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 			
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
+	}
+
+
+	@Override
+	public Section findByCrn(int crn) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.CRN), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, crn, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+
+
+	@Override
+	public Section findByName(String name) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.NAME), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, name, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+
+
+	@Override
+	public Section findByType(String type) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.TYPE), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, type, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+
+
+	@Override
+	public Section findByPopulation(int population) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.EXPECTED_POPULATION), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, population, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+
+
+	@Override
+	public Section findByCourseId(int courseId) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.COURSE_ID), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, courseId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+
+
+	@Override
+	public Section findByScheduleId(int scheduleId) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.SCHEDULE_ID), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, scheduleId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
 	}
 }

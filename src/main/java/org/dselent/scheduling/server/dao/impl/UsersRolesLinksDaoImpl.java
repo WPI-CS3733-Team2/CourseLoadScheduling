@@ -211,4 +211,82 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public UsersRolesLink findByUserId(int uid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.USER_ID), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, uid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UsersRolesLink> usersRolesLinksList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UsersRolesLink usersRolesLink = null;
+	    
+	    if(!usersRolesLinksList.isEmpty())
+	    {
+	    	usersRolesLink = usersRolesLinksList.get(0);
+	    }
+	    
+	    return usersRolesLink;
+	}
+
+
+	@Override
+	public UsersRolesLink findByRoleId(int rid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.ROLE_ID), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, rid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UsersRolesLink> usersRolesLinksList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UsersRolesLink usersRolesLink = null;
+	    
+	    if(!usersRolesLinksList.isEmpty())
+	    {
+	    	usersRolesLink = usersRolesLinksList.get(0);
+	    }
+	    
+	    return usersRolesLink;
+	}
+
+
+	@Override
+	public UsersRolesLink findByIfDeleted(Boolean ifDeleted) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.DELETED), false);
+		List<String> selectColumnNames = User.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, ifDeleted, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UsersRolesLink> usersRolesLinksList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UsersRolesLink usersRolesLink = null;
+	    
+	    if(!usersRolesLinksList.isEmpty())
+	    {
+	    	usersRolesLink = usersRolesLinksList.get(0);
+	    }
+	    
+	    return usersRolesLink;
+	}
 }

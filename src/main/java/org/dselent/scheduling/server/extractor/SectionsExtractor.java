@@ -27,11 +27,11 @@ public class SectionsExtractor extends Extractor<List<Section>>
 			
 			result.setName(rs.getString(Section.getColumnName(Section.Columns.NAME)));						//
 			result.setType(rs.getString(Section.getColumnName(Section.Columns.TYPE)));
-			result.setCrn(rs.getString(Section.getColumnName(Section.Columns.CRN)));
-			result.setExpectedPopulation(rs.getString(Section.getColumnName(Section.Columns.EXPECTED_POPULATION)));
-			result.setCourseId(rs.getString(Section.getColumnName(Section.Columns.COURSE_ID)));
-			result.setCalendarId(rs.getString(Section.getColumnName(Section.Columns.CALENDAR_ID)));
-			result.setScheduleId(rs.getString(Section.getColumnName(Section.Columns.SCHEDULE_ID)));
+			result.setCrn(rs.getInt(Section.getColumnName(Section.Columns.CRN)));
+			result.setExpectedPopulation(rs.getInt(Section.getColumnName(Section.Columns.EXPECTED_POPULATION)));
+			result.setCourseId(rs.getInt(Section.getColumnName(Section.Columns.COURSE_ID)));
+			result.setCalendarId(rs.getInt(Section.getColumnName(Section.Columns.CALENDAR_ID)));
+			result.setScheduleId(rs.getInt(Section.getColumnName(Section.Columns.SCHEDULE_ID)));
 			result.setCreatedAt(rs.getTimestamp(Section.getColumnName(Section.Columns.CREATED_AT)));
 		
 			resultList.add(result);

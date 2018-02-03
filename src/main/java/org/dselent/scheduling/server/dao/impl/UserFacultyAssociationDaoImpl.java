@@ -20,7 +20,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserFacultyAssociationImpl extends BaseDaoImpl<UserFacultyAssociation>
+public class UserFacultyAssociationDaoImpl extends BaseDaoImpl<UserFacultyAssociation>
 		implements UserFacultyAssociationDao {
 
 	@Override
@@ -204,6 +204,56 @@ public class UserFacultyAssociationImpl extends BaseDaoImpl<UserFacultyAssociati
 
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
+	}
+
+	@Override
+	public UserFacultyAssociation findByFacultyId(int fid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.FACULTY_ID), false);
+		List<String> selectColumnNames = UserFacultyAssociation.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, fid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UserFacultyAssociation> userFacultyAssociationsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UserFacultyAssociation userFacultyAssociation = null;
+	    
+	    if(!userFacultyAssociationsList.isEmpty())
+	    {
+	    	userFacultyAssociation = userFacultyAssociationsList.get(0);
+	    }
+	    
+	    return userFacultyAssociation;
+	}
+
+	@Override
+	public UserFacultyAssociation findByUserId(int uid) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.USER_ID), false);
+		List<String> selectColumnNames = UserFacultyAssociation.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, uid, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<UserFacultyAssociation> userFacultyAssociationsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    UserFacultyAssociation userFacultyAssociation = null;
+	    
+	    if(!userFacultyAssociationsList.isEmpty())
+	    {
+	    	userFacultyAssociation = userFacultyAssociationsList.get(0);
+	    }
+	    
+	    return userFacultyAssociation;
 	}
 
 }

@@ -232,4 +232,63 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public Course findByNumber(String number) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Course findByName(String name) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Course.getColumnName(Course.Columns.NAME), false);
+		List<String> selectColumnNames = Course.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, name, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Course> coursesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Course course = null;
+	    
+	    if(!coursesList.isEmpty())
+	    {
+	    course = coursesList.get(0);
+	    }
+	    
+	    return course;
+	}
+
+
+	@Override
+	public Course findByFrequency(Integer frequency) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Course.getColumnName(Course.Columns.FREQUENCY), false);
+		List<String> selectColumnNames = Course.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, frequency, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Course> coursesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Course course = null;
+	    
+	    if(!coursesList.isEmpty())
+	    {
+	    course = coursesList.get(0);
+	    }
+	    
+	    return course;
+	}
 }

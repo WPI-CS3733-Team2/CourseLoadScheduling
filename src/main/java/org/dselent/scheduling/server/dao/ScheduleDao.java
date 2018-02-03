@@ -1,10 +1,13 @@
 package org.dselent.scheduling.server.dao;
 
+import java.sql.SQLException;
+
 import org.dselent.scheduling.server.model.Schedule;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScheduleDao extends Dao<Schedule>
 {
-	// add functions here as needed
+	public Schedule findByFacultyId(int faculty_id) throws SQLException;
+	public Schedule findByName(String name) throws SQLException;
 }

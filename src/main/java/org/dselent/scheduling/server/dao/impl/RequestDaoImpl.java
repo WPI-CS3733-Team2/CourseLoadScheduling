@@ -259,4 +259,134 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 			throw new IllegalArgumentException("Invalid column names provided: " + invalidColumnNames);
 		}
 	}
+
+
+	@Override
+	public Request findByFacultyId(int facultyId) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.FACULTY_ID), false);
+		List<String> selectColumnNames = Request.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, facultyId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Request> requestList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Request request = null;
+	    
+	    if(!requestList.isEmpty())
+	    {
+	    	request = requestList.get(0);
+	    }
+	    
+	    return request;
+	}
+
+
+	@Override
+	public Request findByType(int type) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.TYPE), false);
+		List<String> selectColumnNames = Request.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, type, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Request> requestList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Request request = null;
+	    
+	    if(!requestList.isEmpty())
+	    {
+	    	request = requestList.get(0);
+	    }
+	    
+	    return request;
+	}
+
+
+	@Override
+	public Request findByState(int state) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.STATE), false);
+		List<String> selectColumnNames = Request.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, state, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Request> requestList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Request request = null;
+	    
+	    if(!requestList.isEmpty())
+	    {
+	    	request = requestList.get(0);
+	    }
+	    
+	    return request;
+	}
+
+
+	@Override
+	public Request findByCourseId(int courseId) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.COURSE), false);
+		List<String> selectColumnNames = Request.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, courseId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Request> requestList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Request request = null;
+	    
+	    if(!requestList.isEmpty())
+	    {
+	    	request = requestList.get(0);
+	    }
+	    
+	    return request;
+	}
+
+
+	@Override
+	public Request findBySectionId(int sectionId) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.SECTION), false);
+		List<String> selectColumnNames = Request.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, sectionId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Request> requestList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Request request = null;
+	    
+	    if(!requestList.isEmpty())
+	    {
+	    	request = requestList.get(0);
+	    }
+	    
+	    return request;
+	}
 }
