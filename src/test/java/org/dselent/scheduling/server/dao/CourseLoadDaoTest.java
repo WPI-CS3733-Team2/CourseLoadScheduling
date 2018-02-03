@@ -32,7 +32,7 @@ public class CourseLoadDaoTest
 		// Insert
 		
 		CourseLoad courseLoad1 = new CourseLoad();
-		courseLoad1.setType("REGULAR");
+		courseLoad1.setType("REGULAR1");
 		courseLoad1.setAmount(5);
 		courseLoad1.setDeleted(false);
 		
