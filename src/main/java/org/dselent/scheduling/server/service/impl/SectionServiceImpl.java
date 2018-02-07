@@ -6,12 +6,15 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.SectionsDao;
 import org.dselent.scheduling.server.dao.CalendarDao;
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.service.SectionService;
+import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,10 @@ public class SectionServiceImpl implements SectionService
 {
 	@Autowired
 	private SectionsDao sectionsDao;
+	@Autowired
 	private CalendarDao calendarDao;
+	@Autowired
+	private CustomDao customDao;
 	
     public SectionServiceImpl()
     {
@@ -53,8 +59,12 @@ public class SectionServiceImpl implements SectionService
 		keyHolderColumnNameList_cal.add(Section.getColumnName(Section.Columns.ID));
 		keyHolderColumnNameList_cal.add(Section.getColumnName(Section.Columns.CREATED_AT));
 		
-		int calendarId = calendarDao.insert(calendar1, insertColumnNameList_cal, keyHolderColumnNameList_cal);
-	
+		calendarDao.insert(calendar1, insertColumnNameList_cal, keyHolderColumnNameList_cal);
+
+		List<Calendar> matchList = customDao.getMatchDateCalendar(Integer.parseInt(dto.getYear()), dto.getSemester(), dto.getDays(), dto.getStart_time(), dto.getEnd_time());
+		Calendar madeCalendar = matchList.get(0);
+		int calendarId = madeCalendar.getId();
+		
     	Section section1 = new Section();
 		section1.setCrn(Integer.parseInt(dto.getCrn()));
 		section1.setName(dto.getName());
