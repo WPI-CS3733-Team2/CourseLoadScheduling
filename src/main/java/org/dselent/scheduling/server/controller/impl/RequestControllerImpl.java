@@ -124,7 +124,7 @@ public class RequestControllerImpl implements RequestController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		requestService.viewPendingRequests();
+		success.add(requestService.viewPendingRequests());
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
 		return new ResponseEntity<String>(response, HttpStatus.OK);
