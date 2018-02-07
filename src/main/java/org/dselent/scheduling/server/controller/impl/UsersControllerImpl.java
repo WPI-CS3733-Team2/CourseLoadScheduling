@@ -114,7 +114,7 @@ public class UsersControllerImpl implements UsersController
 		.withNewPassword(newPassword)
 		.build();
 		
-		userService.ChangePassword(passwordModificationDto);
+		userService.changePassword(passwordModificationDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -144,7 +144,7 @@ public class UsersControllerImpl implements UsersController
 		.withEmail(email)
 		.build();
 		
-		userService.SearchUser(userSearchDto);
+		userService.searchUser(userSearchDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
