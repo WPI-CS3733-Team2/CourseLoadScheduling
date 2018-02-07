@@ -32,6 +32,28 @@ public class SectionServiceImpl implements SectionService
 	public int create_section(CreateSectionDto dto) throws SQLException
 	{
 		int rowAffected;
+		
+		Calendar calendar1 = new Calendar();
+		
+		calendar1.setYear(Integer.parseInt(dto.getYear()));
+		calendar1.setSemester(dto.getSemester());
+		calendar1.setDays(dto.getDays());
+		calendar1.setStartTime(dto.getStart_time());
+		calendar1.setEndTime(dto.getEnd_time());
+		
+		List<String> insertColumnNameList_cal = new ArrayList<>();
+		List<String> keyHolderColumnNameList_cal = new ArrayList<>();
+		
+		insertColumnNameList_cal.add(Calendar.getColumnName(Calendar.Columns.YEAR));
+		insertColumnNameList_cal.add(Calendar.getColumnName(Calendar.Columns.SEMESTER));
+		insertColumnNameList_cal.add(Calendar.getColumnName(Calendar.Columns.DAYS));
+		insertColumnNameList_cal.add(Calendar.getColumnName(Calendar.Columns.START_TIME));
+		insertColumnNameList_cal.add(Calendar.getColumnName(Calendar.Columns.END_TIME));
+		
+		keyHolderColumnNameList_cal.add(Section.getColumnName(Section.Columns.ID));
+		keyHolderColumnNameList_cal.add(Section.getColumnName(Section.Columns.CREATED_AT));
+		
+		int calendarId = calendarDao.insert(calendar1, insertColumnNameList_cal, keyHolderColumnNameList_cal);
 	
     	Section section1 = new Section();
 		section1.setCrn(Integer.parseInt(dto.getCrn()));
@@ -39,24 +61,24 @@ public class SectionServiceImpl implements SectionService
 		section1.setType(dto.getType());
 		section1.setExpectedPopulation(Integer.parseInt(dto.getExpectedPopulation()));
 		section1.setCourseId(Integer.parseInt(dto.getCourseId()));
-		section1.setCalendarId(Integer.parseInt(dto.getCalendarId()));
+		section1.setCalendarId(calendarId);
 		section1.setScheduleId(Integer.parseInt(dto.getScheduleId()));
 		
-		List<String> insertColumnNameList = new ArrayList<>();
-		List<String> keyHolderColumnNameList = new ArrayList<>();
+		List<String> insertColumnNameList_sec = new ArrayList<>();
+		List<String> keyHolderColumnNameList_sec = new ArrayList<>();
 		
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.CRN));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.NAME));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.TYPE));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.EXPECTED_POPULATION));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.COURSE_ID));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.CALENDAR_ID));
-		insertColumnNameList.add(Section.getColumnName(Section.Columns.SCHEDULE_ID));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.CRN));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.NAME));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.TYPE));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.EXPECTED_POPULATION));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.COURSE_ID));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.CALENDAR_ID));
+		insertColumnNameList_sec.add(Section.getColumnName(Section.Columns.SCHEDULE_ID));
 		
-		keyHolderColumnNameList.add(Section.getColumnName(Section.Columns.ID));
-		keyHolderColumnNameList.add(Section.getColumnName(Section.Columns.CREATED_AT));
+		keyHolderColumnNameList_sec.add(Section.getColumnName(Section.Columns.ID));
+		keyHolderColumnNameList_sec.add(Section.getColumnName(Section.Columns.CREATED_AT));
 		
-		rowAffected = sectionsDao.insert(section1, insertColumnNameList, keyHolderColumnNameList);
+		rowAffected = sectionsDao.insert(section1, insertColumnNameList_sec, keyHolderColumnNameList_sec);
 		return rowAffected;
     }
 	
