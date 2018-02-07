@@ -42,11 +42,11 @@ public class RequestServiceImpl implements RequestService {
 		// request.setState(Integer.parseInt(dto.getRequest_state()));
 		request.setCourse(Integer.parseInt(dto.getCourse_id()));
 		request.setSection(Integer.parseInt(dto.getSection_id()));
-		request.setData(dto.getData());
-		request.setState(3); // Should automatically be "pending"
-		// For now, coded as if 1=accepted,2=denied,and 3=pending
-		// May need another custom DAO to retrieve whatever row in the table is
-		// "pending"
+
+		request.setData(dto.getData());	
+		request.setState(pendingInt()); //Should automatically be "pending"
+		//For now, coded as if 1=accepted,2=denied,and 3=pending
+		//May need another custom DAO to retrieve whatever row in the table is "pending"
 
 		List<String> requestInsertColumnNameList = new ArrayList<>();
 		List<String> requestKeyHolderColumnNameList = new ArrayList<>();
@@ -99,71 +99,76 @@ public class RequestServiceImpl implements RequestService {
 
 		String indexColumnName = Request.getColumnName(Request.Columns.ID);
 		String updateColumnName = Request.getColumnName(Request.Columns.STATE);
-		Integer newState = requestState;
-		List<QueryTerm> updateQueryTermList = new ArrayList<>();
 
-		// WHERE id = :requestId
-		QueryTerm updateDataTerm = new QueryTerm();
-		updateDataTerm.setColumnName(indexColumnName);
-		updateDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		updateDataTerm.setValue(requestId);
-		updateQueryTermList.add(updateDataTerm);
+    	Integer newState = requestState;
+    	List<QueryTerm> updateQueryTermList = new ArrayList<>();
+    	
+    	// WHERE id = :requestId
+    	QueryTerm updateDataTerm = new QueryTerm();
+    	updateDataTerm.setColumnName(indexColumnName);
+    	updateDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+    	updateDataTerm.setValue(requestId);
+    	updateQueryTermList.add(updateDataTerm);
+    	
+    	rowsAffectedList.add(requestDao.update(updateColumnName, newState, updateQueryTermList));
+    	
+    	return rowsAffectedList;
+    }
 
-		rowsAffectedList.add(requestDao.update(updateColumnName, newState, updateQueryTermList));
-
-		return rowsAffectedList;
-	}
-
-	public List<Request> viewPendingRequests() throws SQLException {
-		// First retrieves which row in the request state table corresponds to
-		// "pending," as this is likely
-		// to vary among group members
-		String selectColumnName0 = RequestState.getColumnName(RequestState.Columns.STATE);
-		String selectData0 = "pending";
-
-		List<QueryTerm> selectQueryTermList0 = new ArrayList<>();
-
-		QueryTerm selectDataTerm0 = new QueryTerm();
-		selectDataTerm0.setColumnName(selectColumnName0);
-		selectDataTerm0.setComparisonOperator(ComparisonOperator.EQUAL);
-		selectDataTerm0.setValue(selectData0);
-		selectQueryTermList0.add(selectDataTerm0);
-
-		List<String> selectColumnNameList0 = RequestState.getColumnNameList();
-
-		List<Pair<String, ColumnOrder>> orderByList0 = new ArrayList<>();
-		Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
-		orderByList0.add(orderPair0);
-
-		// @SuppressWarnings("unused")
-		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0,
-				selectQueryTermList0, orderByList0);
-
-		Integer pending = selectedRequestStateList.get(0).getId();
-		// Integer pending = 3;
-		String selectColumnName = Request.getColumnName(Request.Columns.STATE);
-		Integer selectData = pending;
-
-		List<QueryTerm> selectQueryTermList = new ArrayList<>();
-
-		QueryTerm selectDataTerm = new QueryTerm();
-		selectDataTerm.setColumnName(selectColumnName);
-		selectDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		selectDataTerm.setValue(selectData);
-		selectQueryTermList.add(selectDataTerm);
-
-		List<String> selectColumnNameList = Request.getColumnNameList();
-
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
-		orderByList.add(orderPair1);
-
-		// @SuppressWarnings("unused")
+	public List<Request> viewPendingRequests() throws SQLException{
+    	//First retrieves which row in the request state table corresponds to "pending," as this is likely
+    	// to vary among group members
+    	Integer pending = pendingInt();
+    	//Integer pending = 3;
+    	String selectColumnName = Request.getColumnName(Request.Columns.STATE);
+    	Integer selectData = pending;
+    	
+    	List<QueryTerm> selectQueryTermList = new ArrayList<>();
+    	
+    	QueryTerm selectDataTerm = new QueryTerm();
+    	selectDataTerm.setColumnName(selectColumnName);
+    	selectDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+    	selectDataTerm.setValue(selectData);
+    	selectQueryTermList.add(selectDataTerm);
+    	
+    	List<String> selectColumnNameList = Request.getColumnNameList();
+    	
+    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
+    	orderByList.add(orderPair1);
+    	
+		//@SuppressWarnings("unused")
 		List<Request> selectedRequestList = requestDao.select(selectColumnNameList, selectQueryTermList, orderByList);
 
 		// For testing
 		// System.out.println(selectedRequestList);
 		return selectedRequestList;
+
+
 	}
+
+	private Integer pendingInt() throws SQLException{
+    	String selectColumnName0 = RequestState.getColumnName(RequestState.Columns.STATE);
+    	String selectData0 = "pending";
+    	
+    	List<QueryTerm> selectQueryTermList0 = new ArrayList<>();
+    	
+    	QueryTerm selectDataTerm0 = new QueryTerm();
+    	selectDataTerm0.setColumnName(selectColumnName0);
+    	selectDataTerm0.setComparisonOperator(ComparisonOperator.EQUAL);
+    	selectDataTerm0.setValue(selectData0);
+    	selectQueryTermList0.add(selectDataTerm0);
+    	
+    	List<String> selectColumnNameList0 = RequestState.getColumnNameList();
+    	
+    	List<Pair<String, ColumnOrder>> orderByList0 = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
+    	orderByList0.add(orderPair0);
+    	
+		//@SuppressWarnings("unused")
+		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0, selectQueryTermList0, orderByList0);
+		
+    	return selectedRequestStateList.get(0).getId();
+    }
 
 }
