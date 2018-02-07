@@ -69,7 +69,7 @@ public class CourseServiceImpl implements CourseService
         Course courseToModify = coursesDao.findById(Integer.parseInt(dto.getId()));	
 		
         List<QueryTerm> queryTermList = new ArrayList<>();
-		String queryColumnName = Course.getColumnName(Course.Columns.NAME);
+		String queryColumnName = Course.getColumnName(Course.Columns.ID);
 		QueryTerm idTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseToModify.getId(), null);
 		queryTermList.add(idTerm);
 		
@@ -94,39 +94,33 @@ public class CourseServiceImpl implements CourseService
 	@Override
 	public List<Course> searchCourse(SearchCourseDto dto) throws SQLException {
 		
-    	Course course = new Course();
-		course.setName(dto.getName());
-		course.setNumber(dto.getNumber());
-		course.setFrequency(Integer.parseInt(dto.getFrequency()));										//
+		String name = dto.getName();
+		String number = dto.getNumber();
+		String frequency = dto.getFrequency();										//
     	
 		List<String> courseColumnNameList = new ArrayList<>();
-    	List<String> courseKeyHolderColumnNameList = new ArrayList<>();
     	
     	courseColumnNameList.add(Course.getColumnName(Course.Columns.NAME));		//
     	courseColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
     	courseColumnNameList.add(Course.getColumnName(Course.Columns.FREQUENCY));
     	
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.ID));
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.CREATED_AT));
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.UPDATED_AT));
-    	
     	List<QueryTerm> queryTermList = new ArrayList<>();
     	
-    	if (course.getName() != null) {
+    	if (name != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getName(), LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.OR);
 			queryTerm.setLogicalOperator(null);
 			queryTermList.add(queryTerm);
 		}
-    	if (course.getNumber() != null) {
+    	if (number != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getNumber(), LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.OR);
 			queryTerm.setLogicalOperator(null);
 			queryTermList.add(queryTerm);
 		}
-    	if (course.getFrequency() != null) {
+    	if (frequency != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getFrequency(), LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.OR);
 			queryTerm.setLogicalOperator(null);
 			queryTermList.add(queryTerm);
 		}
