@@ -73,7 +73,6 @@ public class UsersControllerImpl implements UsersController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
-<<<<<<< HEAD
 
 	@Override
 	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
@@ -84,7 +83,7 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
 	}
-=======
+
 	
 	public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception 
     {
@@ -165,7 +164,6 @@ public class UsersControllerImpl implements UsersController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
->>>>>>> 403e7f9fecd3d5e5279324c7a65cd2d9285704d4
 }
 
 	
