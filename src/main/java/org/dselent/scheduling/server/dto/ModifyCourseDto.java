@@ -46,9 +46,11 @@ public class ModifyCourseDto
 		}
 	}
 	
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
+	
 	public String getNumber()
 	{
 		return number;

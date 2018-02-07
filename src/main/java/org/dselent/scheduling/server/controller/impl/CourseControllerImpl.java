@@ -37,6 +37,7 @@ public class CourseControllerImpl implements CourseController
 	@Autowired
     private CourseService courseService;
 	
+	@Override
 	public ResponseEntity<String> createCourse(@RequestBody Map<String, String> request) throws Exception 
     {
     	// Print is for testing purposes
@@ -63,7 +64,7 @@ public class CourseControllerImpl implements CourseController
     }
 
 	@Override
-	public ResponseEntity<String> modifyCourse(Map<String, String> request) throws Exception {
+	public ResponseEntity<String> modifyCourse(@RequestBody Map<String, String> request) throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
@@ -75,7 +76,7 @@ public class CourseControllerImpl implements CourseController
 		String number = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.NUMBER));
 		String frequency = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.FREQUENCY));
 		String id = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.ID));
-
+		
 		ModifyCourseDto.Builder builder = ModifyCourseDto.builder();
 		ModifyCourseDto modifyCourseDto = builder.withName(name)
 				.withNumber(number)
@@ -90,7 +91,7 @@ public class CourseControllerImpl implements CourseController
 	}
 
 	@Override
-	public ResponseEntity<String> searchCourse(Map<String, String> request) throws Exception {
+	public ResponseEntity<String> searchCourse(@RequestBody Map<String, String> request) throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 

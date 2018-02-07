@@ -27,23 +27,6 @@ public class SearchCourseDto
 		this.frequency = builder.frequency;
 		this.id = builder.id;
 		
-		// making claim that none of these can be null
-		// add other state checks here as necessary
-		if(this.name == null) {
-			throw new IllegalStateException("name cannot be null");
-		}
-		else if(this.number == null)
-		{
-			throw new IllegalStateException("number cannot be null");
-		}
-		else if(this.frequency == null)
-		{
-			throw new IllegalStateException("frequency cannot be null");
-		}
-		else if(this.id == null)
-		{
-			throw new IllegalStateException("id cannot be null");
-		}
 	}
 	
 	public String getName() {

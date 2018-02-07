@@ -55,8 +55,12 @@ public class SectionControllerImpl implements SectionController
 		String type = request.get(CreateSection.getBodyName(CreateSection.BodyKey.TYPE));
 		String expected_population = request.get(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION));
 		String course_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID));
-		String calendar_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.CALENDAR_ID));
 		String schedule_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID));
+		String year = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
+		String semester = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
+		String days = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
+		String start_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
+		String end_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
 		
 		CreateSectionDto.Builder builder = CreateSectionDto.builder();
 		CreateSectionDto createSectionDto = builder.withCrn(crn)
@@ -64,8 +68,12 @@ public class SectionControllerImpl implements SectionController
 		.withType(type)
 		.withExpectedPopulation(expected_population)
 		.withCourseId(course_id)
-		.withCalendarId(calendar_id)
 		.withScheduleId(schedule_id)
+		.withYear(year)
+		.withSemester(semester)
+		.withDays(days)
+		.withStartTime(start_time)
+		.withEndTime(end_time)
 		.build();
 		
 		sectionService.create_section(createSectionDto);

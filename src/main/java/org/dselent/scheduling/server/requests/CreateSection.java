@@ -38,8 +38,12 @@ public class CreateSection
 		TYPE,
 		EXPECTED_POPULATION,
 		COURSE_ID,
-		CALENDAR_ID,
-		SCHEDULE_ID;
+		SCHEDULE_ID,
+		YEAR,
+		SEMESTER,
+		DAYS,
+		START_TIME,
+		END_TIME;
 	}
 	
 

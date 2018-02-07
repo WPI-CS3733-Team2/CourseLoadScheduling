@@ -21,86 +21,85 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class RequestServiceImpl implements RequestService
-{
+public class RequestServiceImpl implements RequestService {
 	@Autowired
 	private RequestDao requestDao;
 	@Autowired
 	private RequestStateDao requestStateDao;
-	
-    public RequestServiceImpl()
-    {
-    	//
-    }
-    
-	
-    @Transactional
-    @Override
-    public List<Integer> createRequest(CreateRequestDto dto) throws SQLException{
-    	List<Integer> rowsAffectedList = new ArrayList<>();
-    	
-    	Request request = new Request();
-    	request.setFacultyId(Integer.parseInt(dto.getFaculty_id()));
+
+	public RequestServiceImpl() {
+		//
+	}
+
+	@Transactional
+	@Override
+	public List<Integer> createRequest(CreateRequestDto dto) throws SQLException {
+		List<Integer> rowsAffectedList = new ArrayList<>();
+
+		Request request = new Request();
+		request.setFacultyId(Integer.parseInt(dto.getFaculty_id()));
 		request.setType(Integer.parseInt(dto.getRequest_type()));
-		//request.setState(Integer.parseInt(dto.getRequest_state()));
+		// request.setState(Integer.parseInt(dto.getRequest_state()));
 		request.setCourse(Integer.parseInt(dto.getCourse_id()));
 		request.setSection(Integer.parseInt(dto.getSection_id()));
+
 		request.setData(dto.getData());	
 		request.setState(pendingInt()); //Should automatically be "pending"
 		//For now, coded as if 1=accepted,2=denied,and 3=pending
 		//May need another custom DAO to retrieve whatever row in the table is "pending"
-		
-		List<String> requestInsertColumnNameList = new ArrayList<>();
-    	List<String> requestKeyHolderColumnNameList = new ArrayList<>();
-    	
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.FACULTY_ID));		
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.TYPE));
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.STATE));
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.COURSE));
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.SECTION));
-    	requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.DATA));
 
-    	requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.ID));
-    	requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.CREATED_AT));
-    	requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.UPDATED_AT));
-		
-    	rowsAffectedList.add(requestDao.insert(request, requestInsertColumnNameList, requestKeyHolderColumnNameList));
-    	
-    	return rowsAffectedList;
-    }
-    
-    //Does this need to return a list of integers?
-    public List<Request> viewRequestHistory(Integer facultyId) throws SQLException{
-    	//List<Integer> rowsReturnedList = new ArrayList<>();
-    	
-    	String selectColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
-    	Integer selectData = facultyId;
-    	
-    	List<QueryTerm> selectQueryTermList = new ArrayList<>();
-    	
-    	QueryTerm selectDataTerm = new QueryTerm();
-    	selectDataTerm.setColumnName(selectColumnName);
-    	selectDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-    	selectDataTerm.setValue(selectData);
-    	selectQueryTermList.add(selectDataTerm);
-    	
-    	List<String> selectColumnNameList = Request.getColumnNameList();
-    	
-    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
-    	orderByList.add(orderPair1);
-    	
-		//@SuppressWarnings("unused")
+		List<String> requestInsertColumnNameList = new ArrayList<>();
+		List<String> requestKeyHolderColumnNameList = new ArrayList<>();
+
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.FACULTY_ID));
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.TYPE));
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.STATE));
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.COURSE));
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.SECTION));
+		requestInsertColumnNameList.add(Request.getColumnName(Request.Columns.DATA));
+
+		requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.ID));
+		requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.CREATED_AT));
+		requestKeyHolderColumnNameList.add(Request.getColumnName(Request.Columns.UPDATED_AT));
+
+		rowsAffectedList.add(requestDao.insert(request, requestInsertColumnNameList, requestKeyHolderColumnNameList));
+
+		return rowsAffectedList;
+	}
+
+	// Does this need to return a list of integers?
+	public List<Request> viewRequestHistory(Integer facultyId) throws SQLException {
+		// List<Integer> rowsReturnedList = new ArrayList<>();
+
+		String selectColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
+		Integer selectData = facultyId;
+
+		List<QueryTerm> selectQueryTermList = new ArrayList<>();
+
+		QueryTerm selectDataTerm = new QueryTerm();
+		selectDataTerm.setColumnName(selectColumnName);
+		selectDataTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+		selectDataTerm.setValue(selectData);
+		selectQueryTermList.add(selectDataTerm);
+
+		List<String> selectColumnNameList = Request.getColumnNameList();
+
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
+		orderByList.add(orderPair1);
+
+		// @SuppressWarnings("unused")
 		List<Request> selectedRequestList = requestDao.select(selectColumnNameList, selectQueryTermList, orderByList);
-		
+
 		return selectedRequestList;
-    }
-    
-    public List<Integer> changeRequestState(Integer requestId, Integer requestState) throws SQLException{
-    	List<Integer> rowsAffectedList = new ArrayList<>();
-    	
+	}
+
+	public List<Integer> changeRequestState(Integer requestId, Integer requestState) throws SQLException {
+		List<Integer> rowsAffectedList = new ArrayList<>();
+
 		String indexColumnName = Request.getColumnName(Request.Columns.ID);
 		String updateColumnName = Request.getColumnName(Request.Columns.STATE);
+
     	Integer newState = requestState;
     	List<QueryTerm> updateQueryTermList = new ArrayList<>();
     	
@@ -115,8 +114,8 @@ public class RequestServiceImpl implements RequestService
     	
     	return rowsAffectedList;
     }
-    
-    public List<Request> viewPendingRequests() throws SQLException{
+
+	public List<Request> viewPendingRequests() throws SQLException{
     	//First retrieves which row in the request state table corresponds to "pending," as this is likely
     	// to vary among group members
     	Integer pending = pendingInt();
@@ -140,13 +139,15 @@ public class RequestServiceImpl implements RequestService
     	
 		//@SuppressWarnings("unused")
 		List<Request> selectedRequestList = requestDao.select(selectColumnNameList, selectQueryTermList, orderByList);
-		
-		//For testing
-		//System.out.println(selectedRequestList);
+
+		// For testing
+		// System.out.println(selectedRequestList);
 		return selectedRequestList;
-    }
-    
-    private Integer pendingInt() throws SQLException{
+
+
+	}
+
+	private Integer pendingInt() throws SQLException{
     	String selectColumnName0 = RequestState.getColumnName(RequestState.Columns.STATE);
     	String selectData0 = "pending";
     	
@@ -169,5 +170,5 @@ public class RequestServiceImpl implements RequestService
 		
     	return selectedRequestStateList.get(0).getId();
     }
-    
+
 }
