@@ -1,8 +1,11 @@
 package org.dselent.scheduling.server.controller.impl;
 
+import java.util.Map;
+
 import org.dselent.scheduling.server.controller.CourseLoadController;
 import org.dselent.scheduling.server.service.CourseLoadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -18,6 +21,19 @@ public class CourseLoadControllerImpl implements CourseLoadController
 {
 	@Autowired
     private CourseLoadService courseLoadService;
+
+//	@Override
+//	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
+//		Integer courseLoadId =(int) request.get("id");
+//		courseLoadService.delete(courseLoadId);
+//		return null;
+//	}
+
+	@Override
+	public ResponseEntity<String> detail(Map<String, Object> request) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
     	
 }
 

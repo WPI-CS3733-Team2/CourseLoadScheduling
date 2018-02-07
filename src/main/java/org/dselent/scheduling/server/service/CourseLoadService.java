@@ -17,5 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CourseLoadService
 {
-	
+//	public List<Integer> delete(int id) throws SQLException;
 }
