@@ -103,14 +103,13 @@ public class CourseControllerImpl implements CourseController
 		String id = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.ID));
 
 		SearchCourseDto.Builder builder = SearchCourseDto.builder();
-		SearchCourseDto modifyCourseDto = builder.withName(name)
+		SearchCourseDto searchCourseDto = builder.withName(name)
 				.withNumber(number)
 				.withFrequency(frequency)
 				.withId(id)
 				.build();
 
-		courseService.searchCourse(modifyCourseDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.searchCourse(searchCourseDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.controller;
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.CreateCourse;
 import org.dselent.scheduling.server.requests.ModifyCourse;
+import org.dselent.scheduling.server.requests.SearchCourse;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +62,7 @@ public class CoursesControllerTest
         
     }
     
-    @Test
+    //@Test
     public void testModifyCourseController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
@@ -82,14 +83,15 @@ public class CoursesControllerTest
         
     }
     
-    //@Test
+    @Test
     public void testSearchCourseController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(ModifyCourse.getBodyName(ModifyCourse.BodyKey.NAME), "Testing");
+    	jsonObject.put(SearchCourse.getBodyName(SearchCourse.BodyKey.NAME), "Testing");
+    	jsonObject.put(SearchCourse.getBodyName(SearchCourse.BodyKey.NUMBER), "2222");
     	String jsonString = jsonObject.toString();
         
-    	System.out.println(jsonString);
+    	//System.out.println(jsonString);
     	
         this.mockMvc.perform(post("/course/search_course").content(jsonString)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
