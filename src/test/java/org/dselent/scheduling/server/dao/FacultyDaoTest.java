@@ -28,20 +28,20 @@ public class FacultyDaoTest {
 
 	@Test
 	public void testFacultyDao() throws SQLException {
-		// Faculty fac1 = new Faculty();
-		// fac1.setRank(999);
-		// fac1.setAssigned(false);
-		//
-		// List<String> insertColumnNameList = new ArrayList<>();
-		// List<String> keyHolderColumnNameList = new ArrayList<>();
-		//
-		// insertColumnNameList.add(Faculty.getColumnName(Faculty.Columns.RANK));
-		// insertColumnNameList.add(Faculty.getColumnName(Faculty.Columns.ASSIGNED));
-		//
-		// keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.ID));
-		// keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.DELETED));
-		// keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.CREATED_AT));
-		// facultyDao.insert(fac1, insertColumnNameList, keyHolderColumnNameList);
+		 Faculty fac1 = new Faculty();
+		 fac1.setRank(999);
+		 fac1.setAssigned(false);
+		
+		 List<String> insertColumnNameList = new ArrayList<>();
+		 List<String> keyHolderColumnNameList = new ArrayList<>();
+		
+		 insertColumnNameList.add(Faculty.getColumnName(Faculty.Columns.RANK));
+		 insertColumnNameList.add(Faculty.getColumnName(Faculty.Columns.ASSIGNED));
+		
+		 keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.ID));
+		 keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.DELETED));
+		 keyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.CREATED_AT));
+		 System.out.println(facultyDao.insert(fac1, insertColumnNameList, keyHolderColumnNameList));
 
 		// String selectColumnName = Faculty.getColumnName(Faculty.Columns.RANK);
 		// Integer selectRank = 999;

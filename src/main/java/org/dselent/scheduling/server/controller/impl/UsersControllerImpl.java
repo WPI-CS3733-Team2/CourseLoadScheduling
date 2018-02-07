@@ -35,7 +35,7 @@ public class UsersControllerImpl implements UsersController
 	 * @return A ResponseEntity for the response object(s) and the status code
 	 * @throws Exception 
 	 */
-	public ResponseEntity<String> register(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> register(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
@@ -44,18 +44,22 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String userName = request.get(Register.getBodyName(Register.BodyKey.USER_NAME));
-		String firstName = request.get(Register.getBodyName(Register.BodyKey.FIRST_NAME));
-		String lastName = request.get(Register.getBodyName(Register.BodyKey.LAST_NAME));
-		String email = request.get(Register.getBodyName(Register.BodyKey.EMAIL));
-		String password = request.get(Register.getBodyName(Register.BodyKey.PASSWORD));
+		String wpiId = (String) request.get(Register.getBodyName(Register.BodyKey.WPI_ID));
+		String userName = (String) request.get(Register.getBodyName(Register.BodyKey.USER_NAME));
+		String firstName = (String) request.get(Register.getBodyName(Register.BodyKey.FIRST_NAME));
+		String lastName = (String) request.get(Register.getBodyName(Register.BodyKey.LAST_NAME));
+		String email = (String) request.get(Register.getBodyName(Register.BodyKey.EMAIL));
+		String password = (String) request.get(Register.getBodyName(Register.BodyKey.PASSWORD));
+		Integer roleId = (Integer) request.get(Register.getBodyName(Register.BodyKey.ROLE_ID)); 
 
 		RegisterUserDto.Builder builder = RegisterUserDto.builder();
-		RegisterUserDto registerUserDto = builder.withUserName(userName)
+		RegisterUserDto registerUserDto = builder.withWPIid(wpiId)
+		.withUserName(userName)
 		.withFirstName(firstName)
 		.withLastName(lastName)
 		.withEmail(email)
 		.withPassword(password)
+		.withRoleId(roleId)
 		.build();
 		
 		userService.registerUser(registerUserDto);
@@ -63,6 +67,16 @@ public class UsersControllerImpl implements UsersController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+
+	@Override
+	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
+		Integer id = (Integer) request.get("id");
+		userService.deleteUser(id);
+		List<Object> success = new ArrayList<Object>();
+		String response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+		
+	}
 }
 
 	

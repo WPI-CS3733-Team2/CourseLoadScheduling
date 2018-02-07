@@ -84,27 +84,27 @@ public class UsersDaoTest
 //    	
     	// SELECT
     	// by user name
-//    	
-//    	String selectColumnName = User.getColumnName(User.Columns.USER_NAME);
-//    	String selectUserName = "???????????";
-//    	
-//    	List<QueryTerm> selectQueryTermList = new ArrayList<>();
-//    	
-//    	QueryTerm selectUseNameTerm = new QueryTerm();
-//    	selectUseNameTerm.setColumnName(selectColumnName);
-//    	selectUseNameTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-//    	selectUseNameTerm.setValue(selectUserName);
-//    	selectQueryTermList.add(selectUseNameTerm);
-//    	
-//    	List<String> selectColumnNameList = User.getColumnNameList();
-//    	
-//    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-//    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
-//    	orderByList.add(orderPair1);
-//    	
-//		@SuppressWarnings("unused")
-//		List<User> selectedUserList = usersDao.select(selectColumnNameList, selectQueryTermList, orderByList);
-//    	
-//    	System.out.println();
+    	
+    	String selectColumnName = User.getColumnName(User.Columns.USER_NAME);
+    	String selectUserName = "???????????";
+    	
+    	List<QueryTerm> selectQueryTermList = new ArrayList<>();
+    	
+    	QueryTerm selectUseNameTerm = new QueryTerm();
+    	selectUseNameTerm.setColumnName(selectColumnName);
+    	selectUseNameTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+    	selectUseNameTerm.setValue(selectUserName);
+    	selectQueryTermList.add(selectUseNameTerm);
+    	
+    	List<String> selectColumnNameList = User.getColumnNameList();
+    	
+    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
+    	orderByList.add(orderPair1);
+    	
+		@SuppressWarnings("unused")
+		List<User> selectedUserList = usersDao.select(selectColumnNameList, selectQueryTermList, orderByList);
+    	
+    	System.out.println();
     }
 }

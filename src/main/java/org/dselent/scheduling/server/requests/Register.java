@@ -33,11 +33,14 @@ public class Register
 	
 	public static enum BodyKey
 	{
+		WPI_ID,
 		USER_NAME,
 		FIRST_NAME,
 		LAST_NAME,
 		EMAIL,
-		PASSWORD;
+		PASSWORD,
+		ROLE_ID,
+		RANK
 	}
 	
 

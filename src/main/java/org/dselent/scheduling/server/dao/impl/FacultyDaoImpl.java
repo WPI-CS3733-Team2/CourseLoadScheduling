@@ -25,7 +25,6 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 	@Override
 	public int insert(Faculty facultyModel, List<String> insertColumnNameList, List<String> keyHolderColumnNameList)
 			throws SQLException {
-		// TODO Auto-generated method stub
 		validateColumnNames(insertColumnNameList); 				//check if the provided columns are included in the columns
 		validateColumnNames(keyHolderColumnNameList);
 
@@ -46,8 +45,11 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 	    for(String keyHolderColumnName : keyHolderColumnNameList){
 	    		addObjectValue(keyMap, keyHolderColumnName, facultyModel);
 	    }
-	    	    
-	    return rowsAffected;
+	    
+	    //List<Map<String,Object>> returnMap= keyHolder.getKeyList();
+	   
+	    	return (int)keyMap.get("id");
+	    //eturn id;
 	}
 
 	@Override

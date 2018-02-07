@@ -18,6 +18,8 @@ public class RegisterUserDto
 	private final String lastName;
 	private final String email;
 	private final String password;
+	private final Integer roleId;
+	private final Integer rank;
 
 	// I added to the auto-generated code
 	@Generated("SparkTools")
@@ -30,6 +32,8 @@ public class RegisterUserDto
 		this.lastName = builder.lastName;
 		this.email = builder.email;
 		this.password = builder.password;
+		this.roleId = builder.roleId;
+		this.rank = builder.rank;
 		
 		// making claim that none of these can be null
 		// add other state checks here as necessary
@@ -55,6 +59,14 @@ public class RegisterUserDto
 		else if(this.password == null)
 		{
 			throw new IllegalStateException("password cannot be null");
+		}
+		else if(this.roleId == null) {
+			//throw new IllegalStateException("role id cannot be null");
+			//this.roleId = 1;
+			throw new IllegalStateException("roleId cannot be null");
+		}
+		else if(this.rank == null) {
+			throw new IllegalStateException("rank cannot be null");
 		}
 	}
 	
@@ -86,110 +98,97 @@ public class RegisterUserDto
 		return password;
 	}
 
+	public Integer getRoleId() {
+		return roleId;
+	}
+	
+	public Integer getRank() {
+		return rank;
+	}
+
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
-	public int hashCode()
-	{
+	public String toString() {
+		return "RegisterUserDto [wpi_id=" + wpi_id + ", userName=" + userName + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", roleId=" + roleId
+				+ ", rank=" + rank + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((rank == null) ? 0 : rank.hashCode());
+		result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-		result = prime * result +((wpi_id == null) ? 0 : wpi_id.hashCode());
+		result = prime * result + ((wpi_id == null) ? 0 : wpi_id.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
-		{
 			return true;
-		}
 		if (obj == null)
-		{
 			return false;
-		}
-		if (!(obj instanceof RegisterUserDto))
-		{
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		RegisterUserDto other = (RegisterUserDto) obj;
-		if (email == null)
-		{
+		if (email == null) {
 			if (other.email != null)
-			{
 				return false;
-			}
-		}
-		else if (!email.equals(other.email))
-		{
+		} else if (!email.equals(other.email))
 			return false;
-		}
-		if (firstName == null)
-		{
+		if (firstName == null) {
 			if (other.firstName != null)
-			{
 				return false;
-			}
-		}
-		else if (!firstName.equals(other.firstName))
-		{
+		} else if (!firstName.equals(other.firstName))
 			return false;
-		}
-		if (lastName == null)
-		{
+		if (lastName == null) {
 			if (other.lastName != null)
-			{
 				return false;
-			}
-		}
-		else if (!lastName.equals(other.lastName))
-		{
+		} else if (!lastName.equals(other.lastName))
 			return false;
-		}
-		if (password == null)
-		{
+		if (password == null) {
 			if (other.password != null)
-			{
 				return false;
-			}
-		}
-		else if (!password.equals(other.password))
-		{
+		} else if (!password.equals(other.password))
 			return false;
-		}
-		if (userName == null)
-		{
+		if (rank == null) {
+			if (other.rank != null)
+				return false;
+		} else if (!rank.equals(other.rank))
+			return false;
+		if (roleId == null) {
+			if (other.roleId != null)
+				return false;
+		} else if (!roleId.equals(other.roleId))
+			return false;
+		if (userName == null) {
 			if (other.userName != null)
-			{
 				return false;
-			}
-		}
-		else if (!userName.equals(other.userName))
-		{
+		} else if (!userName.equals(other.userName))
 			return false;
-		}
+		if (wpi_id == null) {
+			if (other.wpi_id != null)
+				return false;
+		} else if (!wpi_id.equals(other.wpi_id))
+			return false;
 		return true;
-	}
-
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("RegisterUserDto [userName=");
-		builder.append(userName);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append("]");
-		return builder.toString();
 	}
 
 	/**
@@ -214,9 +213,13 @@ public class RegisterUserDto
 		private String lastName;
 		private String email;
 		private String password;
+		private Integer roleId;
+		private Integer rank;
 
 		private Builder()
 		{
+			rank = 0;
+			roleId = 1;
 		}
 		
 		public Builder withWPIid(String wpi_id) {				//
@@ -251,6 +254,17 @@ public class RegisterUserDto
 		public Builder withPassword(String password)
 		{
 			this.password = password;
+			return this;
+		}
+		
+		public Builder withRoleId(Integer roleId)
+		{
+			this.roleId = roleId;
+			return this;
+		}
+		
+		public Builder withRank(Integer rank) {
+			this.rank = rank;
 			return this;
 		}
 

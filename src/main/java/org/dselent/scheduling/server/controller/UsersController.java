@@ -13,7 +13,10 @@ public interface UsersController
 {
     
     @RequestMapping(method=RequestMethod.POST, value=Register.REQUEST_NAME)
-	public ResponseEntity<String> register(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> register(@RequestBody Map<String, Object> request) throws Exception;
+    
+    @RequestMapping(method=RequestMethod.POST, value="delete")
+    public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception;
 }
 
 	
