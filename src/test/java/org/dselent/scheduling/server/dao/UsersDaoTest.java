@@ -34,7 +34,7 @@ public class UsersDaoTest
     public void testUsersDao() throws SQLException
     {
     	// INSERT
-    		User user1 = usersDao.findById(1);
+    		User user1 = usersDao.findByEmail("useronex@wpi.edu");
     		System.out.println(user1);
     	
 //    	User user1 = new User();

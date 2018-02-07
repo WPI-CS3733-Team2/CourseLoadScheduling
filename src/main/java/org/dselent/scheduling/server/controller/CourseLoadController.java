@@ -14,8 +14,8 @@ public interface CourseLoadController
 //	@RequestMapping(method=RequestMethod.POST, value="delete")
 //    public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception;
 	
-	@RequestMapping(method=RequestMethod.POST, value = "detail")
-	public ResponseEntity<String> detail(@RequestBody Map<String, Object> request) throws Exception;
+	@RequestMapping(method=RequestMethod.POST, value = "search")
+	public ResponseEntity<String> search(@RequestBody Map<String, Object> request) throws Exception;
 	
 }
 
