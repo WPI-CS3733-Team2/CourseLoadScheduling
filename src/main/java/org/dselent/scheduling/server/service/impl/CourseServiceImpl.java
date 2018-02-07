@@ -152,13 +152,29 @@ public class CourseServiceImpl implements CourseService
 		course.setName(deleteCourseDto.getName());
 		course.setNumber(deleteCourseDto.getNumber());
 		
-		List<String> insertColumnNameList = new ArrayList<>();
-		List<String> keyHolderColumnNameList = new ArrayList<>();
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		boolean firstTerm = true;
 		
-		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
-		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
+		if (course.getName() != null) {
+			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getName(), LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
+			queryTermList.add(queryTerm);
+		}
+    	if (course.getNumber() != null) {
+			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getNumber(), LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
+			queryTermList.add(queryTerm);
+		}
 		
-		rowAffected = coursesDao.insert(course, insertColumnNameList, keyHolderColumnNameList);
+		rowAffected = coursesDao.delete(queryTermList);
 		return rowAffected;
 	}
     
