@@ -46,13 +46,13 @@ public class ScheduleControllerTest
     public void testCreateScheduleController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID), "123456789");
+    	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID), "1");
     	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SCHEDULE_NAME), "Test");
     	String jsonString = jsonObject.toString();
         
     	// System.out.println(jsonString);
     	
-        this.mockMvc.perform(post("/course/create_course").content(jsonString)
+        this.mockMvc.perform(post("/schedule/create_schedule").content(jsonString)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .characterEncoding("utf-8"))
         .andDo(MockMvcResultHandlers.print())
