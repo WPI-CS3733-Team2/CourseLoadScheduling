@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/course_load")
 public interface CourseLoadController
 {
-//	@RequestMapping(method=RequestMethod.POST, value="view")
+//	@RequestMapping(method=RequestMethod.POST, value="delete")
 //    public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception;
+	
+	@RequestMapping(method=RequestMethod.POST, value = "detail")
+	public ResponseEntity<String> detail(@RequestBody Map<String, Object> request) throws Exception;
+	
 }
 
 	
