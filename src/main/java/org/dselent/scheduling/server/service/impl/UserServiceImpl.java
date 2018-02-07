@@ -6,7 +6,11 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
+import org.dselent.scheduling.server.dto.LoginUserDto;
+import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
+import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.UserService;
@@ -16,6 +20,10 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.dselent.scheduling.server.sqlutils.ColumnOrder;
+import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
+import org.dselent.scheduling.server.sqlutils.LogicalOperator;
+import org.dselent.scheduling.server.sqlutils.QueryTerm;
 
 
 @Service
@@ -107,13 +115,177 @@ public class UserServiceImpl implements UserService
 		return rowsAffectedList;
 	}
 	
-	//
-
+    
+    
+    // LoginUserDto --> Boolean
+    /*TODO: The login function should do this:
+	 * Find the user by User name.
+	 * If the userName doesn't exist, return false;
+	 * If the userName can be found, then check if the password is matched
+	 * If yes, return true; otherwise, return false.
+	 */
+    @Transactional
 	@Override
-	public User loginUser(String userName, String password)
+	public boolean loginUser(LoginUserDto dto) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}   
+		
+		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_Password = dto.getPassword();
+		User selectedUser = null;
+		selectedUser = usersDao.findByUserName(input_userName);
+		
+		if(selectedUser == null)
+		{
+			// debugging message
+			System.out.println("The username does not exist.");
+			return false;
+		}
+		else if (input_Password == selectedUser.getEncryptedPassword()){
+			return true;
+		} 
+		else 
+		{
+			// debugging message
+			System.out.println("The password is wrong.");
+			return false;
+		}
+	}
+    
+    
+    // LoginUserDto --> int
+    /*TODO: The changePassword function should do this:
+	 * Find the user by user name.
+	 * If the userName doesn't exist, return -1 and report error;
+	 * 		If the userName can be found, then check if the input old password is matched with existed old password
+	 * 			If yes, replace the new password with existed new password and return rowsAffected. 
+	 * 			If not, return -1 and report error.
+	 */
+    @Transactional
+	@Override
+	public int changePassword(PasswordModificationDto dto) throws SQLException
+	{
+		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_OldPassword = dto.getOldPassword();
+		String input_NewPassword = dto.getNewPassword();
+		User selectedUser = null;
+		selectedUser = usersDao.findByUserName(input_userName);
+		
+		if(selectedUser == null)
+		{
+			// debugging message
+			System.out.println("The username does not exist.");
+			return -1;
+		}
+		else if (input_OldPassword != selectedUser.getEncryptedPassword()){
+			// debugging message
+			System.out.println("The old password is wrong.");
+			return -1;
+		} 
+		else 
+		{
+			//pack the query terms first (only one query term)
+			List<QueryTerm> queryTermList = new ArrayList<>();
+			String queryColumnName = User.getColumnName(User.Columns.USER_NAME);
+			QueryTerm userNameTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_userName, null);
+			queryTermList.add(userNameTerm);
+			
+			// Update the new password.
+			String updateColumnName = User.getColumnName(User.Columns.ENCRYPTED_PASSWORD);
+			int rowsAffected = usersDao.update(updateColumnName, input_NewPassword, queryTermList);
+			
+			return rowsAffected;
+		}
+	}
+    
+ // LoginUserDto --> List<User>
+    /*TODO: The searchUser function should do this:
+	 * 1. Read the input: wpiID, userName, firstName, lastName, and email;
+	 * 2. pack the columnNameList: allColumnNameList;
+	 * 3. pack the input variables to queryTermList;
+	 * 4. pack the orderByList using sorting order: <LastName, Asc>
+	 */
+    @Transactional
+	@Override
+	public List<User> searchUser(UserSearchDto dto) throws SQLException
+	{
+		// 1. extract the matched user data from the input userName
+		String input_WpiId = dto.getWpiId();
+		String input_userName = dto.getUserName();
+		String input_firstName = dto.getFirstName();
+		String input_lastName = dto.getLastName();
+		String input_email = dto.getEmail();
+		
+		// 2. create a columnName list and pack columnName data
+		List<String> columnNamesList = new ArrayList<>();
+		columnNamesList.addAll(User.getColumnNameList());
+		
+		// 3. create a query terms list and pack the query terms data
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		
+		/* startingFlag is used to mark the first queryTerm with "Not Null" value. When one queryTerm is the first one to add
+		 * into queryTermList, then its logicalOperator (default in OR) should be set to null.
+		 */
+		boolean startingQueryFlag = true;
+		if (input_WpiId != null) {
+			String queryColumnName1 = User.getColumnName(User.Columns.WPI_ID);
+			QueryTerm queryTerm1 = new QueryTerm (queryColumnName1, ComparisonOperator.EQUAL, input_WpiId, LogicalOperator.OR);
+			if (startingQueryFlag == true) {
+				queryTerm1.setLogicalOperator(null);
+				startingQueryFlag = false;
+			}
+			queryTermList.add(queryTerm1);
+		}
+		if (input_userName != null) {
+			String queryColumnName2 = User.getColumnName(User.Columns.USER_NAME);
+			QueryTerm queryTerm2 = new QueryTerm (queryColumnName2, ComparisonOperator.EQUAL, input_userName, LogicalOperator.OR);
+			if (startingQueryFlag == true) {
+				queryTerm2.setLogicalOperator(null);
+				startingQueryFlag = false;
+			}
+			queryTermList.add(queryTerm2);
+		}
+		if (input_firstName != null) {
+			String queryColumnName3 = User.getColumnName(User.Columns.FIRST_NAME);
+			QueryTerm queryTerm3 = new QueryTerm (queryColumnName3, ComparisonOperator.EQUAL, input_firstName, LogicalOperator.OR);
+			if (startingQueryFlag == true) {
+				queryTerm3.setLogicalOperator(null);
+				startingQueryFlag = false;
+			}
+			queryTermList.add(queryTerm3);
+
+		}
+		if (input_lastName != null) {
+			String queryColumnName4 = User.getColumnName(User.Columns.LAST_NAME);
+			QueryTerm queryTerm4 = new QueryTerm (queryColumnName4, ComparisonOperator.EQUAL, input_lastName, LogicalOperator.OR);
+			if (startingQueryFlag == true) {
+				queryTerm4.setLogicalOperator(null);
+				startingQueryFlag = false;
+			}
+			queryTermList.add(queryTerm4);
+
+		}
+		if (input_email != null) {
+			String queryColumnName5 = User.getColumnName(User.Columns.EMAIL);
+			QueryTerm queryTerm5 = new QueryTerm (queryColumnName5, ComparisonOperator.EQUAL, input_email, LogicalOperator.OR);
+			if (startingQueryFlag == true) {
+				queryTerm5.setLogicalOperator(null);
+				startingQueryFlag = false;
+			}
+			queryTermList.add(queryTerm5);
+
+		}
+		
+		// 4. create a sort list and pack sorting data
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> orderBy1 = new Pair(User.Columns.FIRST_NAME, ColumnOrder.ASC);
+		orderByList.add(orderBy1);
+		
+		// return the selected users.
+		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
+		return selectedUsers;
+		
+	}
 
 }
