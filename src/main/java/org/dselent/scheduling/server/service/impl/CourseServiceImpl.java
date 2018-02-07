@@ -108,7 +108,7 @@ public class CourseServiceImpl implements CourseService
     	
     	if (name != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.AND);
 			if(firstTerm) {
 				queryTerm.setLogicalOperator(null);
 				firstTerm = false;
@@ -117,7 +117,7 @@ public class CourseServiceImpl implements CourseService
 		}
     	if (number != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.AND);
 			if(firstTerm) {
 				queryTerm.setLogicalOperator(null);
 				firstTerm = false;
@@ -126,7 +126,7 @@ public class CourseServiceImpl implements CourseService
 		}
     	if (frequency != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.OR);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.AND);
 			if(firstTerm) {
 				queryTerm.setLogicalOperator(null);
 				firstTerm = false;

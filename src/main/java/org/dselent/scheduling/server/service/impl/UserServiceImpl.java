@@ -335,10 +335,49 @@ public class UserServiceImpl implements UserService {
 		updateQueryTermList.add(updateDeletedTerm);
 
 		rowsAffectedList.add(usersDao.update(updateColumnName, true, updateQueryTermList));  //delete from users table
-		rowsAffectedList.add(deleteFaculty(id)); //delete from usersRolesLinks table
 		rowsAffectedList.add(deleteRoleLink(id));//delete from faculty table
+		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(id);
+		if(ufa != null) {
+			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
+			
+			CourseLoadAssociation cla = courseLoadAssociationDao.findByFacultyId(ufa.getFacultyId());
+			int courseLoadId = cla.getCourseLoadId();
+			rowsAffectedList.add(deleteCourseLoadAssociation(ufa.getFacultyId()));
+			rowsAffectedList.add(deleteCourseLoad(courseLoadId));
+			
+		}
 
 		return rowsAffectedList;
+	}
+	
+	private Integer deleteCourseLoad(int courseLoadId) throws SQLException{
+		String updateColumnName = CourseLoad.getColumnName(CourseLoad.Columns.DELETED);
+		
+		List<QueryTerm> updateQueryTermList = new ArrayList<>();
+		QueryTerm updateDeletedTerm = new QueryTerm();
+		
+		updateDeletedTerm.setColumnName(CourseLoad.getColumnName(CourseLoad.Columns.ID));
+		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+		updateDeletedTerm.setValue(courseLoadId);
+		updateQueryTermList.add(updateDeletedTerm);
+
+		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
+		return result;
+	}
+	
+	private Integer deleteCourseLoadAssociation(int facultyId) throws SQLException{
+		String updateColumnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.DELETED);
+		
+		List<QueryTerm> updateQueryTermList = new ArrayList<>();
+		QueryTerm updateDeletedTerm = new QueryTerm();
+		
+		updateDeletedTerm.setColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID));
+		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+		updateDeletedTerm.setValue(facultyId);
+		updateQueryTermList.add(updateDeletedTerm);
+
+		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
+		return result;
 	}
 	
 	private Integer addFaculty(Faculty faculty) throws SQLException{
@@ -390,22 +429,18 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
-	private Integer deleteFaculty(Integer userId) throws SQLException{
-		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(userId);
-		int facultyId = ufa.getFacultyId();
-		
+	private Integer deleteFaculty(Integer facultyId) throws SQLException{
 		String updateColumnName = Faculty.getColumnName(Faculty.Columns.DELETED);
-		
+
 		List<QueryTerm> updateQueryTermList = new ArrayList<>();
 		QueryTerm updateDeletedTerm = new QueryTerm();
-		
+
 		updateDeletedTerm.setColumnName(Faculty.getColumnName(Faculty.Columns.ID));
 		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
 		updateDeletedTerm.setValue(facultyId);
 		updateQueryTermList.add(updateDeletedTerm);
 
-		int result = facultyDao.update(updateColumnName, true, updateQueryTermList);
-		return result;
+		return facultyDao.update(updateColumnName, true, updateQueryTermList);
 	}
 
 	private Integer addCourseLoad(CourseLoad courseLoad) throws SQLException{

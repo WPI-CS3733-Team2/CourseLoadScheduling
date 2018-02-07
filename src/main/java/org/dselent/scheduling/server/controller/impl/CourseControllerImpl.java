@@ -97,7 +97,6 @@ public class CourseControllerImpl implements CourseController
 
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
 
 		String name = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NAME));
 		String number = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NUMBER));
