@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.controller;
 import java.util.Map;
 
 import org.dselent.scheduling.server.requests.CreateCourse;
+import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.SearchCourse;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ public interface CourseController
 	@RequestMapping(method=RequestMethod.POST, value=SearchCourse.REQUEST_NAME)
 	public ResponseEntity<String> searchCourse(@RequestBody Map<String, String> request) throws Exception;
 
+	@RequestMapping(method=RequestMethod.POST, value=DeleteCourse.REQUEST_NAME)
+	public ResponseEntity<String> deleteCourse(@RequestBody Map<String, String> request) throws Exception;
 }
 
 	

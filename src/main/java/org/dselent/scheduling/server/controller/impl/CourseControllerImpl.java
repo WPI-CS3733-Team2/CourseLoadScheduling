@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.dselent.scheduling.server.controller.CourseController;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
+import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateCourse;
+import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.SearchCourse;
@@ -111,6 +113,29 @@ public class CourseControllerImpl implements CourseController
 
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.searchCourse(searchCourseDto));
 
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<String> deleteCourse(Map<String, String> request) throws Exception {
+		// Print is for testing purposes
+		System.out.println("controller reached");
+
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String number = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NUMBER));
+		String name = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NAME));
+		
+		DeleteCourseDto.Builder builder = DeleteCourseDto.builder();
+		DeleteCourseDto deleteCourseDto = builder.withName(name)
+		.withNumber(number)
+		.build();
+		
+		courseService.deleteCourse(deleteCourseDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
     	

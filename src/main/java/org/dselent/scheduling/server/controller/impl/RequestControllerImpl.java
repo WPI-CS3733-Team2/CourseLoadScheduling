@@ -65,7 +65,7 @@ public class RequestControllerImpl implements RequestController
 		.withData(data)
 		.build();
 		
-		requestService.createRequest(createRequestDto);
+		success.add(requestService.createRequest(createRequestDto));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -87,7 +87,7 @@ public class RequestControllerImpl implements RequestController
 		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
 		.build();*/
 				
-		requestService.viewRequestHistory(Integer.parseInt(facultyId));
+		success.add(requestService.viewRequestHistory(Integer.parseInt(facultyId)));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -110,7 +110,7 @@ public class RequestControllerImpl implements RequestController
 		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
 		.build();*/
 						
-		requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
+		success.add(requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState)));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -124,7 +124,7 @@ public class RequestControllerImpl implements RequestController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		
+		success.add(requestService.viewPendingRequests());
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
 		return new ResponseEntity<String>(response, HttpStatus.OK);
