@@ -46,7 +46,7 @@ public class RequestServiceImpl implements RequestService
 		request.setCourse(Integer.parseInt(dto.getCourse_id()));
 		request.setSection(Integer.parseInt(dto.getSection_id()));
 		request.setData(dto.getData());	
-		request.setState(3); //Should automatically be "pending"
+		request.setState(pendingInt()); //Should automatically be "pending"
 		//For now, coded as if 1=accepted,2=denied,and 3=pending
 		//May need another custom DAO to retrieve whatever row in the table is "pending"
 		
@@ -119,27 +119,7 @@ public class RequestServiceImpl implements RequestService
     public List<Request> viewPendingRequests() throws SQLException{
     	//First retrieves which row in the request state table corresponds to "pending," as this is likely
     	// to vary among group members
-    	String selectColumnName0 = RequestState.getColumnName(RequestState.Columns.STATE);
-    	String selectData0 = "pending";
-    	
-    	List<QueryTerm> selectQueryTermList0 = new ArrayList<>();
-    	
-    	QueryTerm selectDataTerm0 = new QueryTerm();
-    	selectDataTerm0.setColumnName(selectColumnName0);
-    	selectDataTerm0.setComparisonOperator(ComparisonOperator.EQUAL);
-    	selectDataTerm0.setValue(selectData0);
-    	selectQueryTermList0.add(selectDataTerm0);
-    	
-    	List<String> selectColumnNameList0 = RequestState.getColumnNameList();
-    	
-    	List<Pair<String, ColumnOrder>> orderByList0 = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
-    	orderByList0.add(orderPair0);
-    	
-		//@SuppressWarnings("unused")
-		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0, selectQueryTermList0, orderByList0);
-		
-    	Integer pending = selectedRequestStateList.get(0).getId();
+    	Integer pending = pendingInt();
     	//Integer pending = 3;
     	String selectColumnName = Request.getColumnName(Request.Columns.STATE);
     	Integer selectData = pending;
@@ -164,6 +144,30 @@ public class RequestServiceImpl implements RequestService
 		//For testing
 		//System.out.println(selectedRequestList);
 		return selectedRequestList;
+    }
+    
+    private Integer pendingInt() throws SQLException{
+    	String selectColumnName0 = RequestState.getColumnName(RequestState.Columns.STATE);
+    	String selectData0 = "pending";
+    	
+    	List<QueryTerm> selectQueryTermList0 = new ArrayList<>();
+    	
+    	QueryTerm selectDataTerm0 = new QueryTerm();
+    	selectDataTerm0.setColumnName(selectColumnName0);
+    	selectDataTerm0.setComparisonOperator(ComparisonOperator.EQUAL);
+    	selectDataTerm0.setValue(selectData0);
+    	selectQueryTermList0.add(selectDataTerm0);
+    	
+    	List<String> selectColumnNameList0 = RequestState.getColumnNameList();
+    	
+    	List<Pair<String, ColumnOrder>> orderByList0 = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
+    	orderByList0.add(orderPair0);
+    	
+		//@SuppressWarnings("unused")
+		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0, selectQueryTermList0, orderByList0);
+		
+    	return selectedRequestStateList.get(0).getId();
     }
     
 }
