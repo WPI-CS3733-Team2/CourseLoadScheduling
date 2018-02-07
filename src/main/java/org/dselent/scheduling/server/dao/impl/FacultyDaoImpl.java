@@ -46,10 +46,7 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 	    		addObjectValue(keyMap, keyHolderColumnName, facultyModel);
 	    }
 	    
-	    //List<Map<String,Object>> returnMap= keyHolder.getKeyList();
-	   
-	    	return (int)keyMap.get("id");
-	    //eturn id;
+	    return rowsAffected;
 	}
 
 	@Override

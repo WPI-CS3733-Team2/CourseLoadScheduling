@@ -59,8 +59,8 @@ public class CourseLoadDaoImpl extends BaseDaoImpl<CourseLoad> implements Course
 	    	addObjectValue(keyMap, keyHolderColumnName, courseLoadModel);
 	    }
 	    	 
-	    return (int)keyMap.get("id");
-	    //return rowsAffected;
+	    //return (int)keyMap.get("id");
+	    return rowsAffected;
 		
 	}
 	

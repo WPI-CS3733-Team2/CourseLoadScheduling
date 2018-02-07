@@ -59,7 +59,8 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 	    	addObjectValue(keyMap, keyHolderColumnName, userModel);
 	    }
 	    	    
-	    return (int)keyMap.get("id");
+	    //return (int)keyMap.get("id");
+	    return rowsAffected;
 		
 	}
 	

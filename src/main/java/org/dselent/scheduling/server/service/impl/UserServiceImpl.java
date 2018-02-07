@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService {
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
 
 		rowsAffectedList.add(usersDao.insert(user, userInsertColumnNameList, userKeyHolderColumnNameList));
+		//int userId = user.getId();
 
 
 		UsersRolesLink usersRolesLink = new UsersRolesLink();
@@ -124,19 +125,25 @@ public class UserServiceImpl implements UserService {
 		usersRolesLinksKeyHolderColumnNameList.add(UsersRolesLink.getColumnName(UsersRolesLink.Columns.CREATED_AT));
 		usersRolesLinksKeyHolderColumnNameList.add(UsersRolesLink.getColumnName(UsersRolesLink.Columns.DELETED));
 
-		int userId = usersRolesLinksDao.insert(usersRolesLink, usersRolesLinksInsertColumnNameList,
-				usersRolesLinksKeyHolderColumnNameList);
-		rowsAffectedList.add(userId);
+		
+		rowsAffectedList.add(usersRolesLinksDao.insert(usersRolesLink, usersRolesLinksInsertColumnNameList,
+				usersRolesLinksKeyHolderColumnNameList));
+		
+		
 		
 		
 		//If role is faculty, add faculty&association
 		if(dto.getRoleId() == 0) {
-			int facultyId = addFaculty(dto.getRank());
-			rowsAffectedList.add(facultyId);
-			rowsAffectedList.add(addUFA(facultyId, userId));
-			int courseLoadId = addCourseLoad();
-			rowsAffectedList.add(courseLoadId);
-			rowsAffectedList.add(addCourseLoadAssociation(courseLoadId, facultyId));
+			
+			Faculty faculty = new Faculty();
+			faculty.setRank(dto.getRank());
+			rowsAffectedList.add( addFaculty(faculty));
+			
+			rowsAffectedList.add(addUFA(faculty.getId(), user.getId()));
+			
+			CourseLoad courseLoad  = new CourseLoad();
+			rowsAffectedList.add(addCourseLoad(courseLoad));
+			rowsAffectedList.add(addCourseLoadAssociation(courseLoad.getId(), faculty.getId()));
 		}
 
 		return rowsAffectedList;
@@ -170,9 +177,8 @@ public class UserServiceImpl implements UserService {
 		return rowsAffectedList;
 	}
 	
-	private Integer addFaculty(int rank) throws SQLException{
-		Faculty faculty = new Faculty();
-		faculty.setRank(rank);
+	private Integer addFaculty(Faculty faculty) throws SQLException{
+		
 		
 		List<String> facultyInsertColumnNameList = new ArrayList<>();
 		List<String> facultyKeyHolderColumnNameList = new ArrayList<>();
@@ -184,8 +190,8 @@ public class UserServiceImpl implements UserService {
 		facultyKeyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.DELETED));
 		facultyKeyHolderColumnNameList.add(Faculty.getColumnName(Faculty.Columns.CREATED_AT));
 		
-		int facultyId = facultyDao.insert(faculty, facultyInsertColumnNameList, facultyKeyHolderColumnNameList);
-		return facultyId;
+		return facultyDao.insert(faculty, facultyInsertColumnNameList, facultyKeyHolderColumnNameList);
+		//return facultyId;
 	}
 	
 
@@ -238,8 +244,7 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	private Integer addCourseLoad() throws SQLException{
-		CourseLoad courseLoad = new CourseLoad();
+	private Integer addCourseLoad(CourseLoad courseLoad) throws SQLException{
 		courseLoad.setAmount(0);
 		
 		List<String> insertColumnNameList = new ArrayList<>();
