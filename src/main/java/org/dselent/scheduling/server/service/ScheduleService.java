@@ -3,8 +3,9 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.dselent.scheduling.server.dto.RegisterUserDto;
-import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.dto.CreateScheduleDto;
+import org.dselent.scheduling.server.dto.ViewScheduleDto;
+import org.dselent.scheduling.server.model.Schedule;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,5 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ScheduleService
 {
-	
+	public int create(CreateScheduleDto createScheduleDto) throws SQLException;
+	public void view(ViewScheduleDto viewScheduleDto) throws SQLException;
 }
