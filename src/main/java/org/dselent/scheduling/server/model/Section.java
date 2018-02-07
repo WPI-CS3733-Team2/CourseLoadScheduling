@@ -25,7 +25,8 @@ public class Section extends Model
 		COURSE_ID,
 		CALENDAR_ID,
 		SCHEDULE_ID,
-		CREATED_AT
+		CREATED_AT,
+		DELETED
 	}
 	
 	// enum list
@@ -50,6 +51,8 @@ public class Section extends Model
 		COLUMN_TYPE_MAP.put(Columns.CALENDAR_ID, JDBCType.INTEGER);
 		COLUMN_TYPE_MAP.put(Columns.SCHEDULE_ID, JDBCType.INTEGER);
 		COLUMN_TYPE_MAP.put(Columns.CREATED_AT, JDBCType.TIMESTAMP_WITH_TIMEZONE);
+		COLUMN_TYPE_MAP.put(Columns.DELETED, JDBCType.BOOLEAN);
+		
 	};
 	
 	// attributes
@@ -63,9 +66,11 @@ public class Section extends Model
 	private Integer calendarId;
 	private Integer scheduleId;
 	private Instant createdAt;
+	private Boolean deleted;
 
 	// methods
 		
+	
 	public static JDBCType getColumnType(Columns column)
 	{
 		return COLUMN_TYPE_MAP.get(column);
@@ -89,6 +94,14 @@ public class Section extends Model
 	}
 	
 	//
+	
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 	
 	public Integer getId()
 	{
@@ -341,6 +354,8 @@ public class Section extends Model
 		builder.append(scheduleId);			
 		builder.append(", createdAt=");
 		builder.append(createdAt);
+		builder.append(", deleted=");
+		builder.append(deleted);
 		builder.append("]");
 		return builder.toString();
 	}

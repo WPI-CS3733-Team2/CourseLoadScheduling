@@ -225,6 +225,7 @@ CREATE TABLE public.sections
     calendar_id integer NOT NULL REFERENCES calendar(id),
     schedule_id integer NULL,
     created_at timestamp without time zone NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+    deleted boolean NOT NULL DEFAULT(FALSE),
     CONSTRAINT FK_schedule_id FOREIGN KEY (schedule_id) REFERENCES schedule(id)
     --CONSTRAINT sections_pkey PRIMARY KEY (id),
     -- CONSTRAINT sections_course_id_fkey FOREIGN KEY (course_id)
