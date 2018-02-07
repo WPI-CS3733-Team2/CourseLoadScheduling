@@ -44,7 +44,7 @@ public class UsersControllerImpl implements UsersController
 	public ResponseEntity<String> register(@RequestBody Map<String, String> request) throws Exception 
     {
     	// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("register controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
@@ -114,7 +114,7 @@ public class UsersControllerImpl implements UsersController
 		.withNewPassword(newPassword)
 		.build();
 		
-		userService.ChangePassword(passwordModificationDto);
+		userService.changePassword(passwordModificationDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -144,7 +144,7 @@ public class UsersControllerImpl implements UsersController
 		.withEmail(email)
 		.build();
 		
-		userService.SearchUser(userSearchDto);
+		userService.searchUser(userSearchDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);

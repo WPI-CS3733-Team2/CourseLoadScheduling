@@ -35,7 +35,6 @@ public class UserSearchDto
 		// making claim that at least of one should have value... or not. It depends
 //		if(this.wpiId == null || this.userName == null || this.firstName == null || this.lastName == null || this.email == null) {
 //			throw new IllegalStateException("The search variables cannot be null.");
-		}
 	}
 	
 	public String getWpiId() {
