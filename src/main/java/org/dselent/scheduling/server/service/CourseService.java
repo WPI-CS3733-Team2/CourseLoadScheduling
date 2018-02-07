@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.dselent.scheduling.server.dto.CreateCourseDto;
+import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.model.Course;
@@ -22,5 +23,6 @@ public interface CourseService
 	public List<Integer> createCourse(CreateCourseDto createCourseDto) throws SQLException;
 	public void modifyCourse(ModifyCourseDto modifyCourseDto) throws SQLException;
 	public List<Course> searchCourse(SearchCourseDto searchCourseDto) throws SQLException;
+	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException;
 
 }
