@@ -2,8 +2,6 @@ package org.dselent.scheduling.server.dto;
 
 import javax.annotation.Generated;
 
-import org.dselent.scheduling.server.dto.LoginUserDto.Builder;
-
 /**
  * DTO = Data Transfer Object
  * Used to package/wrap several variables into a single object

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.UsersController;
-import org.dselent.scheduling.server.dto.LoginUserDto;
 import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
@@ -74,6 +73,8 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
+	
+	
 	@Override
 	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
 		Integer id = (Integer) request.get("id");
@@ -84,6 +85,7 @@ public class UsersControllerImpl implements UsersController
 		
 	}
 
+	
 	
 	public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception 
     {
@@ -96,18 +98,14 @@ public class UsersControllerImpl implements UsersController
 		
 		String userName = request.get(Login.getBodyName(Login.BodyKey.USER_NAME));
 		String password = request.get(Login.getBodyName(Login.BodyKey.PASSWORD));
-
-
-		LoginUserDto.Builder builder = LoginUserDto.builder();
-		LoginUserDto loginUserDto = builder.withUserName(userName)
-		.withPassword(password)
-		.build();
 		
-		userService.loginUser(loginUserDto);
+		userService.loginUser(userName, password);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+	
+	
 	
 	public ResponseEntity<String> passwordModification(@RequestBody Map<String, String> request) throws Exception 
     {
@@ -118,18 +116,11 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String userName = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.USER_NAME));
+		String id = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
 		String oldPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
 		String newPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
-
-
-		PasswordModificationDto.Builder builder = PasswordModificationDto.builder();
-		PasswordModificationDto passwordModificationDto = builder.withUserName(userName)
-		.withOldPassword(oldPassword)
-		.withNewPassword(newPassword)
-		.build();
 		
-		userService.changePassword(passwordModificationDto);
+		userService.changePassword(id, oldPassword, newPassword);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);

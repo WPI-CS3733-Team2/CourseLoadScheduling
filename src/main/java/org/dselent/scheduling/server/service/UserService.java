@@ -3,7 +3,6 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.dselent.scheduling.server.dto.LoginUserDto;
 import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
@@ -32,7 +31,7 @@ public interface UserService
 
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
-    public boolean loginUser(LoginUserDto loginUserDto) throws SQLException;
+    public boolean loginUser(String input_userName, String input_password) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
@@ -41,7 +40,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public int changePassword(PasswordModificationDto dto) throws SQLException;
+    public int changePassword(String input_id, String input_oldPassword, String input_newPassword) throws SQLException;
 	/**
 	 * check if the old password match existing one under certain user, 
 	 * and update the new password to old one in the database
