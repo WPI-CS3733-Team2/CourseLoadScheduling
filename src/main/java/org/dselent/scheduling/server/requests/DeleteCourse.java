@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author dselent
  *
  */
-public class ViewSchedule
+public class DeleteCourse
 {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "view_schedule";
+	public static final String REQUEST_NAME = "delete_course";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -28,12 +28,13 @@ public class ViewSchedule
 	
 	public static enum ParameterKey
 	{
-		SCHEDULE_NAME;
+
 	}
 	
 	public static enum BodyKey
 	{
-
+		NUMBER,
+		NAME,
 	}
 	
 
@@ -61,7 +62,7 @@ public class ViewSchedule
 		
 	};
 	
-	private ViewSchedule()
+	private DeleteCourse()
 	{
 		
 	};

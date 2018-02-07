@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.dselent.scheduling.server.controller.CourseController;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
+import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateCourse;
+import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.SearchCourse;
@@ -35,6 +37,7 @@ public class CourseControllerImpl implements CourseController
 	@Autowired
     private CourseService courseService;
 	
+	@Override
 	public ResponseEntity<String> createCourse(@RequestBody Map<String, String> request) throws Exception 
     {
     	// Print is for testing purposes
@@ -61,7 +64,7 @@ public class CourseControllerImpl implements CourseController
     }
 
 	@Override
-	public ResponseEntity<String> modifyCourse(Map<String, String> request) throws Exception {
+	public ResponseEntity<String> modifyCourse(@RequestBody Map<String, String> request) throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
@@ -73,7 +76,7 @@ public class CourseControllerImpl implements CourseController
 		String number = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.NUMBER));
 		String frequency = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.FREQUENCY));
 		String id = request.get(ModifyCourse.getBodyName(ModifyCourse.BodyKey.ID));
-
+		
 		ModifyCourseDto.Builder builder = ModifyCourseDto.builder();
 		ModifyCourseDto modifyCourseDto = builder.withName(name)
 				.withNumber(number)
@@ -88,13 +91,12 @@ public class CourseControllerImpl implements CourseController
 	}
 
 	@Override
-	public ResponseEntity<String> searchCourse(Map<String, String> request) throws Exception {
+	public ResponseEntity<String> searchCourse(@RequestBody Map<String, String> request) throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
 
 		String name = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NAME));
 		String number = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NUMBER));
@@ -102,15 +104,37 @@ public class CourseControllerImpl implements CourseController
 		String id = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.ID));
 
 		SearchCourseDto.Builder builder = SearchCourseDto.builder();
-		SearchCourseDto modifyCourseDto = builder.withName(name)
+		SearchCourseDto searchCourseDto = builder.withName(name)
 				.withNumber(number)
 				.withFrequency(frequency)
 				.withId(id)
 				.build();
 
-		courseService.searchCourse(modifyCourseDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.searchCourse(searchCourseDto));
 
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<String> deleteCourse(Map<String, String> request) throws Exception {
+		// Print is for testing purposes
+		System.out.println("controller reached");
+
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String number = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NUMBER));
+		String name = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NAME));
+		
+		DeleteCourseDto.Builder builder = DeleteCourseDto.builder();
+		DeleteCourseDto deleteCourseDto = builder.withName(name)
+		.withNumber(number)
+		.build();
+		
+		courseService.deleteCourse(deleteCourseDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
     	

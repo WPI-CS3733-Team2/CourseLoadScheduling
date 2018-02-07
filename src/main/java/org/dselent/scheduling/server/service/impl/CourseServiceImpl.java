@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
+import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
@@ -69,7 +70,7 @@ public class CourseServiceImpl implements CourseService
         Course courseToModify = coursesDao.findById(Integer.parseInt(dto.getId()));	
 		
         List<QueryTerm> queryTermList = new ArrayList<>();
-		String queryColumnName = Course.getColumnName(Course.Columns.NAME);
+		String queryColumnName = Course.getColumnName(Course.Columns.ID);
 		QueryTerm idTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseToModify.getId(), null);
 		queryTermList.add(idTerm);
 		
@@ -94,44 +95,47 @@ public class CourseServiceImpl implements CourseService
 	@Override
 	public List<Course> searchCourse(SearchCourseDto dto) throws SQLException {
 		
-    	Course course = new Course();
-		course.setName(dto.getName());
-		course.setNumber(dto.getNumber());
-		course.setFrequency(Integer.parseInt(dto.getFrequency()));										//
+		String name = dto.getName();
+		String number = dto.getNumber();
+		String frequency = dto.getFrequency();										
     	
 		List<String> courseColumnNameList = new ArrayList<>();
-    	List<String> courseKeyHolderColumnNameList = new ArrayList<>();
     	
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.NAME));		//
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.FREQUENCY));
-    	
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.ID));
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.CREATED_AT));
-    	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.UPDATED_AT));
-    	
+		courseColumnNameList.addAll(Course.getColumnNameList());
+		
     	List<QueryTerm> queryTermList = new ArrayList<>();
+    	boolean firstTerm = true;
     	
-    	if (course.getName() != null) {
+    	if (name != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getName(), LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
-    	if (course.getNumber() != null) {
+    	if (number != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getNumber(), LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
-    	if (course.getFrequency() != null) {
+    	if (frequency != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getFrequency(), LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
+    	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Course.Columns.NUMBER, ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.NUMBER), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	List<Course> selectedCourses = new ArrayList<Course>();
@@ -139,5 +143,23 @@ public class CourseServiceImpl implements CourseService
     			
 		return selectedCourses;
     }
+
+	@Override
+	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException {
+		int rowAffected;
+		
+		Course course = new Course();
+		course.setName(deleteCourseDto.getName());
+		course.setNumber(deleteCourseDto.getNumber());
+		
+		List<String> insertColumnNameList = new ArrayList<>();
+		List<String> keyHolderColumnNameList = new ArrayList<>();
+		
+		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
+		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
+		
+		rowAffected = coursesDao.insert(course, insertColumnNameList, keyHolderColumnNameList);
+		return rowAffected;
+	}
     
 }
