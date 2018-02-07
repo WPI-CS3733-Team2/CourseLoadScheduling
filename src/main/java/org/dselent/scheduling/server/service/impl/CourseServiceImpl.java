@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
+import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
@@ -139,5 +140,23 @@ public class CourseServiceImpl implements CourseService
     			
 		return selectedCourses;
     }
+
+	@Override
+	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException {
+		int rowAffected;
+		
+		Course course = new Course();
+		course.setName(deleteCourseDto.getName());
+		course.setNumber(deleteCourseDto.getNumber());
+		
+		List<String> insertColumnNameList = new ArrayList<>();
+		List<String> keyHolderColumnNameList = new ArrayList<>();
+		
+		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
+		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
+		
+		rowAffected = coursesDao.insert(course, insertColumnNameList, keyHolderColumnNameList);
+		return rowAffected;
+	}
     
 }
