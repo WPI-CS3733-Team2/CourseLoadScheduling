@@ -17,6 +17,10 @@ public interface UsersController
     
     @RequestMapping(method=RequestMethod.POST, value="delete")
     public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception;
+    
+    public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception;
+    public ResponseEntity<String> passwordModification(@RequestBody Map<String, String> request) throws Exception;
+    public ResponseEntity<String> userSearch(@RequestBody Map<String, String> request) throws Exception;
 }
 
 	

@@ -10,10 +10,14 @@ import org.dselent.scheduling.server.dao.FacultyDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
+import org.dselent.scheduling.server.dto.LoginUserDto;
+import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.CourseLoadAssociation;
 import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.UserService;
@@ -25,8 +29,11 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.dselent.scheduling.server.model.UserFacultyAssociation;;
-
+import org.dselent.scheduling.server.model.UserFacultyAssociation;
+import org.dselent.scheduling.server.sqlutils.ColumnOrder;
+import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
+import org.dselent.scheduling.server.sqlutils.LogicalOperator;
+import org.dselent.scheduling.server.sqlutils.QueryTerm;
 
 
 @Service
@@ -149,9 +156,101 @@ public class UserServiceImpl implements UserService {
 		return rowsAffectedList;
 	}
 
+	
+    
+    
+    // LoginUserDto --> Boolean
+    /*TODO: The login function should do this:
+	 * Find the user by User name.
+	 * If the userName doesn't exist, return false;
+	 * If the userName can be found, then check if the password is matched
+	 * If yes, return true; otherwise, return false.
+	 */
 
 	@Override
-	public User loginUser(String userName, String password)
+	public boolean loginUser(LoginUserDto dto) throws SQLException
+	{
+		
+		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_Password = dto.getPassword();
+		User selectedUser = null;
+		selectedUser = usersDao.findByUserName(input_userName);
+		
+		if(selectedUser == null)
+		{
+			// debugging message
+			System.out.println("The username does not exist.");
+			return false;
+		}
+		else if (input_Password == selectedUser.getEncryptedPassword()){
+			return true;
+		} 
+		else 
+		{
+			// debugging message
+			System.out.println("The password is wrong.");
+			return false;
+		}
+	}
+    
+    
+    // LoginUserDto --> int
+    /*TODO: The changePassword function should do this:
+	 * Find the user by user name.
+	 * If the userName doesn't exist, return -1 and report error;
+	 * 		If the userName can be found, then check if the input old password is matched with existed old password
+	 * 			If yes, replace the new password with existed new password and return rowsAffected. 
+	 * 			If not, return -1 and report error.
+	 */
+    @Transactional
+	@Override
+	public int changePassword(PasswordModificationDto dto) throws SQLException
+	{
+		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_OldPassword = dto.getOldPassword();
+		String input_NewPassword = dto.getNewPassword();
+		User selectedUser = null;
+		selectedUser = usersDao.findByUserName(input_userName);
+		
+		if(selectedUser == null)
+		{
+			// debugging message
+			System.out.println("The username does not exist.");
+			return -1;
+		}
+		else if (input_OldPassword != selectedUser.getEncryptedPassword()){
+			// debugging message
+			System.out.println("The old password is wrong.");
+			return -1;
+		} 
+		else 
+		{
+			//pack the query terms first (only one query term)
+			List<QueryTerm> queryTermList = new ArrayList<>();
+			String queryColumnName = User.getColumnName(User.Columns.USER_NAME);
+			QueryTerm userNameTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_userName, null);
+			queryTermList.add(userNameTerm);
+			
+			// Update the new password.
+			String updateColumnName = User.getColumnName(User.Columns.ENCRYPTED_PASSWORD);
+			int rowsAffected = usersDao.update(updateColumnName, input_NewPassword, queryTermList);
+			
+			return rowsAffected;
+		}
+	}
+    
+ // LoginUserDto --> List<User>
+    /*TODO: The searchUser function should do this:
+	 * 1. Read the input: wpiID, userName, firstName, lastName, and email;
+	 * 2. pack the columnNameList: allColumnNameList;
+	 * 3. pack the input variables to queryTermList;
+	 * 4. pack the orderByList using sorting order: <LastName, Asc>
+	 */
+    @Transactional
+	@Override
+	public List<User> searchUser(UserSearchDto dto) throws SQLException
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -193,7 +292,7 @@ public class UserServiceImpl implements UserService {
 		return facultyDao.insert(faculty, facultyInsertColumnNameList, facultyKeyHolderColumnNameList);
 		//return facultyId;
 	}
-	
+
 
 	private Integer addUFA(int facultyId, int userId) throws SQLException{
 		UserFacultyAssociation ufa = new UserFacultyAssociation();
@@ -278,4 +377,6 @@ public class UserServiceImpl implements UserService {
 		
 		return courseLoadAssociationDao.insert(cla, insertColumnNameList, keyHolderColumnNameList);
 	}
+
+
 }

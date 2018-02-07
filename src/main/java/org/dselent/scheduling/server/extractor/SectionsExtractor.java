@@ -33,6 +33,7 @@ public class SectionsExtractor extends Extractor<List<Section>>
 			result.setCalendarId(rs.getInt(Section.getColumnName(Section.Columns.CALENDAR_ID)));
 			result.setScheduleId(rs.getInt(Section.getColumnName(Section.Columns.SCHEDULE_ID)));
 			result.setCreatedAt(rs.getTimestamp(Section.getColumnName(Section.Columns.CREATED_AT)));
+			result.setDeleted(rs.getBoolean(Section.getColumnName(Section.Columns.DELETED)));
 		
 			resultList.add(result);
 		}

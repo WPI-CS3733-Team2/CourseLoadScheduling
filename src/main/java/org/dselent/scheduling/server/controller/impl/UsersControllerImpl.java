@@ -5,9 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.UsersController;
+import org.dselent.scheduling.server.dto.LoginUserDto;
+import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
+import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.requests.Login;
+import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
+import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +44,7 @@ public class UsersControllerImpl implements UsersController
 	public ResponseEntity<String> register(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("register controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
@@ -67,6 +73,7 @@ public class UsersControllerImpl implements UsersController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+<<<<<<< HEAD
 
 	@Override
 	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
@@ -77,6 +84,88 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
 	}
+=======
+	
+	public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("login controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String userName = request.get(Login.getBodyName(Login.BodyKey.USER_NAME));
+		String password = request.get(Login.getBodyName(Login.BodyKey.PASSWORD));
+
+
+		LoginUserDto.Builder builder = LoginUserDto.builder();
+		LoginUserDto loginUserDto = builder.withUserName(userName)
+		.withPassword(password)
+		.build();
+		
+		userService.loginUser(loginUserDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
+	public ResponseEntity<String> passwordModification(@RequestBody Map<String, String> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("passwordModification controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String userName = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.USER_NAME));
+		String oldPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
+		String newPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
+
+
+		PasswordModificationDto.Builder builder = PasswordModificationDto.builder();
+		PasswordModificationDto passwordModificationDto = builder.withUserName(userName)
+		.withOldPassword(oldPassword)
+		.withNewPassword(newPassword)
+		.build();
+		
+		userService.changePassword(passwordModificationDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
+	public ResponseEntity<String> userSearch(@RequestBody Map<String, String> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("userSearch controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String wpiId = request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
+		String userName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
+		String firstName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME));
+		String lastName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME));
+		String email = request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));
+
+
+		UserSearchDto.Builder builder = UserSearchDto.builder();
+		UserSearchDto userSearchDto = builder.withWpiId(wpiId)
+		.withUserName(userName)
+		.withFirstName(firstName)
+		.withLastName(lastName)
+		.withEmail(email)
+		.build();
+		
+		userService.searchUser(userSearchDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+>>>>>>> 403e7f9fecd3d5e5279324c7a65cd2d9285704d4
 }
 
 	
