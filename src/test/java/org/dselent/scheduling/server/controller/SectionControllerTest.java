@@ -3,6 +3,9 @@ package org.dselent.scheduling.server.controller;
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.CreateSection;
 import org.dselent.scheduling.server.requests.RemoveSection;
+import org.dselent.scheduling.server.requests.ModifySectionCalendar;
+import org.dselent.scheduling.server.requests.ModifySectionSchedule;
+import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,6 +75,7 @@ public class SectionControllerTest
         
     }*/
     
+	/*
 	@Test
 	public void testSectionController() throws Exception
     
@@ -85,6 +89,74 @@ public class SectionControllerTest
     	// System.out.println(jsonString);
     	
         this.mockMvc.perform(post("/section/remove_section").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }*/
+	
+	/*@Test
+	public void testSectionController() throws Exception
+    {
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID), "108");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR), "2018");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER), "B");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS), "TR");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME), "0800");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME), "1000");
+    	
+    	String jsonString = jsonObject.toString();
+        
+    	// System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/section/modify_section_calendar").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }*/
+	/*@Test
+	public void testSectionController() throws Exception
+    {
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID), "108");
+    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID), "9");
+    	
+    	String jsonString = jsonObject.toString();
+        
+    	// System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/section/modify_section_schedule").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }*/
+	@Test
+	public void testSectionController() throws Exception
+    {
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID), "108");
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE), "lecture");
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME), "X04");
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION), "20");
+    	
+    	
+    	String jsonString = jsonObject.toString();
+        
+    	// System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/section/modify_section_type_name_pop").content(jsonString)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .characterEncoding("utf-8"))
         .andDo(MockMvcResultHandlers.print())
