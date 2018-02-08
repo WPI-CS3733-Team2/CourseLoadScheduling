@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.UsersController;
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -74,10 +74,12 @@ public class UsersControllerImpl implements UsersController
 	
 	
 	@Override
-	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
-		Integer id = (Integer) request.get("id");
-		userService.deleteUser(id);
+	public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception {
+		//System.out.println(request);
+		Integer id = (int) request.get(DeleteUser.getBodyName(DeleteUser.BodyKey.ID));
 		List<Object> success = new ArrayList<Object>();
+		//System.out.println("controller Impl: " + request.get(DeleteUser.getBodyName(DeleteUser.BodyKey.ID)));
+		userService.deleteUser(id);
 		String response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
@@ -97,7 +99,7 @@ public class UsersControllerImpl implements UsersController
 		String userName = request.get(Login.getBodyName(Login.BodyKey.USER_NAME));
 		String password = request.get(Login.getBodyName(Login.BodyKey.PASSWORD));
 		
-		userService.loginUser(userName, password);
+		success.add(userService.loginUser(userName, password));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -131,7 +133,7 @@ public class UsersControllerImpl implements UsersController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
 		String wpiId = request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
 		String userName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
@@ -148,8 +150,8 @@ public class UsersControllerImpl implements UsersController
 		.withEmail(email)
 		.build();
 		
-		userService.searchUser(userSearchDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(userSearchDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
