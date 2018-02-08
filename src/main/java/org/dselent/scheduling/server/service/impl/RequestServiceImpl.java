@@ -67,10 +67,8 @@ public class RequestServiceImpl implements RequestService {
 		return rowsAffectedList;
 	}
 
-	// Does this need to return a list of integers?
 	public List<Request> viewRequestHistory(Integer facultyId) throws SQLException {
-		// List<Integer> rowsReturnedList = new ArrayList<>();
-
+		
 		String selectColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
 		Integer selectData = facultyId;
 
