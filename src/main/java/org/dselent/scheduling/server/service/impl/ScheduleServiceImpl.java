@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.util.Pair;
 import org.dselent.scheduling.server.dao.ScheduleDao;
 import org.dselent.scheduling.server.dto.CreateScheduleDto;
 import org.dselent.scheduling.server.dto.ViewScheduleDto;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
@@ -49,7 +49,7 @@ public class ScheduleServiceImpl implements ScheduleService
 		return rowAffected;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Schedule> view(ViewScheduleDto viewScheduleDto) throws SQLException {
 		List<Schedule> affectedSchedules = new ArrayList<>();

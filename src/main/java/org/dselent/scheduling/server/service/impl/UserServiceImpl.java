@@ -174,13 +174,15 @@ public class UserServiceImpl implements UserService {
 		User selectedUser = null;
 		selectedUser = usersDao.findByUserName(input_userName);
 		
+
 		if(selectedUser == null)
 		{
 			// debugging message
 			System.out.println("The username does not exist.");
 			return false;
 		}
-		else if (input_password == selectedUser.getEncryptedPassword()){
+		else if (input_password.equals(selectedUser.getEncryptedPassword())){
+			System.out.println("Login successfully.");
 			return true;
 		} 
 		else 
@@ -202,17 +204,17 @@ public class UserServiceImpl implements UserService {
 	 */
     @Transactional
 	@Override
-	public int changePassword(String input_id, String input_OldPassword, String input_NewPassword) throws SQLException
+	public int changePassword(Object input_id, String input_OldPassword, String input_NewPassword) throws SQLException
 	{
 
-		User selectedUser = usersDao.findById(Integer.parseInt(input_id));
+		User selectedUser = usersDao.findById((int)input_id);
 		
 		if(selectedUser == null)
 		{
 			// debugging message
 			throw new SQLException("user ID is wrong.");
 		}
-		else if (input_OldPassword != selectedUser.getEncryptedPassword()){
+		else if (!input_OldPassword.equals(selectedUser.getEncryptedPassword())){
 			// debugging message
 			throw new SQLException("The old password is wrong.");
 		} 
@@ -312,11 +314,12 @@ public class UserServiceImpl implements UserService {
 		
 		// 4. create a sort list and pack sorting data
 		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> orderBy1 = new Pair(User.Columns.FIRST_NAME, ColumnOrder.ASC);
+		Pair<String, ColumnOrder> orderBy1 = new Pair<String, ColumnOrder>(User.getColumnName(User.Columns.FIRST_NAME), ColumnOrder.ASC);
 		orderByList.add(orderBy1);
 		
 		// return the selected users.
 		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
+		System.out.println(selectedUsers);
 		return selectedUsers;
 		
 	}

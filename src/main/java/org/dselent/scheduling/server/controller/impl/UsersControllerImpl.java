@@ -107,7 +107,7 @@ public class UsersControllerImpl implements UsersController
 	
 	
 	
-	public ResponseEntity<String> passwordModification(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> passwordModification(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("passwordModification controller reached");
@@ -116,9 +116,9 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String id = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
-		String oldPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
-		String newPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
+		Object id = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
+		String oldPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
+		String newPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
 		
 		userService.changePassword(id, oldPassword, newPassword);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);

@@ -28,6 +28,7 @@ public class QueryPathConstants
 	private static String CALENDAR_OF_COURSE_PATH = BASE_QUERY_PATH + "GetCalendarsOfACourse" + SQL_EXTENSION;
 	private static String CALENDAR_OF_FACULTY_PATH = BASE_QUERY_PATH + "GetCalendarsOfAFaculty" + SQL_EXTENSION;
 	private static String FACULTIES_WITH_USER_WPI_ID_PATH = BASE_QUERY_PATH + "GetFacultiesWithUserWPIID" + SQL_EXTENSION;
+	private static String MATCH_DATE_CALENDAR_PATH = BASE_QUERY_PATH + "GetMatchDateCalendar" + SQL_EXTENSION; 
 
 
 	
@@ -43,6 +44,7 @@ public class QueryPathConstants
 	public static String CALENDAR_OF_COURSE_QUERY = readFile(CALENDAR_OF_COURSE_PATH);
 	public static String CALENDAR_OF_FACULTY_QUERY = readFile(CALENDAR_OF_FACULTY_PATH);
 	public static String FACULTIES_WITH_USER_WPI_ID_QUERY = readFile(FACULTIES_WITH_USER_WPI_ID_PATH);
+	public static String MATCH_DATE_CALENDAR_QUERY = readFile(MATCH_DATE_CALENDAR_PATH);
 
 	
 	private QueryPathConstants()

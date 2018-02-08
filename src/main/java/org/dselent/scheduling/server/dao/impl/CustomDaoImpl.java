@@ -117,4 +117,19 @@ public class CustomDaoImpl implements CustomDao
 	    return facultiesWithUserWPIIDList;
 	}
 	
+	@Override
+	public List<Calendar> getMatchDateCalendar(int year, String semester, String days, String start_time, String end_time){
+		CalendarExtractor extractor = new CalendarExtractor();
+		String queryTemplate = new String(QueryPathConstants.MATCH_DATE_CALENDAR_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("year", year);
+	    parameters.addValue("semester", semester);
+	    parameters.addValue("days", days);
+	    parameters.addValue("start_time", start_time);
+	    parameters.addValue("end_time", end_time);
+	    List<Calendar> calendarMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    
+	    return calendarMatchList;
+	}
+	
 }

@@ -2,7 +2,9 @@ package org.dselent.scheduling.server.controller;
 
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.Login;
+import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
+import org.dselent.scheduling.server.requests.UserSearch;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,11 +69,12 @@ public class UsersControllerTest
         //.andExpect(content().contentType("application/json"));
          */
     	
+    	/*
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(Login.getBodyName(Login.BodyKey.USER_NAME), "cew");
-    	jsonObject.put(Login.getBodyName(Login.BodyKey.PASSWORD), "cew");
+    	jsonObject.put(Login.getBodyName(Login.BodyKey.PASSWORD), "22");
     	String jsonString = jsonObject.toString();
-        
+    	
     	System.out.println(jsonString);
     	
         this.mockMvc.perform(post("/user/login").content(jsonString)
@@ -80,6 +83,42 @@ public class UsersControllerTest
         .andDo(MockMvcResultHandlers.print())
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
-        
+        */
+    	
+    	/*
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(PasswordModification.getBodyName(PasswordModification.BodyKey.ID), 3);
+    	jsonObject.put(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD), "wer");
+    	jsonObject.put(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD), "josephbeck");
+    	String jsonString = jsonObject.toString();
+
+    	System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/user/change_password").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        */
+    	
+    	/*
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID), "3");
+    	jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME), "dselent");
+    	jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME), null);
+    	jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME), null);
+    	jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL), "cew@wpi.edu");
+    	String jsonString = jsonObject.toString();
+
+    	System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/user/search_user").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        */
     }
 }

@@ -28,4 +28,5 @@ public interface CustomDao
 	public List<Calendar> getCalendarsOfACourse(int course_id);
 	public List<Calendar> getCalendarsOfAFaculty(int faculty_id);
 	public List<Faculty> getFacultiesWithUserWPIID(String wpi_id);
+	public List<Calendar> getMatchDateCalendar(int year, String semester, String days, String start_time, String end_time);
 }

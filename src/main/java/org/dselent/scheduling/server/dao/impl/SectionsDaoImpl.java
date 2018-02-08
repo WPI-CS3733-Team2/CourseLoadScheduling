@@ -83,32 +83,6 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	    
 	    return sectionsList;
 	}
-
-	@Override
-	public Section findById(int id) throws SQLException
-	{
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.ID), false);
-		List<String> selectColumnNames = Section.getColumnNameList();
-		
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
-		queryTermList.add(idTerm);
-		
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
-		orderByList.add(order);
-		
-		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
-	
-	    Section section = null;
-	    
-	    if(!sectionsList.isEmpty())
-	    {
-	    	section = sectionsList.get(0);
-	    }
-	    
-	    return section;
-	}
 	
 	@Override
 	public int update(String columnName, Object newValue, List<QueryTerm> queryTermList)
@@ -262,6 +236,31 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	}
 
 
+	@Override
+	public Section findById(int id) throws SQLException {
+		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.ID), false);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+	
 	@Override
 	public Section findByCrn(int crn) throws SQLException {
 		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.CRN), false);
