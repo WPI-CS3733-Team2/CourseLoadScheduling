@@ -6,6 +6,7 @@ import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
+import org.dselent.scheduling.server.requests.ViewAccountDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,10 @@ public interface UsersController
     
     @RequestMapping(method=RequestMethod.POST, value=UserSearch.REQUEST_NAME)
     public ResponseEntity<String> userSearch(@RequestBody Map<String, String> request) throws Exception;
+    
+    @RequestMapping(method=RequestMethod.POST, value=ViewAccountDetails.REQUEST_NAME)
+	public ResponseEntity<String> viewAccountDetails(@RequestBody Map<String, String> request) throws Exception;
+
 }
 
 	

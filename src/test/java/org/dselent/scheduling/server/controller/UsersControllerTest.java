@@ -5,6 +5,7 @@ import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
+import org.dselent.scheduling.server.requests.ViewAccountDetails;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,17 +47,16 @@ public class UsersControllerTest
     @Test
     public void testUsersController() throws Exception
     {
-    	
     	/*
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "123");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password1");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt@wpi.edu");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), "1");
-    	jsonObject.put(Register.getBodyName(Register.BodyKey.ROLE_ID), 1);
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "testUser");
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "TU_first");
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "TU_last");
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "TU_password");
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "testuser@wpi.edu");
+    	jsonObject.put(Register.getBodyName(Register.BodyKey.DELETED), false);
+
     	String jsonString = jsonObject.toString();
         
     	System.out.println(jsonString);
@@ -68,6 +68,20 @@ public class UsersControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
          */
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(ViewAccountDetails.getBodyName(ViewAccountDetails.BodyKey.ID), 3);
+    	// jsonObject.put(ViewAccountDetails.getBodyName(ViewAccountDetails.BodyKey.ID), 300);
+    	String jsonString = jsonObject.toString();
+    	
+    	System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/user/details").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
     	
     	/*
     	JSONObject jsonObject = new JSONObject();

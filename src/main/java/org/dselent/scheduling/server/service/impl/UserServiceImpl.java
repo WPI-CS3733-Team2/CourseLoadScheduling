@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
 
-		rowsAffectedList.add(usersDao.insert(user, userInsertColumnNameList, userKeyHolderColumnNameList));
+;
 		//int userId = user.getId();
 
 
@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
 	
     
     
-    // LoginUserDto --> Boolean
+    // String, String --> Boolean
     /*TODO: The login function should do this:
 	 * Find the user by User name.
 	 * If the userName doesn't exist, return false;
@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
 	}
     
     
-    // LoginUserDto --> int
+    // int, String, String --> int
     /*TODO: The changePassword function should do this:
 	 * Find the user by id in user table.
 	 * If the id doesn't exist, return -1 and report error;
@@ -324,6 +324,36 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+    
+    // int --> User
+    /*TODO: The AccountDetails function should do this:
+	 * Find the user by id in user table.
+	 * If the id doesn't exist, throw exceptions
+	 * 		If the userName can be found, set the user's private info (Encrypted_password and salt) as null
+	 * 		And return the user with empty private info. 
+	 */
+    @Transactional
+	@Override
+	public User AccountDetails(String input_userId) throws SQLException
+	{
+
+		User selectedUser = usersDao.findById(Integer.parseInt(input_userId));
+		
+		if(selectedUser == null)
+		{
+			throw new SQLException("user ID is wrong.");
+		} 
+		else 
+		{
+			selectedUser.setEncryptedPassword(null);
+			selectedUser.setSalt(null);
+			
+			// for debugging
+			System.out.println(selectedUser);
+			return selectedUser;
+		}
+	}
+    
 	@Override
 	public List<Integer> deleteUser(Integer id) throws SQLException {
 		List<Integer> rowsAffectedList = new ArrayList<>();

@@ -3,7 +3,6 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.model.User;
@@ -53,6 +52,14 @@ public interface UserService
     /**
 	 * search the input variables: wpiID, userName, firstName, lastName and email,
 	 * and return the selected list of user matching those values of input variables.
+	 * @param UserSearchDto DTO container information for wpiID, userName, firstName, lastName and email
+	 * @return the list of user selected for select operation
+	 * @throws SQLException
+	 */
+    
+    public User AccountDetails(String user_id) throws SQLException;
+    /**
+	 * return the user with ID.
 	 * @param UserSearchDto DTO container information for wpiID, userName, firstName, lastName and email
 	 * @return the list of user selected for select operation
 	 * @throws SQLException

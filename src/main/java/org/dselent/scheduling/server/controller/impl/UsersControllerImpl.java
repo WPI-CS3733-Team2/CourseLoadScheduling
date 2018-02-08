@@ -13,6 +13,7 @@ import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
+import org.dselent.scheduling.server.requests.ViewAccountDetails;
 import org.dselent.scheduling.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,8 +56,6 @@ public class UsersControllerImpl implements UsersController
 		String lastName = (String) request.get(Register.getBodyName(Register.BodyKey.LAST_NAME));
 		String email = (String) request.get(Register.getBodyName(Register.BodyKey.EMAIL));
 		String password = (String) request.get(Register.getBodyName(Register.BodyKey.PASSWORD));
-		Integer roleId = (Integer) request.get(Register.getBodyName(Register.BodyKey.ROLE_ID)); 
-
 		RegisterUserDto.Builder builder = RegisterUserDto.builder();
 		RegisterUserDto registerUserDto = builder.withWPIid(wpiId)
 		.withUserName(userName)
@@ -64,7 +63,6 @@ public class UsersControllerImpl implements UsersController
 		.withLastName(lastName)
 		.withEmail(email)
 		.withPassword(password)
-		.withRoleId(roleId)
 		.build();
 		
 		userService.registerUser(registerUserDto);
@@ -151,6 +149,23 @@ public class UsersControllerImpl implements UsersController
 		.build();
 		
 		userService.searchUser(userSearchDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
+	public ResponseEntity<String> viewAccountDetails(@RequestBody Map<String, String> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("viewAccountDetails controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String user_id = request.get(ViewAccountDetails.getBodyName(ViewAccountDetails.BodyKey.ID));
+		
+		userService.AccountDetails(user_id);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
