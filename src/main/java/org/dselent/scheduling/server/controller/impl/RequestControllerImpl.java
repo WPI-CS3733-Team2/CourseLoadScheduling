@@ -80,12 +80,6 @@ public class RequestControllerImpl implements RequestController
 		List<Object> success = new ArrayList<Object>();
 				
 		String facultyId = request.get(ViewRequestHistory.getParameterName(ViewRequestHistory.ParameterKey.FACULTY_ID));
-		
-		//Since there's only one data value, this may not need a DTO.
-		//Maybe change later.
-		/*CreateRequestDto.Builder builder = CreateRequestDto.builder();
-		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
-		.build();*/
 				
 		success.add(requestService.viewRequestHistory(Integer.parseInt(facultyId)));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
@@ -103,12 +97,6 @@ public class RequestControllerImpl implements RequestController
 						
 		String requestId = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_ID));
 		String requestState = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_STATE));
-				
-		//Since there's only one data value, this may not need a DTO.
-		//Maybe change later.
-		/*CreateRequestDto.Builder builder = CreateRequestDto.builder();
-		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
-		.build();*/
 						
 		success.add(requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState)));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
