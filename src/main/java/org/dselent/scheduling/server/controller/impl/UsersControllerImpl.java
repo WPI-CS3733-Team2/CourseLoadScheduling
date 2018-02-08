@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.UsersController;
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -77,9 +77,9 @@ public class UsersControllerImpl implements UsersController
 	
 	@Override
 	public ResponseEntity<String> delete(Map<String, Object> request) throws Exception {
-		Integer id = (Integer) request.get("id");
-		userService.deleteUser(id);
+		Integer id = (Integer) request.get(DeleteUser.getBodyName(DeleteUser.BodyKey.ID));
 		List<Object> success = new ArrayList<Object>();
+		userService.deleteUser(id);
 		String response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		

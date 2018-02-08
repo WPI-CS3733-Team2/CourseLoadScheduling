@@ -2,6 +2,7 @@ package org.dselent.scheduling.server.controller;
 
 import java.util.Map;
 
+import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -18,7 +19,7 @@ public interface UsersController
     @RequestMapping(method=RequestMethod.POST, value=Register.REQUEST_NAME)
 	public ResponseEntity<String> register(@RequestBody Map<String, Object> request) throws Exception;
     
-    @RequestMapping(method=RequestMethod.POST, value="delete")
+    @RequestMapping(method=RequestMethod.POST, value=DeleteUser.REQUEST_NAME)
     public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception;
     
     @RequestMapping(method=RequestMethod.POST, value=Login.REQUEST_NAME)

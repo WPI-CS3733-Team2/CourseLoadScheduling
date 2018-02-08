@@ -3,8 +3,11 @@ package org.dselent.scheduling.server.controller.impl;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.CourseLoadController;
+import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.requests.SearchCourseLoad;
 import org.dselent.scheduling.server.service.CourseLoadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -30,9 +33,16 @@ public class CourseLoadControllerImpl implements CourseLoadController
 //	}
 
 	@Override
-	public ResponseEntity<String> detail(Map<String, Object> request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<String> search(Map<String, Object> request) throws Exception {
+		
+		System.out.println("Reach CourseLoad controller search function");
+		String response = "";
+		
+		Integer facultyId =(int) request.get(SearchCourseLoad.getBodyName(SearchCourseLoad.BodyKey.FACULTY_ID));
+
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseLoadService.searchCourseLoad(facultyId));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
     	
 }
