@@ -97,36 +97,45 @@ public class CourseServiceImpl implements CourseService
 		
 		String name = dto.getName();
 		String number = dto.getNumber();
-		String frequency = dto.getFrequency();										//
+		String frequency = dto.getFrequency();										
     	
 		List<String> courseColumnNameList = new ArrayList<>();
     	
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.NAME));		//
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
-    	courseColumnNameList.add(Course.getColumnName(Course.Columns.FREQUENCY));
-    	
+		courseColumnNameList.addAll(Course.getColumnNameList());
+		
     	List<QueryTerm> queryTermList = new ArrayList<>();
+    	boolean firstTerm = true;
     	
     	if (name != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
     	if (number != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
     	if (frequency != null) {
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.OR);
-			queryTerm.setLogicalOperator(null);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
 			queryTermList.add(queryTerm);
 		}
+    	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Course.Columns.NUMBER, ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.NUMBER), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	List<Course> selectedCourses = new ArrayList<Course>();
@@ -143,13 +152,29 @@ public class CourseServiceImpl implements CourseService
 		course.setName(deleteCourseDto.getName());
 		course.setNumber(deleteCourseDto.getNumber());
 		
-		List<String> insertColumnNameList = new ArrayList<>();
-		List<String> keyHolderColumnNameList = new ArrayList<>();
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		boolean firstTerm = true;
 		
-		insertColumnNameList.add(Course.getColumnName(Course.Columns.NAME));
-		insertColumnNameList.add(Course.getColumnName(Course.Columns.NUMBER));
+		if (course.getName() != null) {
+			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getName(), LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
+			queryTermList.add(queryTerm);
+		}
+    	if (course.getNumber() != null) {
+			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getNumber(), LogicalOperator.AND);
+			if(firstTerm) {
+				queryTerm.setLogicalOperator(null);
+				firstTerm = false;
+			}
+			queryTermList.add(queryTerm);
+		}
 		
-		rowAffected = coursesDao.insert(course, insertColumnNameList, keyHolderColumnNameList);
+		rowAffected = coursesDao.delete(queryTermList);
 		return rowAffected;
 	}
     

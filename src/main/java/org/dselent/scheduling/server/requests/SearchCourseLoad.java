@@ -6,17 +6,9 @@ import java.util.List;
 import org.dselent.scheduling.server.miscellaneous.RequestParameterConverter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Defines information for the login request including the keys for the
- * header, parameters, and body and the request type (RequestMethod).
- * 
- * @author dselent
- *
- */
-public class Login
-{
+public class SearchCourseLoad {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "login";
+	public static final String REQUEST_NAME = "search_courseLoad";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -33,11 +25,10 @@ public class Login
 	
 	public static enum BodyKey
 	{
-		USER_NAME,
-		PASSWORD;
+		FACULTY_ID
 	}
 	
-	
+
 	
 	static
 	{
@@ -62,7 +53,7 @@ public class Login
 		
 	};
 	
-	private Login()
+	private SearchCourseLoad()
 	{
 		
 	};

@@ -87,7 +87,7 @@ public class CourseLoadAssociationDaoImpl extends BaseDaoImpl<CourseLoadAssociat
 	@Override
 	public CourseLoadAssociation findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.ID), false);
+		String columnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.ID);
 		List<String> selectColumnNames = CourseLoadAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -230,7 +230,7 @@ public class CourseLoadAssociationDaoImpl extends BaseDaoImpl<CourseLoadAssociat
 
 	@Override
 	public CourseLoadAssociation findByFacultyId(int faculty_id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID), false);
+		String columnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID);
 		List<String> selectColumnNames = CourseLoadAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -256,7 +256,7 @@ public class CourseLoadAssociationDaoImpl extends BaseDaoImpl<CourseLoadAssociat
 
 	@Override
 	public CourseLoadAssociation findByCourseLoadId(int courseLoad_id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.COURSE_LOAD_ID), false);
+		String columnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.COURSE_LOAD_ID);
 		List<String> selectColumnNames = CourseLoadAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

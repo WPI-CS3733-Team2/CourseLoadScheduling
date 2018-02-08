@@ -3,8 +3,6 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.dselent.scheduling.server.dto.LoginUserDto;
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.model.User;
@@ -32,7 +30,7 @@ public interface UserService
 
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
-    public boolean loginUser(LoginUserDto loginUserDto) throws SQLException;
+    public boolean loginUser(String input_userName, String input_password) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
@@ -41,7 +39,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public int changePassword(PasswordModificationDto dto) throws SQLException;
+    public int changePassword(Object input_id, String input_oldPassword, String input_newPassword) throws SQLException;
 	/**
 	 * check if the old password match existing one under certain user, 
 	 * and update the new password to old one in the database
@@ -54,6 +52,14 @@ public interface UserService
     /**
 	 * search the input variables: wpiID, userName, firstName, lastName and email,
 	 * and return the selected list of user matching those values of input variables.
+	 * @param UserSearchDto DTO container information for wpiID, userName, firstName, lastName and email
+	 * @return the list of user selected for select operation
+	 * @throws SQLException
+	 */
+    
+    public User AccountDetails(String user_id) throws SQLException;
+    /**
+	 * return the user with ID.
 	 * @param UserSearchDto DTO container information for wpiID, userName, firstName, lastName and email
 	 * @return the list of user selected for select operation
 	 * @throws SQLException
