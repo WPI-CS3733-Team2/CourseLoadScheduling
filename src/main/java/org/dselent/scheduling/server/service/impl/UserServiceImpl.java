@@ -10,7 +10,6 @@ import org.dselent.scheduling.server.dao.FacultyDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.CourseLoadAssociation;
@@ -30,9 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.dselent.scheduling.server.model.UserFacultyAssociation;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
-import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.LogicalOperator;
-import org.dselent.scheduling.server.sqlutils.QueryTerm;
 
 
 @Service
@@ -107,9 +104,10 @@ public class UserServiceImpl implements UserService {
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.SALT));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE)); //
-		userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED)); //
+		//userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED)); //
 
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
+		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.DELETED));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
 
@@ -139,7 +137,7 @@ public class UserServiceImpl implements UserService {
 		
 		
 		//If role is faculty, add faculty&association
-		if(dto.getRoleId() == 0) {
+		if(dto.getRoleId() == 1) {
 			
 			Faculty faculty = new Faculty();
 			faculty.setRank(dto.getRank());
@@ -154,17 +152,6 @@ public class UserServiceImpl implements UserService {
 
 		return rowsAffectedList;
 	}
-
-	
-    
-    
-    // LoginUserDto --> Boolean
-    /*TODO: The login function should do this:
-	 * Find the user by User name.
-	 * If the userName doesn't exist, return false;
-	 * If the userName can be found, then check if the password is matched
-	 * If yes, return true; otherwise, return false.
-	 */
 
 	@Override
 	public boolean loginUser(String input_userName, String input_password) throws SQLException
@@ -192,16 +179,7 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
-    
-    
-    // LoginUserDto --> int
-    /*TODO: The changePassword function should do this:
-	 * Find the user by id in user table.
-	 * If the id doesn't exist, return -1 and report error;
-	 * 		If the userName can be found, then check if the input old password is matched with existed old password
-	 * 			If yes, replace the new password with existed new password and return rowsAffected. 
-	 * 			If not, return -1 and report error.
-	 */
+
     @Transactional
 	@Override
 	public int changePassword(Object input_id, String input_OldPassword, String input_NewPassword) throws SQLException
@@ -234,13 +212,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
     
- // LoginUserDto --> List<User>
-    /*TODO: The searchUser function should do this:
-	 * 1. Read the input: wpiID, userName, firstName, lastName, and email;
-	 * 2. pack the columnNameList: allColumnNameList;
-	 * 3. pack the input variables to queryTermList;
-	 * 4. pack the orderByList using sorting order: <LastName, Asc>
-	 */
+
     @Transactional
 	@Override
 	public List<User> searchUser(UserSearchDto dto) throws SQLException
@@ -326,6 +298,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<Integer> deleteUser(Integer id) throws SQLException {
+		System.out.println("service: " + id);
 		List<Integer> rowsAffectedList = new ArrayList<>();
 		
 		String updateColumnName = User.getColumnName(User.Columns.DELETED);
@@ -339,6 +312,9 @@ public class UserServiceImpl implements UserService {
 
 		rowsAffectedList.add(usersDao.update(updateColumnName, true, updateQueryTermList));  //delete from users table
 		rowsAffectedList.add(deleteRoleLink(id));//delete from faculty table
+		//System.out.println(userFacultyAssociationDao.findByUserId(7));
+		//System.out.println(id);
+		//System.out.println(userFacultyAssociationDao.findByUserId(7)); 
 		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(id);
 		if(ufa != null) {
 			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
