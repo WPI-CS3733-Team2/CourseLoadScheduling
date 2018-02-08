@@ -65,7 +65,7 @@ public class RequestControllerImpl implements RequestController
 		.withData(data)
 		.build();
 		
-		success.add(requestService.createRequest(createRequestDto));
+		requestService.createRequest(createRequestDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class RequestControllerImpl implements RequestController
 		String requestId = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_ID));
 		String requestState = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_STATE));
 						
-		success.add(requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState)));
+		requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
