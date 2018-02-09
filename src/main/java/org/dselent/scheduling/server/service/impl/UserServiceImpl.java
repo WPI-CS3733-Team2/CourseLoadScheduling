@@ -14,12 +14,14 @@ import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.CourseLoadService;
 import org.dselent.scheduling.server.service.ScheduleService;
+import org.dselent.scheduling.server.service.SectionService;
 import org.dselent.scheduling.server.service.UserService;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryTerm;
@@ -51,12 +53,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private FacultyDao facultyDao;
 	
-//	@Autowired
-//	private CourseLoadDao courseLoadDao;
-//	
-//	@Autowired
-//	private CourseLoadAssociationDao courseLoadAssociationDao;
-	
 	@Autowired
 	private CustomDao customDao;
 	
@@ -65,6 +61,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private CourseLoadService courseLoadService;
+	
+	@Autowired
+	private SectionService sectionService;
 
 	public UserServiceImpl() {
 		//
@@ -329,7 +328,7 @@ public class UserServiceImpl implements UserService {
 		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(id);
 		if(ufa != null) {
 			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
-			
+			rowsAffectedList.addAll(dislinkFacultyWithSection(ufa.getFacultyId()));
 			
 			//int courseLoadId = cla.getCourseLoadId();
 			rowsAffectedList.add(courseLoadService.deleteCourseLoadAssociation(ufa.getFacultyId()));
@@ -401,6 +400,8 @@ public class UserServiceImpl implements UserService {
 		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
 		updateDeletedTerm.setValue(facultyId);
 		updateQueryTermList.add(updateDeletedTerm);
+		
+		
 
 		return facultyDao.update(updateColumnName, true, updateQueryTermList);
 	}
@@ -417,6 +418,21 @@ public class UserServiceImpl implements UserService {
 	public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException {
 		List<Calendar> calendars = customDao.getCalendarsOfAFaculty(facultyId);
 		return calendars;
+	}
+
+	@Override
+	public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception {
+		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
+		Integer scheduleId = scheduleOfFaculty.getId();
+		sectionService.modify_section_schedule(sectionId, scheduleId);
+		return courseLoadService.increaseAmount(facultyId);
+	}
+
+	@Override
+	public List<Integer> dislinkFacultyWithSection(Integer facultyId) throws SQLException {
+		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
+		Integer scheduleId = scheduleOfFaculty.getId();
+		return sectionService.dislinkAll(scheduleId);
 	}
 
 

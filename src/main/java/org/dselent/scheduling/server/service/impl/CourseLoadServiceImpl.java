@@ -122,6 +122,28 @@ public class CourseLoadServiceImpl implements CourseLoadService {
 		int result = courseLoadAssociationDao.update(updateColumnName, true, updateQueryTermList);
 		return result;
 	}
+
+	@Override
+	public Integer increaseAmount(int facultyId) throws SQLException {
+		CourseLoadAssociation cla = courseLoadAssociationDao.findByFacultyId(facultyId);
+		int courseLoadId = cla.getCourseLoadId();
+		CourseLoad courseLoad = courseLoadDao.findById(courseLoadId);
+		int newAmount = courseLoad.getAmount() + 1;
+		
+		
+		String updateColumnName = CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT);
+		
+		List<QueryTerm> updateQueryTermList = new ArrayList<>();
+		QueryTerm updateTerm = new QueryTerm();
+		
+		updateTerm.setColumnName(CourseLoad.getColumnName(CourseLoad.Columns.ID));
+		updateTerm.setComparisonOperator(ComparisonOperator.EQUAL);
+		updateTerm.setValue(courseLoadId);
+		updateQueryTermList.add(updateTerm);
+
+		int result = courseLoadDao.update(updateColumnName, newAmount, updateQueryTermList);
+		return newAmount;
+	}
 	
 
 }

@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.controller;
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
+import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -120,7 +121,7 @@ public class UsersControllerTest {
 		  //.andExpect(content().contentType("application/json")); 
 	}
 	
-	@Test
+	//@Test
 	public void DeleteUser() throws Exception{
 		
 		  JSONObject jsonObject = new JSONObject();
@@ -155,6 +156,19 @@ public class UsersControllerTest {
 		  System.out.println(jsonString);
 		  
 		  this.mockMvc.perform(post("/user/get_faculty_calendars").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
+					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
+	}
+	
+	//@Test
+	public void TestLinkFacultyWithSection() throws Exception{
+		  JSONObject jsonObject = new JSONObject();
+		  jsonObject.put(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.FACULTY_ID), 18);
+		  jsonObject.put(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.SECTION_ID), 10);
+		  String jsonString = jsonObject.toString();
+		  
+		  System.out.println(jsonString);
+		  
+		  this.mockMvc.perform(post("/user/link_faculty_with_section").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
 					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 }

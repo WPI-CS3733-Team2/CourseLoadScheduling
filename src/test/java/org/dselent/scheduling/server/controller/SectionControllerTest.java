@@ -47,18 +47,18 @@ public class SectionControllerTest
 	 */
     
 	
-	//@Test
+	@Test
     public void testSectionInsertion() throws Exception
     
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.CRN), 565050);
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.NAME), "X02");
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.CRN), 56505000);
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.NAME), "X0200");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.TYPE), "Lab");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION), 50);
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID), 1);
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID), 1);
+    //	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID), 1);
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.YEAR), 2018);
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SEMESTER), "A");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.DAYS), "MWF");

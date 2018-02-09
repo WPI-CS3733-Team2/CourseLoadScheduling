@@ -78,5 +78,10 @@ public class ScheduleServiceImpl implements ScheduleService
 		affectedSchedules = scheduleDao.select(columnNames, queryTermList, orderByList);
 		return affectedSchedules;
 	}
+
+	@Override
+	public Schedule findWithFacultyId(Integer facultyId) throws SQLException {
+		return scheduleDao.findByFacultyId(facultyId);
+	}
     
 }

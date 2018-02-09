@@ -19,4 +19,5 @@ public interface ScheduleService
 {
 	public int create(Integer facultyId, String scheduleName) throws SQLException;
 	public List<Schedule> view(ViewScheduleDto viewScheduleDto) throws SQLException;
+	public Schedule findWithFacultyId(Integer facultyId) throws SQLException;
 }

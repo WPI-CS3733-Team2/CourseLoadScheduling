@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
+import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -185,6 +186,18 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		Integer facultyId = (Integer) request.get(GetFacultyCalendars.getBodyName(GetFacultyCalendars.BodyKey.FACULTY_ID));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getFacultyCalendars(facultyId));
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
+
+
+	@Override
+	public ResponseEntity<String> linkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception {
+		System.out.println("linkFacultyWithSection reached");
+		String response = "";
+		Integer facultyId = (Integer) request.get(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.FACULTY_ID));
+		Integer sectionId = (Integer) request.get(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.SECTION_ID));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.linkFacultyWithSection(facultyId, sectionId));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 }

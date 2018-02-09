@@ -5,6 +5,7 @@ import java.util.List;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
@@ -60,4 +61,8 @@ public interface UserService
     public List<User> viewUserOfRoleId(Integer roleId) throws SQLException;
     
     public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
+    
+    public  List<Integer> dislinkFacultyWithSection(Integer facultyId) throws SQLException;
+    
+    public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
 }

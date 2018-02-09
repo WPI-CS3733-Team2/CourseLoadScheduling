@@ -29,5 +29,7 @@ public interface CourseLoadService
 	
 	public Integer deleteCourseLoadAssociation(int facultyId) throws SQLException;
 	
+	public Integer increaseAmount(int facultyId) throws SQLException;
+	
 	//public CourseLoadAssociation findByFacultyId()
 }

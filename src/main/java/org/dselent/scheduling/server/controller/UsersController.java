@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
+import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
@@ -33,13 +34,15 @@ public interface UsersController
     @RequestMapping(method=RequestMethod.POST, value=UserSearch.REQUEST_NAME)
     public ResponseEntity<String> userSearch(@RequestBody Map<String, Object> request) throws Exception;
     
+    
     @RequestMapping(method=RequestMethod.POST, value=ViewUserOfRoleId.REQUEST_NAME)
     public ResponseEntity<String> viewUserOfRoleId(@RequestBody Map<String, Integer> request) throws Exception;
     
     @RequestMapping(method=RequestMethod.POST, value=GetFacultyCalendars.REQUEST_NAME)
     public ResponseEntity<String> getfacultyCalendars(@RequestBody Map<String, Integer> request) throws Exception;
     
-
+    @RequestMapping(method=RequestMethod.POST, value=LinkFacultyWithSection.REQUEST_NAME)
+    public ResponseEntity<String> linkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception;
 }
 
 	

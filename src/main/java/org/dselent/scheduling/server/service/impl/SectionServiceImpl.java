@@ -253,4 +253,18 @@ public class SectionServiceImpl implements SectionService {
 		return selectedCalendars;
 	}
 
+	@Override
+	public List<Integer> dislinkAll(Integer scheduleId) throws SQLException {
+		List<Integer> rowsAffectedList = new ArrayList<>();
+		String updateColumnName = Section.getColumnName(Section.Columns.SCHEDULE_ID);
+
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		String queryColumnName = Section.getColumnName(Section.Columns.SCHEDULE_ID);
+		QueryTerm idTerm = new QueryTerm(queryColumnName, ComparisonOperator.EQUAL, scheduleId, null);
+		queryTermList.add(idTerm);
+
+		rowsAffectedList.add(sectionsDao.update(updateColumnName, null, queryTermList));
+		return rowsAffectedList;
+	}
+
 }
