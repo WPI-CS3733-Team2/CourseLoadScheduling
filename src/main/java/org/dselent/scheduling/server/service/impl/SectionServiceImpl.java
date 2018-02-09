@@ -105,6 +105,14 @@ public class SectionServiceImpl implements SectionService {
 		affectedRowsList.add(sectionsDao.update(updateColumnName, state, queryTermList));
 		return affectedRowsList;
 	}
+	
+	public Section select_section(Integer id) throws SQLException {
+
+		Section section1 = sectionsDao.findById(id);
+		
+		return section1;
+	}
+
 
 	public List<Integer> modify_section_calendar(ModifySectionCalendarDto dto) throws SQLException {
 		List<Integer> rowsAffectedList = new ArrayList<>();
