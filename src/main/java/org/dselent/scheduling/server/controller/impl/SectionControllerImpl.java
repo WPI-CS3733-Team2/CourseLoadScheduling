@@ -8,9 +8,12 @@ import org.dselent.scheduling.server.controller.SectionController;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.dto.ViewSectionCalendarsOfCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.requests.CreateSection;
 import org.dselent.scheduling.server.requests.SelectSection;
+import org.dselent.scheduling.server.requests.ViewSectionCalendarsOfCourse;
 import org.dselent.scheduling.server.requests.ModifySectionCalendar;
 import org.dselent.scheduling.server.requests.ModifySectionSchedule;
 import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
@@ -192,6 +195,40 @@ public class SectionControllerImpl implements SectionController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+	
+	@Override
+	public ResponseEntity<List<Calendar>> view_section_calendars_of_course(Map<String, Object> request)
+			throws Exception {
+		// Print is for testing purposes
+		System.out.println("controller reached");
+
+		// add any objects that need to be returned to the success list
+		List<Calendar> response = new ArrayList<>();
+		// List<Object> success = new ArrayList<Object>();
+
+		Integer crn = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.CRN));
+		String name = (String) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.NAME));
+		String type = (String) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.TYPE));
+		Integer expected_population = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.EXPECTED_POPULATION));
+		Integer course_id = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.COURSE_ID));
+		Integer schedule_id = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.SCHEDULE_ID));
+
+		ViewSectionCalendarsOfCourseDto.Builder builder = ViewSectionCalendarsOfCourseDto.builder();
+		ViewSectionCalendarsOfCourseDto viewSectionCalendarsDto = builder.withCrn(crn)
+		.withName(name)
+		.withType(type)
+		.withExpectedPopulation(expected_population)
+		.withCourseId(course_id)
+		.withScheduleId(schedule_id)
+		.build();
+
+		// ;
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
+				sectionService.view_section_calendars_of_course(viewSectionCalendarsDto));
+
+		return new ResponseEntity<List<Calendar>>(response, HttpStatus.OK);
+	}
+
     	
 }
 

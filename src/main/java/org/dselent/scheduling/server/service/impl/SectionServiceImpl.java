@@ -10,11 +10,14 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.service.SectionService;
+import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
+import org.dselent.scheduling.server.sqlutils.LogicalOperator;
 import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -198,6 +201,56 @@ public class SectionServiceImpl implements SectionService {
 		}
 		sectionsDao.updateColumns(updateColumnName, updateValue, queryTermList);
 		return rowsAffectedList;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Calendar> view_section_calendars_of_course(Integer courseId) throws SQLException {
+    	
+		List<String> sectionColumnNameList = new ArrayList<>();
+    	
+    	sectionColumnNameList.add(Section.getColumnName(Section.Columns.CALENDAR_ID));
+    	
+    	List<QueryTerm> queryTermList = new ArrayList<>();
+    	
+    	String queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
+		QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseId, null);
+		queryTermList.add(queryTerm);
+    	
+    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderBy = new Pair(Section.Columns.CALENDAR_ID, ColumnOrder.ASC);
+    	orderByList.add(orderBy);
+    	
+    	List<Section> calendarIds = new ArrayList<>();
+    	calendarIds = sectionsDao.select(sectionColumnNameList, queryTermList, orderByList);
+		
+		List<String> calendarColumnNameList = new ArrayList<>();
+    	
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.YEAR));		//
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.SEMESTER));
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.DAYS));
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.START_TIME));
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.END_TIME));
+    	
+    	queryTermList = new ArrayList<>();
+    	
+    	for(int i = 0; i < calendarIds.size(); i++) {
+			queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
+			queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, calendarIds.get(i).getCalendarId(), LogicalOperator.OR);
+			if(i == 0) {
+				queryTerm.setLogicalOperator(null);
+			}
+			queryTermList.add(queryTerm);
+    	}
+    	
+    	orderByList = new ArrayList<>();
+    	orderBy = new Pair(Calendar.Columns.ID, ColumnOrder.ASC);
+    	orderByList.add(orderBy);
+    	
+    	List<Calendar> selectedCalendars = new ArrayList<>();
+    	selectedCalendars = calendarDao.select(calendarColumnNameList, queryTermList, orderByList);
+    			
+		return selectedCalendars;
 	}
 
 }
