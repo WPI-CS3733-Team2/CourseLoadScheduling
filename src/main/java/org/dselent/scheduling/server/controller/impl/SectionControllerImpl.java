@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateSection;
+import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ModifySectionCalendar;
 import org.dselent.scheduling.server.requests.ModifySectionSchedule;
 import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
@@ -98,6 +99,24 @@ public class SectionControllerImpl implements SectionController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+	
+	public ResponseEntity<String> select_section(@RequestBody Map<String, Object> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		//List<Object> success = new ArrayList<Object>();
+		
+		Integer id = (Integer) request.get(SelectSection.getBodyName(SelectSection.BodyKey.ID));
+		
+		//success.add((sectionService.remove_section(id);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(id));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
 	
 	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, Object> request) throws Exception 
     {

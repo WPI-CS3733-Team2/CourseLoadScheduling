@@ -9,6 +9,7 @@ import java.util.Map;
 import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.extractor.CoursesExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -308,5 +309,27 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 	    }
 	    
 	    return course;
+	}
+
+
+	@Override
+	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList) {
+		String queryTemplate = QueryStringBuilder.generateUpdateString(Course.TABLE_NAME, columnName, queryTermList);
+		List<Object> objectList = new ArrayList<Object>();
+		for(Object obj: newValue) {
+			objectList.add(obj);
+		}
+		//objectList.add(newValue);
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    int rowsAffected = jdbcTemplate.update(queryTemplate, parameters);
+	    
+		return rowsAffected;
 	}
 }
