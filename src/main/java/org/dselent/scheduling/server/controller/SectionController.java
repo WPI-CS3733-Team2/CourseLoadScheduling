@@ -38,7 +38,7 @@ public interface SectionController
 	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, Object> request) throws Exception;
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewSectionCalendarsOfCourse.REQUEST_NAME)
-	public ResponseEntity<List<Calendar>> view_section_calendars_of_course(@RequestBody Map<String, Object> request) throws Exception;
+	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, Object> request) throws Exception;
 
 }
 

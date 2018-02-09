@@ -197,36 +197,19 @@ public class SectionControllerImpl implements SectionController
     }
 	
 	@Override
-	public ResponseEntity<List<Calendar>> view_section_calendars_of_course(Map<String, Object> request)
+	public ResponseEntity<String> view_section_calendars_of_course(Map<String, Object> request)
 			throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
 		// add any objects that need to be returned to the success list
-		List<Calendar> response = new ArrayList<>();
-		// List<Object> success = new ArrayList<Object>();
-
-		Integer crn = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.CRN));
-		String name = (String) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.NAME));
-		String type = (String) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.TYPE));
-		Integer expected_population = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.EXPECTED_POPULATION));
+		String response = "";
 		Integer course_id = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.COURSE_ID));
-		Integer schedule_id = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.SCHEDULE_ID));
 
-		ViewSectionCalendarsOfCourseDto.Builder builder = ViewSectionCalendarsOfCourseDto.builder();
-		ViewSectionCalendarsOfCourseDto viewSectionCalendarsDto = builder.withCrn(crn)
-		.withName(name)
-		.withType(type)
-		.withExpectedPopulation(expected_population)
-		.withCourseId(course_id)
-		.withScheduleId(schedule_id)
-		.build();
-
-		// ;
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
-				sectionService.view_section_calendars_of_course(viewSectionCalendarsDto));
+				sectionService.view_section_calendars_of_course(course_id));
 
-		return new ResponseEntity<List<Calendar>>(response, HttpStatus.OK);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 
     	
