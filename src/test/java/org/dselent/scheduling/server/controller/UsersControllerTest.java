@@ -2,10 +2,12 @@ package org.dselent.scheduling.server.controller;
 
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.DeleteUser;
+import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
+import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,17 +39,17 @@ public class UsersControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 
-	@Test
+	//@Test
 	public void testRegister() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "12345");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt23");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug23");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent23");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password13");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt23@wpi.edu");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), "1");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "123456");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt236");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug236");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent236");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password136");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt236@wpi.edu");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), 1);
 		jsonObject.put(Register.getBodyName(Register.BodyKey.ROLE_ID), 1);
 		String jsonString = jsonObject.toString();
 
@@ -130,5 +132,29 @@ public class UsersControllerTest {
 		  this.mockMvc.perform(post("/user/delete").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
 					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 		  //.andExpect(content().contentType("application/json")); 
+	}
+	
+	//@Test
+	public void TestViewUserOfRoleId() throws Exception{
+		  JSONObject jsonObject = new JSONObject();
+		  jsonObject.put(ViewUserOfRoleId.getBodyName(ViewUserOfRoleId.BodyKey.ROLE_ID), 1);
+		  String jsonString = jsonObject.toString();
+		  
+		  System.out.println(jsonString);
+		  
+		  this.mockMvc.perform(post("/user/view_user_of_role_id").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
+					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
+	}
+	
+	//@Test
+	public void TestGetFacultyCalendars() throws Exception{
+		  JSONObject jsonObject = new JSONObject();
+		  jsonObject.put(GetFacultyCalendars.getBodyName(GetFacultyCalendars.BodyKey.FACULTY_ID), 13);
+		  String jsonString = jsonObject.toString();
+		  
+		  System.out.println(jsonString);
+		  
+		  this.mockMvc.perform(post("/user/get_faculty_calendars").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
+					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 }

@@ -33,7 +33,7 @@ public class CustomDaoTest
     {
     	//@SuppressWarnings("unused")
     		
-		//List<User> userList = customDao.getAllUsersWithRole(1);
+		List<User> userList = customDao.getAllUsersWithRole(1);
     	//List<Schedule> scheduleList = customDao.searchScheduleByFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsInSchedule(3);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(1);
@@ -41,11 +41,11 @@ public class CustomDaoTest
     	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
     	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(1);
     	//List<Faculty> facultyListInOneCourse = customDao.getFacultiesTeachingACourse(2);
-    	List<Faculty> facultyListWPIID = customDao.getFacultiesWithUserWPIID("?????????x");
+    	//List<Faculty> facultyListWPIID = customDao.getFacultiesWithUserWPIID("?????????x");
     	//List<Faculty> facultyList = customDao.getFacultiesWithUserEmail("dselent@wpi.edu");
     	//List<Calendar> calendarList = customDao.getMatchDateCalendar(2018, "D", "MR", "1400", "1450");
     	// see things in debugger
     //	System.out.println(calendarList);
-		System.out.println(facultyListWPIID);
+		System.out.println(userList);
     }
 }

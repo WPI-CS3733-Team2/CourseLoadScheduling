@@ -2,10 +2,9 @@ package org.dselent.scheduling.server.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
@@ -57,4 +56,8 @@ public interface UserService
 	 * @return the list of user selected for select operation
 	 * @throws SQLException
 	 */
+    
+    public List<User> viewUserOfRoleId(Integer roleId) throws SQLException;
+    
+    public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
 }

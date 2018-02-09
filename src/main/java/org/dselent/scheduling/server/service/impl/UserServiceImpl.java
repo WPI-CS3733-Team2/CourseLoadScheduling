@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.CourseLoadAssociationDao;
 import org.dselent.scheduling.server.dao.CourseLoadDao;
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.FacultyDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.CourseLoadAssociation;
 import org.dselent.scheduling.server.model.Faculty;
@@ -54,6 +56,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private CourseLoadAssociationDao courseLoadAssociationDao;
+	
+	@Autowired
+	private CustomDao customDao;
 
 	public UserServiceImpl() {
 		//
@@ -455,6 +460,18 @@ public class UserServiceImpl implements UserService {
 		keyHolderColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.CREATED_AT));
 		
 		return courseLoadAssociationDao.insert(cla, insertColumnNameList, keyHolderColumnNameList);
+	}
+
+	@Override
+	public List<User> viewUserOfRoleId(Integer roleId) throws SQLException {
+		List<User> users = customDao.getAllUsersWithRole(roleId);
+		return users;
+	}
+
+	@Override
+	public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException {
+		List<Calendar> calendars = customDao.getCalendarsOfAFaculty(facultyId);
+		return calendars;
 	}
 
 

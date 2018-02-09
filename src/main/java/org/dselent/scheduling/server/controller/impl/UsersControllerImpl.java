@@ -9,10 +9,12 @@ import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.DeleteUser;
+import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
+import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
 import org.dselent.scheduling.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +49,6 @@ public class UsersControllerImpl implements UsersController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
 		
 		String wpiId = (String) request.get(Register.getBodyName(Register.BodyKey.WPI_ID));
 		String userName = (String) request.get(Register.getBodyName(Register.BodyKey.USER_NAME));
@@ -155,6 +156,31 @@ public class UsersControllerImpl implements UsersController
 		//System.out.println(response);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+
+
+
+	@Override
+	public ResponseEntity<String> viewUserOfRoleId(@RequestBody Map<String, Integer> request) throws Exception {
+		System.out.println("userSearch controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		
+		Integer roleId = (Integer) request.get(ViewUserOfRoleId.getBodyName(ViewUserOfRoleId.BodyKey.ROLE_ID));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.viewUserOfRoleId(roleId));
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
+
+
+	@Override
+	public ResponseEntity<String> getfacultyCalendars(@RequestBody Map<String, Integer> request) throws Exception {
+		System.out.println("getFacultyCalendars reached");
+		String response = "";
+		Integer facultyId = (Integer) request.get(GetFacultyCalendars.getBodyName(GetFacultyCalendars.BodyKey.FACULTY_ID));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getFacultyCalendars(facultyId));
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
 }
 
 	
