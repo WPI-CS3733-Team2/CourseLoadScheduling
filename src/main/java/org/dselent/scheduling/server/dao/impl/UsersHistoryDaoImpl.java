@@ -77,7 +77,7 @@ public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements Us
 
 	@Override
 	public UsersHistory findById(int id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UsersHistory.getColumnName(UsersHistory.Columns.ID), false);
+		String columnName = UsersHistory.getColumnName(UsersHistory.Columns.ID);
 		List<String> selectColumnNames = UsersHistory.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -251,7 +251,7 @@ public class UsersHistoryDaoImpl extends BaseDaoImpl<UsersHistory> implements Us
 
 	@Override
 	public UsersHistory findByUserId(int uid) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UsersHistory.getColumnName(UsersHistory.Columns.USER_ID), false);
+		String columnName = UsersHistory.getColumnName(UsersHistory.Columns.USER_ID);
 		List<String> selectColumnNames = UsersHistory.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

@@ -87,7 +87,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 	@Override
 	public Schedule findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.ID), false);
+		String columnName = Schedule.getColumnName(Schedule.Columns.ID);
 		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -225,7 +225,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 
 	@Override
 	public Schedule findByFacultyId(int faculty_id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.FACULTY_ID), false);
+		String columnName = Schedule.getColumnName(Schedule.Columns.FACULTY_ID);
 		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -251,7 +251,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 
 	@Override
 	public Schedule findByName(String name) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME), false);
+		String columnName = Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME);
 		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

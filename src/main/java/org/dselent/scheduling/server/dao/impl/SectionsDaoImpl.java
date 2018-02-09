@@ -9,6 +9,7 @@ import java.util.Map;
 import org.dselent.scheduling.server.dao.SectionsDao;
 import org.dselent.scheduling.server.extractor.SectionsExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -82,32 +83,6 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	    List<Section> sectionsList = jdbcTemplate.query(queryTemplate, extractor, parameters);
 	    
 	    return sectionsList;
-	}
-
-	@Override
-	public Section findById(int id) throws SQLException
-	{
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.ID), false);
-		List<String> selectColumnNames = Section.getColumnNameList();
-		
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
-		queryTermList.add(idTerm);
-		
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
-		orderByList.add(order);
-		
-		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
-	
-	    Section section = null;
-	    
-	    if(!sectionsList.isEmpty())
-	    {
-	    	section = sectionsList.get(0);
-	    }
-	    
-	    return section;
 	}
 	
 	@Override
@@ -263,8 +238,33 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 
 	@Override
+	public Section findById(int id) throws SQLException {
+		String columnName = Section.getColumnName(Section.Columns.ID);
+		List<String> selectColumnNames = Section.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Section> sectionsList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Section section = null;
+	    
+	    if(!sectionsList.isEmpty())
+	    {
+	    	section = sectionsList.get(0);
+	    }
+	    
+	    return section;
+	}
+	
+	@Override
 	public Section findByCrn(int crn) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.CRN), false);
+		String columnName = Section.getColumnName(Section.Columns.CRN);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -290,7 +290,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByName(String name) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.NAME), false);
+		String columnName = Section.getColumnName(Section.Columns.NAME);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -316,7 +316,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByType(String type) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.TYPE), false);
+		String columnName = Section.getColumnName(Section.Columns.TYPE);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -342,7 +342,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByPopulation(int population) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.EXPECTED_POPULATION), false);
+		String columnName = Section.getColumnName(Section.Columns.EXPECTED_POPULATION);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -368,7 +368,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByCourseId(int courseId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.COURSE_ID), false);
+		String columnName = Section.getColumnName(Section.Columns.COURSE_ID);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -394,7 +394,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByScheduleId(int scheduleId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.SCHEDULE_ID), false);
+		String columnName = Section.getColumnName(Section.Columns.SCHEDULE_ID);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -415,5 +415,27 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	    }
 	    
 	    return section;
+	}
+
+
+	@Override
+	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList) {
+		String queryTemplate = QueryStringBuilder.generateUpdateString(Section.TABLE_NAME, columnName, queryTermList);
+		List<Object> objectList = new ArrayList<Object>();
+		for(Object obj: newValue) {
+			objectList.add(obj);
+		}
+		//objectList.add(newValue);
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    int rowsAffected = jdbcTemplate.update(queryTemplate, parameters);
+	    
+		return rowsAffected;
 	}
 }

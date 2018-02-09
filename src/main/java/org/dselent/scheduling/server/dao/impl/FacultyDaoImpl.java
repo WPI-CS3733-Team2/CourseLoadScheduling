@@ -52,7 +52,6 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 	@Override
 	public List<Faculty> select(List<String> selectColumnNameList, List<QueryTerm> queryTermList,
 			List<Pair<String, ColumnOrder>> orderByList) throws SQLException {
-		// TODO Auto-generated method stub
 		FacultyExtractor extractor = new FacultyExtractor();
 		String queryTemplate = QueryStringBuilder.generateSelectString(Faculty.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
 
@@ -72,8 +71,7 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	@Override
 	public Faculty findById(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.ID), false);
+		String columnName = Faculty.getColumnName(Faculty.Columns.ID);
 		List<String> selectColumnNames = Faculty.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -219,7 +217,7 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	@Override
 	public Faculty findByRank(int rank) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.RANK), false);
+		String columnName = Faculty.getColumnName(Faculty.Columns.RANK);
 		List<String> selectColumnNames = Faculty.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -244,7 +242,7 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	@Override
 	public Faculty findByIfAssigned(Boolean ifAssigned) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.ASSIGNED), false);
+		String columnName = Faculty.getColumnName(Faculty.Columns.ASSIGNED);
 		List<String> selectColumnNames = Faculty.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -269,7 +267,7 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	@Override
 	public Faculty findByIfDeleted(Boolean ifDeleted) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Faculty.getColumnName(Faculty.Columns.DELETED), false);
+		String columnName = Faculty.getColumnName(Faculty.Columns.DELETED);
 		List<String> selectColumnNames = Faculty.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

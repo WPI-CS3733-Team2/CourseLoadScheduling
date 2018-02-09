@@ -61,7 +61,7 @@ public class ScheduleControllerImpl implements ScheduleController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String scheduleId = request.get(ViewSchedule.getParameterName(ViewSchedule.ParameterKey.SCHEDULE_ID));
+		String scheduleId = request.get(ViewSchedule.getParameterName(ViewSchedule.ParameterKey.SCHEDULE_NAME));
 		
 		ViewScheduleDto.Builder builder = ViewScheduleDto.builder();
 		ViewScheduleDto viewScheduleDto = builder.withScheduleId(scheduleId)

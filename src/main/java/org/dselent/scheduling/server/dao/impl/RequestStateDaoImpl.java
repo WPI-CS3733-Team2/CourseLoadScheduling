@@ -86,7 +86,7 @@ public class RequestStateDaoImpl extends BaseDaoImpl<RequestState> implements Re
 	@Override
 	public RequestState findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(RequestState.getColumnName(RequestState.Columns.ID), false);
+		String columnName = RequestState.getColumnName(RequestState.Columns.ID);
 		List<String> selectColumnNames = RequestState.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

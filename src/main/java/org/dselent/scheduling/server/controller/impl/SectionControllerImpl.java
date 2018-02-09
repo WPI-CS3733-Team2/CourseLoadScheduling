@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateSection;
+import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ModifySectionCalendar;
 import org.dselent.scheduling.server.requests.ModifySectionSchedule;
 import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
@@ -41,26 +42,26 @@ public class SectionControllerImpl implements SectionController
 	 * @return A ResponseEntity for the response object(s) and the status code
 	 * @throws Exception 
 	 */
-	public ResponseEntity<String> create_section(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> create_section(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
-		String crn = request.get(CreateSection.getBodyName(CreateSection.BodyKey.CRN));
-		String name = request.get(CreateSection.getBodyName(CreateSection.BodyKey.NAME));
-		String type = request.get(CreateSection.getBodyName(CreateSection.BodyKey.TYPE));
-		String expected_population = request.get(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION));
-		String course_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID));
-		String schedule_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID));
-		String year = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
-		String semester = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
-		String days = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
-		String start_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
-		String end_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
+		Integer crn =(Integer) request.get(CreateSection.getBodyName(CreateSection.BodyKey.CRN));
+		String name =(String) request.get(CreateSection.getBodyName(CreateSection.BodyKey.NAME));
+		String type =(String) request.get(CreateSection.getBodyName(CreateSection.BodyKey.TYPE));
+		Integer expected_population =(Integer) request.get(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION));
+		Integer course_id =(Integer) request.get(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID));
+		Integer schedule_id =(Integer) request.get(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID));
+		Integer year =(Integer) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
+		String semester =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
+		String days =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
+		String start_time = (String)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
+		String end_time = (String)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
 		
 		CreateSectionDto.Builder builder = CreateSectionDto.builder();
 		CreateSectionDto createSectionDto = builder.withCrn(crn)
@@ -76,44 +77,62 @@ public class SectionControllerImpl implements SectionController
 		.withEndTime(end_time)
 		.build();
 		
-		sectionService.create_section(createSectionDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		//;
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.create_section(createSectionDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	public ResponseEntity<String> remove_section(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> remove_section(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
-		String id = request.get(RemoveSection.getBodyName(RemoveSection.BodyKey.ID));
+		Integer id = (Integer) request.get(RemoveSection.getBodyName(RemoveSection.BodyKey.ID));
 		
-		sectionService.remove_section(id);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		//success.add((sectionService.remove_section(id);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(id));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> select_section(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
-		String id = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID));
-		String year = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
-		String semester = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
-		String days = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
-		String start_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
-		String end_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
+		Integer id = (Integer) request.get(SelectSection.getBodyName(SelectSection.BodyKey.ID));
+		
+		//success.add((sectionService.remove_section(id);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(id));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
+	
+	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, Object> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		//List<Object> success = new ArrayList<Object>();
+		
+		Integer id = (Integer)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID));
+		Integer year = (Integer)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
+		String semester =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
+		String days =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
+		String start_time =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
+		String end_time = (String)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
 		
 		ModifySectionCalendarDto.Builder builder = ModifySectionCalendarDto.builder();
 		ModifySectionCalendarDto modifySectionCalendarDto = builder.withId(id)
@@ -124,13 +143,30 @@ public class SectionControllerImpl implements SectionController
 		.withEndTime(end_time)
 		.build();
 		
-		sectionService.modify_section_calendar(modifySectionCalendarDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.modify_section_calendar(modifySectionCalendarDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	public ResponseEntity<String> modify_section_schedule(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> modify_section_schedule(@RequestBody Map<String, Object> request) throws Exception 
+    {
+    	// Print is for testing purposes
+		System.out.println("controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		//List<Object> success = new ArrayList<Object>();
+		
+		Integer id = (Integer)request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID));
+		Integer schedule_id = (Integer)request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID));
+		
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.modify_section_schedule(id, schedule_id));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+	
+	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
@@ -139,28 +175,10 @@ public class SectionControllerImpl implements SectionController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String id = request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID));
-		String schedule_id = request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID));
-		
-		sectionService.modify_section_schedule(id, schedule_id);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
-
-		return new ResponseEntity<String>(response, HttpStatus.OK);
-    }
-	
-	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, String> request) throws Exception 
-    {
-    	// Print is for testing purposes
-		System.out.println("controller reached");
-    	
-		// add any objects that need to be returned to the success list
-		String response = "";
-		List<Object> success = new ArrayList<Object>();
-		
-		String id = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID));
-		String type = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE));
-		String name = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME));
-		String expected_population = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION));
+		Integer id = (Integer)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID));
+		String type = (String)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE));
+		String name = (String)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME));
+		Integer expected_population = (Integer) request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION));
 		
 		ModifySectionTypeNamePopDto.Builder builder = ModifySectionTypeNamePopDto.builder();
 		ModifySectionTypeNamePopDto modifySectionTypeNamePopDto = builder.withId(id)

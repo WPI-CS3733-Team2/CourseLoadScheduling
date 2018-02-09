@@ -87,7 +87,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 	@Override
 	public Calendar findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.ID), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.ID);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -113,10 +113,32 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 	@Override
 	public int update(String columnName, Object newValue, List<QueryTerm> queryTermList)
 	{
+		
 		String queryTemplate = QueryStringBuilder.generateUpdateString(Calendar.TABLE_NAME, columnName, queryTermList);
-
 		List<Object> objectList = new ArrayList<Object>();
 		objectList.add(newValue);
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    int rowsAffected = jdbcTemplate.update(queryTemplate, parameters);
+	    
+		return rowsAffected;
+	}
+	
+	
+	@Override
+	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList) {
+		String queryTemplate = QueryStringBuilder.generateUpdateString(Calendar.TABLE_NAME, columnName, queryTermList);
+		List<Object> objectList = new ArrayList<Object>();
+		for(Object obj: newValue) {
+			objectList.add(obj);
+		}
+		//objectList.add(newValue);
 		
 		for(QueryTerm queryTerm : queryTermList)
 		{
@@ -273,7 +295,8 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 
 	@Override
 	public Calendar findByYear(int year) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.YEAR), false);
+		//String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.YEAR), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.YEAR);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -299,7 +322,8 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 
 	@Override
 	public Calendar findBySemester(String semester) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.SEMESTER), false);
+		//String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.SEMESTER), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.SEMESTER);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -325,7 +349,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 
 	@Override
 	public Calendar findByDay(String day) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.DAYS), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.DAYS);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -351,7 +375,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 
 	@Override
 	public Calendar findByStartingTime(String startTime) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.START_TIME), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.START_TIME);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -377,7 +401,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 
 	@Override
 	public Calendar findByEndingTime(String endTime) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Calendar.getColumnName(Calendar.Columns.END_TIME), false);
+		String columnName = Calendar.getColumnName(Calendar.Columns.END_TIME);
 		List<String> selectColumnNames = Calendar.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -399,4 +423,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 	    
 	    return calendar;
 	}
+
+
+
 }

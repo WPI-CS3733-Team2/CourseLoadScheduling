@@ -87,7 +87,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 	@Override
 	public Request findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.ID), false);
+		String columnName = Request.getColumnName(Request.Columns.ID);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -263,7 +263,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 
 	@Override
 	public Request findByFacultyId(int facultyId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.FACULTY_ID), false);
+		String columnName = Request.getColumnName(Request.Columns.FACULTY_ID);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -289,7 +289,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 
 	@Override
 	public Request findByType(int type) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.TYPE), false);
+		String columnName = Request.getColumnName(Request.Columns.TYPE);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -315,7 +315,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 
 	@Override
 	public Request findByState(int state) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.STATE), false);
+		String columnName = Request.getColumnName(Request.Columns.STATE);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -341,7 +341,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 
 	@Override
 	public Request findByCourseId(int courseId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.COURSE), false);
+		String columnName = Request.getColumnName(Request.Columns.COURSE);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -367,7 +367,7 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 
 	@Override
 	public Request findBySectionId(int sectionId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Request.getColumnName(Request.Columns.SECTION), false);
+		String columnName = Request.getColumnName(Request.Columns.SECTION);
 		List<String> selectColumnNames = Request.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

@@ -77,7 +77,7 @@ public class UserRoleDaoImpl extends BaseDaoImpl<UserRole> implements UserRoleDa
 
 	@Override
 	public UserRole findById(int id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UserRole.getColumnName(UserRole.Columns.ID), false);
+		String columnName = UserRole.getColumnName(UserRole.Columns.ID);
 		List<String> selectColumnNames = UserRole.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

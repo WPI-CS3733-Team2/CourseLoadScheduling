@@ -2,11 +2,9 @@ package org.dselent.scheduling.server.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
-import org.dselent.scheduling.server.dto.LoginUserDto;
-import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
@@ -32,16 +30,16 @@ public interface UserService
 
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
-    public boolean loginUser(LoginUserDto loginUserDto) throws SQLException;
+    public User loginUser(String input_userName, String input_password) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
 	 * @param loginUserDto DTO container userName and password.
-	 * @return Boolean value showing login successfully or not.
+	 * @return User information of the logged in user, if
 	 * @throws SQLException
 	 */
     
-    public int changePassword(PasswordModificationDto dto) throws SQLException;
+    public int changePassword(Object input_id, String input_oldPassword, String input_newPassword) throws SQLException;
 	/**
 	 * check if the old password match existing one under certain user, 
 	 * and update the new password to old one in the database
@@ -58,4 +56,8 @@ public interface UserService
 	 * @return the list of user selected for select operation
 	 * @throws SQLException
 	 */
+    
+    public List<User> viewUserOfRoleId(Integer roleId) throws SQLException;
+    
+    public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
 }

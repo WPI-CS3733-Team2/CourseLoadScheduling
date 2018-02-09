@@ -12,8 +12,8 @@ import javax.annotation.Generated;
  */
 public class ModifySectionCalendarDto
 {
-	private final String id;
-	private final String year;
+	private final Integer id;
+	private final Integer year;
 	private final String semester;
 	private final String days;
 	private final String start_time;
@@ -58,11 +58,11 @@ public class ModifySectionCalendarDto
 		}
 	}
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
@@ -174,8 +174,8 @@ public class ModifySectionCalendarDto
 	@Generated("SparkTools")
 	public static final class Builder
 	{
-		private String id;
-		private String year;
+		private Integer id;
+		private Integer year;
 		private String semester;
 		private String days;
 		private String start_time;
@@ -185,12 +185,12 @@ public class ModifySectionCalendarDto
 		{
 		}
 		
-		public Builder withId(String id) {				//
-			this.id = id;
+		public Builder withId(Integer id2) {				//
+			this.id = id2;
 			return this;
 		}
 		
-		public Builder withYear(String year)
+		public Builder withYear(Integer year)
 		{
 			this.year = year;
 			return this;
