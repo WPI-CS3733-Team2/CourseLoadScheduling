@@ -60,8 +60,10 @@ public class CourseServiceImpl implements CourseService
     
     @Transactional
     @Override
-	public void modifyCourse(ModifyCourseDto dto) throws SQLException
+	public List<Integer> modifyCourse(ModifyCourseDto dto) throws SQLException
 	{
+    	List<Integer> rowsAffectedList = new ArrayList<>();
+    	
     	Course course = new Course();
 		course.setName(dto.getName());
 		course.setNumber(dto.getNumber());
@@ -74,20 +76,18 @@ public class CourseServiceImpl implements CourseService
 		QueryTerm idTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseToModify.getId(), null);
 		queryTermList.add(idTerm);
 		
-		String updateColumnName;
+		List<String> updateColumnName = new ArrayList<>();
+		updateColumnName.add(Course.getColumnName(Course.Columns.NAME));
+		updateColumnName.add(Course.getColumnName(Course.Columns.NUMBER));
+		updateColumnName.add(Course.getColumnName(Course.Columns.FREQUENCY));
 		
-		if(course.getName() != null) {
-			updateColumnName = Course.getColumnName(Course.Columns.NAME);
-			coursesDao.update(updateColumnName, course.getName(), queryTermList);
-		}
-		if(course.getNumber() != null) {
-			updateColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			coursesDao.update(updateColumnName, course.getNumber(), queryTermList);
-		}
-		if(course.getFrequency() != null) {
-			updateColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
-			coursesDao.update(updateColumnName, course.getFrequency(), queryTermList);
-		}
+		List<Object> updateValues = new ArrayList<>();
+		updateValues.add(course.getName());
+		updateValues.add(course.getNumber());
+		updateValues.add(course.getFrequency());
+		
+		rowsAffectedList.add(coursesDao.updateColumns(updateColumnName, updateValues, queryTermList));
+		return rowsAffectedList;
 	}
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
