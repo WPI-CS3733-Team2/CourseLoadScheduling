@@ -10,8 +10,6 @@ import org.dselent.scheduling.server.dto.CreateRequestDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Request;
 import org.dselent.scheduling.server.model.RequestState;
-//import org.dselent.scheduling.server.model.User;
-//import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.RequestService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -28,7 +26,7 @@ public class RequestServiceImpl implements RequestService {
 	private RequestStateDao requestStateDao;
 
 	public RequestServiceImpl() {
-		//
+
 	}
 
 	@Transactional
@@ -39,7 +37,6 @@ public class RequestServiceImpl implements RequestService {
 		Request request = new Request();
 		request.setFacultyId(Integer.parseInt(dto.getFaculty_id()));
 		request.setType(Integer.parseInt(dto.getRequest_type()));
-		// request.setState(Integer.parseInt(dto.getRequest_state()));
 		request.setCourse(Integer.parseInt(dto.getCourse_id()));
 		request.setSection(Integer.parseInt(dto.getSection_id()));
 
@@ -67,9 +64,7 @@ public class RequestServiceImpl implements RequestService {
 		return rowsAffectedList;
 	}
 
-	// Does this need to return a list of integers?
 	public List<Request> viewRequestHistory(Integer facultyId) throws SQLException {
-		// List<Integer> rowsReturnedList = new ArrayList<>();
 
 		String selectColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
 		Integer selectData = facultyId;
@@ -119,7 +114,6 @@ public class RequestServiceImpl implements RequestService {
     	//First retrieves which row in the request state table corresponds to "pending," as this is likely
     	// to vary among group members
     	Integer pending = pendingInt();
-    	//Integer pending = 3;
     	String selectColumnName = Request.getColumnName(Request.Columns.STATE);
     	Integer selectData = pending;
     	
