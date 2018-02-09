@@ -208,38 +208,35 @@ public class SectionServiceImpl implements SectionService {
 	public List<Calendar> view_section_calendars_of_course(Integer courseId) throws SQLException {
     	
 		List<String> sectionColumnNameList = new ArrayList<>();
-
-    	sectionColumnNameList.addAll(Section.getColumnNameList());
+    	
+    	sectionColumnNameList.add(Section.getColumnName(Section.Columns.CALENDAR_ID));
     	
     	List<QueryTerm> queryTermList = new ArrayList<>();
     	
-    	String queryColumnName = Section.getColumnName(Section.Columns.COURSE_ID);
+    	String queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
 		QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseId, null);
 		queryTermList.add(queryTerm);
     	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Section.getColumnName(Section.Columns.CALENDAR_ID), ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair(Section.Columns.CALENDAR_ID, ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
-    	List<Section> sectionsOfCalendar = new ArrayList<>();
-    	sectionsOfCalendar = sectionsDao.select(sectionColumnNameList, queryTermList, orderByList);
+    	List<Section> calendarIds = new ArrayList<>();
+    	calendarIds = sectionsDao.select(sectionColumnNameList, queryTermList, orderByList);
 		
 		List<String> calendarColumnNameList = new ArrayList<>();
     	
-
-    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.ID));
-    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.YEAR));
+    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.YEAR));		//
     	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.SEMESTER));
     	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.DAYS));
     	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.START_TIME));
     	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.END_TIME));
-    	calendarColumnNameList.add(Calendar.getColumnName(Calendar.Columns.CREATED_AT));
     	
     	queryTermList = new ArrayList<>();
     	
-    	for(int i = 0; i < sectionsOfCalendar.size(); i++) {
+    	for(int i = 0; i < calendarIds.size(); i++) {
 			queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
-			queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, sectionsOfCalendar.get(i).getCalendarId(), LogicalOperator.OR);
+			queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, calendarIds.get(i).getCalendarId(), LogicalOperator.OR);
 			if(i == 0) {
 				queryTerm.setLogicalOperator(null);
 			}
@@ -247,7 +244,7 @@ public class SectionServiceImpl implements SectionService {
     	}
     	
     	orderByList = new ArrayList<>();
-    	orderBy = new Pair(Calendar.getColumnName(Calendar.Columns.ID), ColumnOrder.ASC);
+    	orderBy = new Pair(Calendar.Columns.ID, ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	List<Calendar> selectedCalendars = new ArrayList<>();
