@@ -48,7 +48,7 @@ public class SectionControllerImpl implements SectionController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
 		String crn = request.get(CreateSection.getBodyName(CreateSection.BodyKey.CRN));
 		String name = request.get(CreateSection.getBodyName(CreateSection.BodyKey.NAME));
@@ -76,8 +76,8 @@ public class SectionControllerImpl implements SectionController
 		.withEndTime(end_time)
 		.build();
 		
-		sectionService.create_section(createSectionDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		//;
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.create_section(createSectionDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
@@ -89,12 +89,12 @@ public class SectionControllerImpl implements SectionController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
 		String id = request.get(RemoveSection.getBodyName(RemoveSection.BodyKey.ID));
 		
-		sectionService.remove_section(id);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		//success.add((sectionService.remove_section(id);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(id));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
@@ -106,7 +106,7 @@ public class SectionControllerImpl implements SectionController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		
 		String id = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID));
 		String year = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
@@ -124,8 +124,7 @@ public class SectionControllerImpl implements SectionController
 		.withEndTime(end_time)
 		.build();
 		
-		sectionService.modify_section_calendar(modifySectionCalendarDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.modify_section_calendar(modifySectionCalendarDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }

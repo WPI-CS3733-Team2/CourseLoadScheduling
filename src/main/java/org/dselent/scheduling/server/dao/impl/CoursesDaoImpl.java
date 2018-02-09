@@ -85,7 +85,7 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 	@Override
 	public Course findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(Course.getColumnName(Course.Columns.ID), false);
+		String columnName = Course.getColumnName(Course.Columns.ID);
 		List<String> selectColumnNames = Course.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -235,14 +235,33 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 
 	@Override
 	public Course findByNumber(String number) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String columnName = Course.getColumnName(Course.Columns.NUMBER);
+		List<String> selectColumnNames = Course.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, number, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Course> coursesList = select(selectColumnNames, queryTermList, orderByList);
+	
+	    Course course = null;
+	    
+	    if(!coursesList.isEmpty())
+	    {
+	    course = coursesList.get(0);
+	    }
+	    
+	    return course;
 	}
 
 
 	@Override
 	public Course findByName(String name) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Course.getColumnName(Course.Columns.NAME), false);
+		String columnName = Course.getColumnName(Course.Columns.NAME);
 		List<String> selectColumnNames = Course.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -268,7 +287,7 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 
 	@Override
 	public Course findByFrequency(Integer frequency) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Course.getColumnName(Course.Columns.FREQUENCY), false);
+		String columnName = Course.getColumnName(Course.Columns.FREQUENCY);
 		List<String> selectColumnNames = Course.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

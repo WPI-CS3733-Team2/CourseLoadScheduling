@@ -29,7 +29,9 @@ public interface UsersController
     public ResponseEntity<String> passwordModification(@RequestBody Map<String, Object> request) throws Exception;
     
     @RequestMapping(method=RequestMethod.POST, value=UserSearch.REQUEST_NAME)
-    public ResponseEntity<String> userSearch(@RequestBody Map<String, String> request) throws Exception;
+    public ResponseEntity<String> userSearch(@RequestBody Map<String, Object> request) throws Exception;
+    
+
 }
 
 	

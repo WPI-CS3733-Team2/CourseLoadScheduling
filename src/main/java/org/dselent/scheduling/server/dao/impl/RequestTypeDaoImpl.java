@@ -86,7 +86,7 @@ public class RequestTypeDaoImpl extends BaseDaoImpl<RequestType> implements Requ
 	@Override
 	public RequestType findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(RequestType.getColumnName(RequestType.Columns.ID), false);
+		String columnName = RequestType.getColumnName(RequestType.Columns.ID);
 		List<String> selectColumnNames = RequestType.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

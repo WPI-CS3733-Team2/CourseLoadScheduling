@@ -5,6 +5,7 @@ import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
+import org.dselent.scheduling.server.requests.UserSearch;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,16 +37,16 @@ public class UsersControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 
-	// @Test
+	@Test
 	public void testRegister() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "1234");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt2");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug2");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent2");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password1");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt2@wpi.edu");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "12345");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password13");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt23@wpi.edu");
 		jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), "1");
 		jsonObject.put(Register.getBodyName(Register.BodyKey.ROLE_ID), 1);
 		String jsonString = jsonObject.toString();
@@ -62,12 +63,12 @@ public class UsersControllerTest {
 
 	}
 
-	// @Test
+	//@Test
 	public void TestSearch() throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL))
-		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),
-		// "?????????x");
+		 jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),
+		 "?????????x");
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME),
 		// "user1x");
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME), null);
@@ -117,11 +118,11 @@ public class UsersControllerTest {
 		  //.andExpect(content().contentType("application/json")); 
 	}
 	
-	@Test
+	//@Test
 	public void DeleteUser() throws Exception{
 		
 		  JSONObject jsonObject = new JSONObject();
-		  jsonObject.put(DeleteUser.getBodyName(DeleteUser.BodyKey.ID), 4);
+		  jsonObject.put(DeleteUser.getBodyName(DeleteUser.BodyKey.ID), 7);
 		  String jsonString = jsonObject.toString();
 		  
 		  System.out.println(jsonString);

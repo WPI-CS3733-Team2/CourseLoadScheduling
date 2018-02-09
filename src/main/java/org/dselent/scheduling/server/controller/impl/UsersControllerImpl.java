@@ -67,8 +67,8 @@ public class UsersControllerImpl implements UsersController
 		.withRoleId(roleId)
 		.build();
 		
-		userService.registerUser(registerUserDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.registerUser(registerUserDto));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
@@ -79,10 +79,10 @@ public class UsersControllerImpl implements UsersController
 	public ResponseEntity<String> delete(@RequestBody Map<String, Object> request) throws Exception {
 		//System.out.println(request);
 		Integer id = (int) request.get(DeleteUser.getBodyName(DeleteUser.BodyKey.ID));
-		List<Object> success = new ArrayList<Object>();
+		//List<Object> success = new ArrayList<Object>();
 		//System.out.println("controller Impl: " + request.get(DeleteUser.getBodyName(DeleteUser.BodyKey.ID)));
-		userService.deleteUser(id);
-		String response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		//success.add(userService.deleteUser(id));
+		String response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.deleteUser(id));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
 	}
@@ -96,13 +96,11 @@ public class UsersControllerImpl implements UsersController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
 		
 		String userName = request.get(Login.getBodyName(Login.BodyKey.USER_NAME));
 		String password = request.get(Login.getBodyName(Login.BodyKey.PASSWORD));
 		
-		success.add(userService.loginUser(userName, password));
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.loginUser(userName, password));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
@@ -128,7 +126,7 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	public ResponseEntity<String> userSearch(@RequestBody Map<String, String> request) throws Exception 
+	public ResponseEntity<String> userSearch(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("userSearch controller reached");
@@ -137,11 +135,11 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		String wpiId = request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
-		String userName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
-		String firstName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME));
-		String lastName = request.get(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME));
-		String email = request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));
+		String wpiId =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
+		String userName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
+		String firstName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME));
+		String lastName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME));
+		String email =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));
 
 
 		UserSearchDto.Builder builder = UserSearchDto.builder();
@@ -154,7 +152,7 @@ public class UsersControllerImpl implements UsersController
 		
 		
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(userSearchDto));
-
+		//System.out.println(response);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 }

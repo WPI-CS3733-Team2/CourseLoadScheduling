@@ -44,8 +44,8 @@ public class SectionControllerTest
 	 * Not really an using this as a JUnit test
 	 * More of an example on how to use the classes
 	 */
-   /* @Test
-    public void testSectionController() throws Exception
+    //@Test
+    public void testSectionInsertion() throws Exception
     
     {
     	
@@ -73,16 +73,16 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }*/
+    }
     
-	/*
-	@Test
-	public void testSectionController() throws Exception
+	
+	//@Test
+	public void testSectionRemove() throws Exception
     
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(RemoveSection.getBodyName(RemoveSection.BodyKey.ID), "107");
+    	jsonObject.put(RemoveSection.getBodyName(RemoveSection.BodyKey.ID), "5");
     	
     	String jsonString = jsonObject.toString();
         
@@ -95,14 +95,14 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }*/
+    }
 	
-	/*@Test
-	public void testSectionController() throws Exception
+	@Test
+	public void testSectionModifyCalendar() throws Exception
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID), "108");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID), "10");
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR), "2018");
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER), "B");
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS), "TR");
@@ -120,7 +120,7 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }*/
+    }
 	/*@Test
 	public void testSectionController() throws Exception
     {
@@ -141,7 +141,7 @@ public class SectionControllerTest
         //.andExpect(content().contentType("application/json"));
         
     }*/
-	@Test
+	/*@Test
 	public void testSectionController() throws Exception
     {
     	
@@ -163,5 +163,5 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }
+    }*/
 }

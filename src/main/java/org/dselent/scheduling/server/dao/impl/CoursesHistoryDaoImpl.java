@@ -86,7 +86,7 @@ public class CoursesHistoryDaoImpl extends BaseDaoImpl<CourseHistory> implements
 	@Override
 	public CourseHistory findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(CourseHistory.getColumnName(CourseHistory.Columns.ID), false);
+		String columnName = CourseHistory.getColumnName(CourseHistory.Columns.ID);
 		List<String> selectColumnNames = Course.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

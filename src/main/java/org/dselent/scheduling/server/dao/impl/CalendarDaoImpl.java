@@ -130,6 +130,28 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 		return rowsAffected;
 	}
 	
+	
+	@Override
+	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList) {
+		String queryTemplate = QueryStringBuilder.generateUpdateString(Calendar.TABLE_NAME, columnName, queryTermList);
+		List<Object> objectList = new ArrayList<Object>();
+		for(Object obj: newValue) {
+			objectList.add(obj);
+		}
+		//objectList.add(newValue);
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    int rowsAffected = jdbcTemplate.update(queryTemplate, parameters);
+	    
+		return rowsAffected;
+	}
+	
 	@Override
 	public int delete(List<QueryTerm> queryTermList)
 	{
@@ -401,4 +423,7 @@ public class CalendarDaoImpl extends BaseDaoImpl<Calendar> implements CalendarDa
 	    
 	    return calendar;
 	}
+
+
+
 }

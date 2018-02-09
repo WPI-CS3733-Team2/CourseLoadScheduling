@@ -238,7 +238,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findById(int id) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.ID), false);
+		String columnName = Section.getColumnName(Section.Columns.ID);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -263,7 +263,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	
 	@Override
 	public Section findByCrn(int crn) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.CRN), false);
+		String columnName = Section.getColumnName(Section.Columns.CRN);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -289,7 +289,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByName(String name) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.NAME), false);
+		String columnName = Section.getColumnName(Section.Columns.NAME);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -315,7 +315,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByType(String type) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.TYPE), false);
+		String columnName = Section.getColumnName(Section.Columns.TYPE);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -341,7 +341,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByPopulation(int population) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.EXPECTED_POPULATION), false);
+		String columnName = Section.getColumnName(Section.Columns.EXPECTED_POPULATION);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -367,7 +367,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByCourseId(int courseId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.COURSE_ID), false);
+		String columnName = Section.getColumnName(Section.Columns.COURSE_ID);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -393,7 +393,7 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 
 	@Override
 	public Section findByScheduleId(int scheduleId) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(Section.getColumnName(Section.Columns.SCHEDULE_ID), false);
+		String columnName = Section.getColumnName(Section.Columns.SCHEDULE_ID);
 		List<String> selectColumnNames = Section.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

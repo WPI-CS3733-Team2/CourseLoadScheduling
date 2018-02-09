@@ -77,7 +77,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 	@Override
 	public UsersRolesLink findById(int id) throws SQLException
 	{
-		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.ID), false);
+		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.ID);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -215,7 +215,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 
 	@Override
 	public UsersRolesLink findByUserId(int uid) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.USER_ID), false);
+		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.USER_ID);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -241,7 +241,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 
 	@Override
 	public UsersRolesLink findByRoleId(int rid) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.ROLE_ID), false);
+		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.ROLE_ID);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -267,7 +267,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 
 	@Override
 	public UsersRolesLink findByIfDeleted(Boolean ifDeleted) throws SQLException {
-		String columnName = QueryStringBuilder.convertColumnName(UsersRolesLink.getColumnName(UsersRolesLink.Columns.DELETED), false);
+		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.DELETED);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

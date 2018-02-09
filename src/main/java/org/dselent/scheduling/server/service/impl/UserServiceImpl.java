@@ -291,7 +291,7 @@ public class UserServiceImpl implements UserService {
 		
 		// return the selected users.
 		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
-		System.out.println(selectedUsers);
+		System.out.println("Selected Users: "+selectedUsers);
 		return selectedUsers;
 		
 	}
@@ -340,7 +340,7 @@ public class UserServiceImpl implements UserService {
 		updateDeletedTerm.setValue(courseLoadId);
 		updateQueryTermList.add(updateDeletedTerm);
 
-		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
+		int result = courseLoadDao.update(updateColumnName, true, updateQueryTermList);
 		return result;
 	}
 	
@@ -355,7 +355,7 @@ public class UserServiceImpl implements UserService {
 		updateDeletedTerm.setValue(facultyId);
 		updateQueryTermList.add(updateDeletedTerm);
 
-		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
+		int result = courseLoadAssociationDao.update(updateColumnName, true, updateQueryTermList);
 		return result;
 	}
 	
