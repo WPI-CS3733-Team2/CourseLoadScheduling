@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.controller;
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.CreateSection;
 import org.dselent.scheduling.server.requests.RemoveSection;
+import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ModifySectionCalendar;
 import org.dselent.scheduling.server.requests.ModifySectionSchedule;
 import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
@@ -44,7 +45,9 @@ public class SectionControllerTest
 	 * Not really an using this as a JUnit test
 	 * More of an example on how to use the classes
 	 */
-    //@Test
+    
+	
+	//@Test
     public void testSectionInsertion() throws Exception
     
     {
@@ -141,7 +144,7 @@ public class SectionControllerTest
         //.andExpect(content().contentType("application/json"));
         
     }
-	@Test
+	//@Test
 	public void testSectionModifyInfo() throws Exception
     {
     	
@@ -157,6 +160,27 @@ public class SectionControllerTest
     	// System.out.println(jsonString);
     	
         this.mockMvc.perform(post("/section/modify_section_type_name_pop").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }
+	
+	@Test
+	public void testSectionSelect() throws Exception
+    
+    {
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(SelectSection.getBodyName(SelectSection.BodyKey.ID), 5);
+    	
+    	String jsonString = jsonObject.toString();
+        
+    	// System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/section/select_section").content(jsonString)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .characterEncoding("utf-8"))
         .andDo(MockMvcResultHandlers.print())

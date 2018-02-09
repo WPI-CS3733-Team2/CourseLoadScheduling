@@ -7,6 +7,7 @@ import org.dselent.scheduling.server.requests.ModifySectionCalendar;
 import org.dselent.scheduling.server.requests.ModifySectionSchedule;
 import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
 import org.dselent.scheduling.server.requests.RemoveSection;
+import org.dselent.scheduling.server.requests.SelectSection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,9 @@ public interface SectionController
 	
 	@RequestMapping(method=RequestMethod.POST, value=RemoveSection.REQUEST_NAME)
 	public ResponseEntity<String> remove_section(@RequestBody Map<String,Object> request) throws Exception;
+	
+	@RequestMapping(method=RequestMethod.POST, value=SelectSection.REQUEST_NAME)
+	public ResponseEntity<String> select_section(@RequestBody Map<String,Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=ModifySectionCalendar.REQUEST_NAME)
 	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, Object> request) throws Exception;
