@@ -87,7 +87,7 @@ public class CalendarHistoryDaoImpl extends BaseDaoImpl<CalendarHistory> impleme
 	@Override
 	public CalendarHistory findById(int id) throws SQLException
 	{
-		String columnName = CalendarHistory.getColumnName(CalendarHistory.Columns.ID);
+		String columnName = QueryStringBuilder.convertColumnName(CalendarHistory.getColumnName(CalendarHistory.Columns.ID), false);
 		List<String> selectColumnNames = CalendarHistory.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -281,7 +281,7 @@ public class CalendarHistoryDaoImpl extends BaseDaoImpl<CalendarHistory> impleme
 
 	@Override
 	public CalendarHistory findByCalendarId(int calendar_id) throws SQLException {
-		String columnName = CalendarHistory.getColumnName(CalendarHistory.Columns.CALENDAR_ID);
+		String columnName = QueryStringBuilder.convertColumnName(CalendarHistory.getColumnName(CalendarHistory.Columns.CALENDAR_ID), false);
 		List<String> selectColumnNames = CalendarHistory.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

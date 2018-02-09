@@ -97,6 +97,7 @@ public class CourseControllerImpl implements CourseController
 
 		// add any objects that need to be returned to the success list
 		String response = "";
+		List<Object> success = new ArrayList<Object>();
 
 		String name = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NAME));
 		String number = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.NUMBER));
@@ -104,13 +105,14 @@ public class CourseControllerImpl implements CourseController
 		String id = request.get(SearchCourse.getBodyName(SearchCourse.BodyKey.ID));
 
 		SearchCourseDto.Builder builder = SearchCourseDto.builder();
-		SearchCourseDto searchCourseDto = builder.withName(name)
+		SearchCourseDto modifyCourseDto = builder.withName(name)
 				.withNumber(number)
 				.withFrequency(frequency)
 				.withId(id)
 				.build();
 
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.searchCourse(searchCourseDto));
+		courseService.searchCourse(modifyCourseDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

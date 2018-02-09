@@ -3,7 +3,8 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.dselent.scheduling.server.model.CourseLoad;
+import org.dselent.scheduling.server.dto.RegisterUserDto;
+import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CourseLoadService
 {
-	public List<CourseLoad> searchCourseLoad(int facultyId) throws SQLException;
+	
 }

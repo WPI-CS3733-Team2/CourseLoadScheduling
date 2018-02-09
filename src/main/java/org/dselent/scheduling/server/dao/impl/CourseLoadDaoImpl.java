@@ -88,7 +88,7 @@ public class CourseLoadDaoImpl extends BaseDaoImpl<CourseLoad> implements Course
 	@Override
 	public CourseLoad findById(int id) throws SQLException
 	{
-		String columnName = CourseLoad.getColumnName(CourseLoad.Columns.ID);
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoad.getColumnName(CourseLoad.Columns.ID), false);
 		List<String> selectColumnNames = CourseLoad.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -231,7 +231,7 @@ public class CourseLoadDaoImpl extends BaseDaoImpl<CourseLoad> implements Course
 
 	@Override
 	public CourseLoad findBytype(String type) throws SQLException {
-		String columnName = CourseLoad.getColumnName(CourseLoad.Columns.TYPE);
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoad.getColumnName(CourseLoad.Columns.TYPE), false);
 		List<String> selectColumnNames = CourseLoad.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -257,7 +257,7 @@ public class CourseLoadDaoImpl extends BaseDaoImpl<CourseLoad> implements Course
 
 	@Override
 	public CourseLoad findByAmount(Integer amount) throws SQLException {
-		String columnName = CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT);
+		String columnName = QueryStringBuilder.convertColumnName(CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT), false);
 		List<String> selectColumnNames = CourseLoad.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

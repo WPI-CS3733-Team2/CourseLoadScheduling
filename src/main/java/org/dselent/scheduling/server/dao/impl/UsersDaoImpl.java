@@ -88,8 +88,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 	@Override
 	public User findById(int id) throws SQLException
 	{
-		//String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.ID), false);
-		String columnName = User.getColumnName(User.Columns.ID);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.ID), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -288,8 +287,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByWpiId(String wpiid) throws SQLException {
-		//String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.WPI_ID), false);
-		String columnName = User.getColumnName(User.Columns.WPI_ID);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.WPI_ID), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -315,8 +313,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByUserName(String userName) throws SQLException {
-		//String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.USER_NAME), false);
-		String columnName = User.getColumnName(User.Columns.USER_NAME);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.USER_NAME), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -342,7 +339,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByFirstName(String firstName) throws SQLException {
-		String columnName = User.getColumnName(User.Columns.FIRST_NAME);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.FIRST_NAME), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -368,7 +365,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByLastName(String lastName) throws SQLException {
-		String columnName = User.getColumnName(User.Columns.LAST_NAME);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.LAST_NAME), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -394,7 +391,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByEmail(String email) throws SQLException {
-		String columnName = User.getColumnName(User.Columns.EMAIL);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.EMAIL), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -420,7 +417,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByState(String state) throws SQLException {
-		String columnName = User.getColumnName(User.Columns.ACCOUNT_STATE);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.ACCOUNT_STATE), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -446,8 +443,7 @@ public class UsersDaoImpl extends BaseDaoImpl<User> implements UsersDao
 
 	@Override
 	public User findByIfDeleted(Boolean ifDeleted) throws SQLException {
-		//String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.DELETED), false);
-		String columnName = User.getColumnName(User.Columns.DELETED);
+		String columnName = QueryStringBuilder.convertColumnName(User.getColumnName(User.Columns.DELETED), false);
 		List<String> selectColumnNames = User.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

@@ -7,12 +7,8 @@ import java.util.List;
 import org.dselent.scheduling.server.dao.ScheduleDao;
 import org.dselent.scheduling.server.dto.CreateScheduleDto;
 import org.dselent.scheduling.server.dto.ViewScheduleDto;
-import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.service.ScheduleService;
-import org.dselent.scheduling.server.sqlutils.ColumnOrder;
-import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
-import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,34 +45,10 @@ public class ScheduleServiceImpl implements ScheduleService
 		return rowAffected;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Schedule> view(ViewScheduleDto viewScheduleDto) throws SQLException {
-		List<Schedule> affectedSchedules = new ArrayList<>();
+	public void view(ViewScheduleDto viewScheduleDto) throws SQLException {
+
 		
-		Schedule schedule = new Schedule();
-		
-		schedule.setScheduleName(viewScheduleDto.getScheduleName());
-		
-		List<String> columnNames = new ArrayList<>();
-		
-		columnNames.addAll(Schedule.getColumnNameList());
-		
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		
-		if (schedule.getScheduleName() != null) 
-		{
-			String queryColumnName = Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME);
-			QueryTerm queryTerm = new QueryTerm(queryColumnName,ComparisonOperator.EQUAL,schedule.getScheduleName(),null);
-			queryTermList.add(queryTerm);
-		}
-		
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> orderBy = new Pair(Schedule.getColumnName(Schedule.Columns.ID), ColumnOrder.ASC);
-		orderByList.add(orderBy);
-		
-		affectedSchedules = scheduleDao.select(columnNames, queryTermList, orderByList);
-		return affectedSchedules;
 	}
     
 }

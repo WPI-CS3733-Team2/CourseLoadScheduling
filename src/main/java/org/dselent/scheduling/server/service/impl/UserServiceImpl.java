@@ -10,6 +10,8 @@ import org.dselent.scheduling.server.dao.FacultyDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
+import org.dselent.scheduling.server.dto.LoginUserDto;
+import org.dselent.scheduling.server.dto.PasswordModificationDto;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.CourseLoadAssociation;
@@ -29,7 +31,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.dselent.scheduling.server.model.UserFacultyAssociation;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
+import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.LogicalOperator;
+import org.dselent.scheduling.server.sqlutils.QueryTerm;
 
 
 @Service
@@ -104,14 +108,13 @@ public class UserServiceImpl implements UserService {
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.SALT));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE)); //
-		//userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED)); //
+		userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED)); //
 
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
-		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.DELETED));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
 
-;
+		rowsAffectedList.add(usersDao.insert(user, userInsertColumnNameList, userKeyHolderColumnNameList));
 		//int userId = user.getId();
 
 
@@ -137,7 +140,7 @@ public class UserServiceImpl implements UserService {
 		
 		
 		//If role is faculty, add faculty&association
-		if(dto.getRoleId() == 1) {
+		if(dto.getRoleId() == 0) {
 			
 			Faculty faculty = new Faculty();
 			faculty.setRank(dto.getRank());
@@ -153,11 +156,10 @@ public class UserServiceImpl implements UserService {
 		return rowsAffectedList;
 	}
 
-<<<<<<< HEAD
 	
     
     
-    // String, String --> Boolean
+    // LoginUserDto --> Boolean
     /*TODO: The login function should do this:
 	 * Find the user by User name.
 	 * If the userName doesn't exist, return false;
@@ -165,25 +167,23 @@ public class UserServiceImpl implements UserService {
 	 * If yes, return true; otherwise, return false.
 	 */
 
-=======
->>>>>>> 1d65b263d215f02b330e390b0e2ad0fb464e55dc
 	@Override
-	public boolean loginUser(String input_userName, String input_password) throws SQLException
+	public boolean loginUser(LoginUserDto dto) throws SQLException
 	{
 		
 		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_Password = dto.getPassword();
 		User selectedUser = null;
 		selectedUser = usersDao.findByUserName(input_userName);
 		
-
 		if(selectedUser == null)
 		{
 			// debugging message
 			System.out.println("The username does not exist.");
 			return false;
 		}
-		else if (input_password.equals(selectedUser.getEncryptedPassword())){
-			System.out.println("Login successfully.");
+		else if (input_Password == selectedUser.getEncryptedPassword()){
 			return true;
 		} 
 		else 
@@ -193,43 +193,45 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
-<<<<<<< HEAD
     
     
-    // int, String, String --> int
+    // LoginUserDto --> int
     /*TODO: The changePassword function should do this:
-	 * Find the user by id in user table.
-	 * If the id doesn't exist, return -1 and report error;
+	 * Find the user by user name.
+	 * If the userName doesn't exist, return -1 and report error;
 	 * 		If the userName can be found, then check if the input old password is matched with existed old password
 	 * 			If yes, replace the new password with existed new password and return rowsAffected. 
 	 * 			If not, return -1 and report error.
 	 */
-=======
-
->>>>>>> 1d65b263d215f02b330e390b0e2ad0fb464e55dc
     @Transactional
 	@Override
-	public int changePassword(Object input_id, String input_OldPassword, String input_NewPassword) throws SQLException
+	public int changePassword(PasswordModificationDto dto) throws SQLException
 	{
-
-		User selectedUser = usersDao.findById((int)input_id);
+		// extract the matched user data from the input userName
+		String input_userName = dto.getUserName();
+		String input_OldPassword = dto.getOldPassword();
+		String input_NewPassword = dto.getNewPassword();
+		User selectedUser = null;
+		selectedUser = usersDao.findByUserName(input_userName);
 		
 		if(selectedUser == null)
 		{
 			// debugging message
-			throw new SQLException("user ID is wrong.");
+			System.out.println("The username does not exist.");
+			return -1;
 		}
-		else if (!input_OldPassword.equals(selectedUser.getEncryptedPassword())){
+		else if (input_OldPassword != selectedUser.getEncryptedPassword()){
 			// debugging message
-			throw new SQLException("The old password is wrong.");
+			System.out.println("The old password is wrong.");
+			return -1;
 		} 
 		else 
 		{
 			//pack the query terms first (only one query term)
 			List<QueryTerm> queryTermList = new ArrayList<>();
-			String queryColumnName = User.getColumnName(User.Columns.ID);
-			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_id, null);
-			queryTermList.add(IdTerm);
+			String queryColumnName = User.getColumnName(User.Columns.USER_NAME);
+			QueryTerm userNameTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_userName, null);
+			queryTermList.add(userNameTerm);
 			
 			// Update the new password.
 			String updateColumnName = User.getColumnName(User.Columns.ENCRYPTED_PASSWORD);
@@ -239,123 +241,23 @@ public class UserServiceImpl implements UserService {
 		}
 	}
     
-
+ // LoginUserDto --> List<User>
+    /*TODO: The searchUser function should do this:
+	 * 1. Read the input: wpiID, userName, firstName, lastName, and email;
+	 * 2. pack the columnNameList: allColumnNameList;
+	 * 3. pack the input variables to queryTermList;
+	 * 4. pack the orderByList using sorting order: <LastName, Asc>
+	 */
     @Transactional
 	@Override
 	public List<User> searchUser(UserSearchDto dto) throws SQLException
 	{
-		// 1. extract the matched user data from the input userName
-		String input_WpiId = dto.getWpiId();
-		String input_userName = dto.getUserName();
-		String input_firstName = dto.getFirstName();
-		String input_lastName = dto.getLastName();
-		String input_email = dto.getEmail();
-		
-		// 2. create a columnName list and pack columnName data
-		List<String> columnNamesList = new ArrayList<>();
-		columnNamesList.addAll(User.getColumnNameList());
-		
-		// 3. create a query terms list and pack the query terms data
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		
-		/* startingFlag is used to mark the first queryTerm with "Not Null" value. When one queryTerm is the first one to add
-		 * into queryTermList, then its logicalOperator (default in OR) should be set to null.
-		 */
-		boolean startingQueryFlag = true;
-		if (input_WpiId != null) {
-			String queryColumnName1 = User.getColumnName(User.Columns.WPI_ID);
-			QueryTerm queryTerm1 = new QueryTerm (queryColumnName1, ComparisonOperator.EQUAL, input_WpiId, LogicalOperator.OR);
-			if (startingQueryFlag == true) {
-				queryTerm1.setLogicalOperator(null);
-				startingQueryFlag = false;
-			}
-			queryTermList.add(queryTerm1);
-		}
-		if (input_userName != null) {
-			String queryColumnName2 = User.getColumnName(User.Columns.USER_NAME);
-			QueryTerm queryTerm2 = new QueryTerm (queryColumnName2, ComparisonOperator.EQUAL, input_userName, LogicalOperator.OR);
-			if (startingQueryFlag == true) {
-				queryTerm2.setLogicalOperator(null);
-				startingQueryFlag = false;
-			}
-			queryTermList.add(queryTerm2);
-		}
-		if (input_firstName != null) {
-			String queryColumnName3 = User.getColumnName(User.Columns.FIRST_NAME);
-			QueryTerm queryTerm3 = new QueryTerm (queryColumnName3, ComparisonOperator.EQUAL, input_firstName, LogicalOperator.OR);
-			if (startingQueryFlag == true) {
-				queryTerm3.setLogicalOperator(null);
-				startingQueryFlag = false;
-			}
-			queryTermList.add(queryTerm3);
-
-		}
-		if (input_lastName != null) {
-			String queryColumnName4 = User.getColumnName(User.Columns.LAST_NAME);
-			QueryTerm queryTerm4 = new QueryTerm (queryColumnName4, ComparisonOperator.EQUAL, input_lastName, LogicalOperator.OR);
-			if (startingQueryFlag == true) {
-				queryTerm4.setLogicalOperator(null);
-				startingQueryFlag = false;
-			}
-			queryTermList.add(queryTerm4);
-
-		}
-		if (input_email != null) {
-			String queryColumnName5 = User.getColumnName(User.Columns.EMAIL);
-			QueryTerm queryTerm5 = new QueryTerm (queryColumnName5, ComparisonOperator.EQUAL, input_email, LogicalOperator.OR);
-			if (startingQueryFlag == true) {
-				queryTerm5.setLogicalOperator(null);
-				startingQueryFlag = false;
-			}
-			queryTermList.add(queryTerm5);
-
-		}
-		
-		// 4. create a sort list and pack sorting data
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> orderBy1 = new Pair<String, ColumnOrder>(User.getColumnName(User.Columns.FIRST_NAME), ColumnOrder.ASC);
-		orderByList.add(orderBy1);
-		
-		// return the selected users.
-		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
-		System.out.println(selectedUsers);
-		return selectedUsers;
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-    
-    // int --> User
-    /*TODO: The AccountDetails function should do this:
-	 * Find the user by id in user table.
-	 * If the id doesn't exist, throw exceptions
-	 * 		If the userName can be found, set the user's private info (Encrypted_password and salt) as null
-	 * 		And return the user with empty private info. 
-	 */
-    @Transactional
-	@Override
-	public User AccountDetails(String input_userId) throws SQLException
-	{
-
-		User selectedUser = usersDao.findById(Integer.parseInt(input_userId));
-		
-		if(selectedUser == null)
-		{
-			throw new SQLException("user ID is wrong.");
-		} 
-		else 
-		{
-			selectedUser.setEncryptedPassword(null);
-			selectedUser.setSalt(null);
-			
-			// for debugging
-			System.out.println(selectedUser);
-			return selectedUser;
-		}
-	}
-    
 	@Override
 	public List<Integer> deleteUser(Integer id) throws SQLException {
-		System.out.println("service: " + id);
 		List<Integer> rowsAffectedList = new ArrayList<>();
 		
 		String updateColumnName = User.getColumnName(User.Columns.DELETED);
@@ -368,52 +270,10 @@ public class UserServiceImpl implements UserService {
 		updateQueryTermList.add(updateDeletedTerm);
 
 		rowsAffectedList.add(usersDao.update(updateColumnName, true, updateQueryTermList));  //delete from users table
+		rowsAffectedList.add(deleteFaculty(id)); //delete from usersRolesLinks table
 		rowsAffectedList.add(deleteRoleLink(id));//delete from faculty table
-		//System.out.println(userFacultyAssociationDao.findByUserId(7));
-		//System.out.println(id);
-		//System.out.println(userFacultyAssociationDao.findByUserId(7)); 
-		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(id);
-		if(ufa != null) {
-			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
-			
-			CourseLoadAssociation cla = courseLoadAssociationDao.findByFacultyId(ufa.getFacultyId());
-			int courseLoadId = cla.getCourseLoadId();
-			rowsAffectedList.add(deleteCourseLoadAssociation(ufa.getFacultyId()));
-			rowsAffectedList.add(deleteCourseLoad(courseLoadId));
-			
-		}
 
 		return rowsAffectedList;
-	}
-	
-	private Integer deleteCourseLoad(int courseLoadId) throws SQLException{
-		String updateColumnName = CourseLoad.getColumnName(CourseLoad.Columns.DELETED);
-		
-		List<QueryTerm> updateQueryTermList = new ArrayList<>();
-		QueryTerm updateDeletedTerm = new QueryTerm();
-		
-		updateDeletedTerm.setColumnName(CourseLoad.getColumnName(CourseLoad.Columns.ID));
-		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		updateDeletedTerm.setValue(courseLoadId);
-		updateQueryTermList.add(updateDeletedTerm);
-
-		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
-		return result;
-	}
-	
-	private Integer deleteCourseLoadAssociation(int facultyId) throws SQLException{
-		String updateColumnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.DELETED);
-		
-		List<QueryTerm> updateQueryTermList = new ArrayList<>();
-		QueryTerm updateDeletedTerm = new QueryTerm();
-		
-		updateDeletedTerm.setColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID));
-		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		updateDeletedTerm.setValue(facultyId);
-		updateQueryTermList.add(updateDeletedTerm);
-
-		int result = usersRolesLinksDao.update(updateColumnName, true, updateQueryTermList);
-		return result;
 	}
 	
 	private Integer addFaculty(Faculty faculty) throws SQLException{
@@ -465,18 +325,22 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
-	private Integer deleteFaculty(Integer facultyId) throws SQLException{
+	private Integer deleteFaculty(Integer userId) throws SQLException{
+		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(userId);
+		int facultyId = ufa.getFacultyId();
+		
 		String updateColumnName = Faculty.getColumnName(Faculty.Columns.DELETED);
-
+		
 		List<QueryTerm> updateQueryTermList = new ArrayList<>();
 		QueryTerm updateDeletedTerm = new QueryTerm();
-
+		
 		updateDeletedTerm.setColumnName(Faculty.getColumnName(Faculty.Columns.ID));
 		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
 		updateDeletedTerm.setValue(facultyId);
 		updateQueryTermList.add(updateDeletedTerm);
 
-		return facultyDao.update(updateColumnName, true, updateQueryTermList);
+		int result = facultyDao.update(updateColumnName, true, updateQueryTermList);
+		return result;
 	}
 
 	private Integer addCourseLoad(CourseLoad courseLoad) throws SQLException{

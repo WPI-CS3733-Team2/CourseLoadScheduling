@@ -19,5 +19,5 @@ import org.springframework.stereotype.Service;
 public interface ScheduleService
 {
 	public int create(CreateScheduleDto createScheduleDto) throws SQLException;
-	public List<Schedule> view(ViewScheduleDto viewScheduleDto) throws SQLException;
+	public void view(ViewScheduleDto viewScheduleDto) throws SQLException;
 }

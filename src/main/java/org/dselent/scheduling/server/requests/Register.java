@@ -39,7 +39,8 @@ public class Register
 		LAST_NAME,
 		EMAIL,
 		PASSWORD,
-		DELETED
+		ROLE_ID,
+		RANK
 	}
 	
 

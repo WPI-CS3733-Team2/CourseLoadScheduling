@@ -14,5 +14,5 @@ public interface SectionsDao extends Dao<Section>
 	public Section findByPopulation(int population) throws SQLException;
 	public Section findByCourseId(int courseId) throws SQLException;
 	public Section findByScheduleId(int scheduleId) throws SQLException;
-	public Section findById(int id) throws SQLException;
+	
 }

@@ -5,30 +5,30 @@ import javax.annotation.Generated;
 //import org.dselent.scheduling.server.dto.RegisterUserDto.Builder;
 
 public class ViewScheduleDto{
-	private final String schedule_name;
+	private final String schedule_id;
 	
 	@Generated("SparkTools")
 	private ViewScheduleDto(Builder builder)
 	{
 		// can add defaults if null for other places where the builder pattern is used
-		this.schedule_name = builder.schedule_name;
+		this.schedule_id = builder.schedule_id;
 		
 		// making claim that none of these can be null
 		// add other state checks here as necessary
-		if(this.schedule_name == null) {
-			throw new IllegalStateException("schedule_name cannot be null");
+		if(this.schedule_id == null) {
+			throw new IllegalStateException("schedule_id cannot be null");
 		}
 	}
 
-	public String getScheduleName() {
-		return schedule_name;
+	public String getschedule_id() {
+		return schedule_id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((schedule_name == null) ? 0 : schedule_name.hashCode());
+		result = prime * result + ((schedule_id == null) ? 0 : schedule_id.hashCode());
 		return result;
 	}
 
@@ -41,17 +41,17 @@ public class ViewScheduleDto{
 		if (getClass() != obj.getClass())
 			return false;
 		ViewScheduleDto other = (ViewScheduleDto) obj;
-		if (schedule_name == null) {
-			if (other.schedule_name != null)
+		if (schedule_id == null) {
+			if (other.schedule_id != null)
 				return false;
-		} else if (!schedule_name.equals(other.schedule_name))
+		} else if (!schedule_id.equals(other.schedule_id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ViewScheduleDto [schedule_name=" + schedule_name + "]";
+		return "ViewScheduleDto [schedule_id=" + schedule_id + "]";
 	}
 	
     /**
@@ -70,14 +70,14 @@ public class ViewScheduleDto{
 	@Generated("SparkTools")
 	public static final class Builder
 	{
-		private String schedule_name;
+		private String schedule_id;
 		
 		private Builder()
 		{
 		}
 		
-		public Builder withScheduleId(String schedule_name) {				//
-			this.schedule_name = schedule_name;
+		public Builder withScheduleId(String schedule_id) {				//
+			this.schedule_id = schedule_id;
 			return this;
 		}
 

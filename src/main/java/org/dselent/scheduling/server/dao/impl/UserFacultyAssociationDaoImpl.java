@@ -81,7 +81,7 @@ public class UserFacultyAssociationDaoImpl extends BaseDaoImpl<UserFacultyAssoci
 	@Override
 	public UserFacultyAssociation findById(int id) throws SQLException {
 		// TODO Auto-generated method stub
-		String columnName = UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.ID);
+		String columnName = QueryStringBuilder.convertColumnName(UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.ID), false);
 		List<String> selectColumnNames = UserFacultyAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -208,7 +208,7 @@ public class UserFacultyAssociationDaoImpl extends BaseDaoImpl<UserFacultyAssoci
 
 	@Override
 	public UserFacultyAssociation findByFacultyId(int fid) throws SQLException {
-		String columnName = UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.FACULTY_ID);
+		String columnName = QueryStringBuilder.convertColumnName(UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.FACULTY_ID), false);
 		List<String> selectColumnNames = UserFacultyAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
@@ -233,7 +233,7 @@ public class UserFacultyAssociationDaoImpl extends BaseDaoImpl<UserFacultyAssoci
 
 	@Override
 	public UserFacultyAssociation findByUserId(int uid) throws SQLException {
-		String columnName = UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.USER_ID);
+		String columnName = QueryStringBuilder.convertColumnName(UserFacultyAssociation.getColumnName(UserFacultyAssociation.Columns.USER_ID), false);
 		List<String> selectColumnNames = UserFacultyAssociation.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();

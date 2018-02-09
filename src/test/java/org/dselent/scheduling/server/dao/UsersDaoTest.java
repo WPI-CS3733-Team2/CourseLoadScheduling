@@ -34,38 +34,36 @@ public class UsersDaoTest
     public void testUsersDao() throws SQLException
     {
     	// INSERT
-    		User user1 = usersDao.findByEmail("useronex@wpi.edu");
-    		System.out.println(user1);
     	
-//    	User user1 = new User();
-//    	user1.setWpiId("?????????x");
-//    	user1.setUserName("user1x");
-//    	user1.setFirstName("userx");
-//    	user1.setLastName("onex");
-//    	user1.setEmail("useronex@wpi.edu");
-//    	user1.setEncryptedPassword("11111111x"); // simplified for now
-//    	user1.setSalt("11111111x"); // also simplified for now
-//    	user1.setAccountState("1x");; // assumes 1 = activated
-//    	user1.setDeleted(false);
-//    	
-//    	List<String> insertColumnNameList = new ArrayList<>();
-//    	List<String> keyHolderColumnNameList = new ArrayList<>();
-//    	
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.WPI_ID));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.USER_NAME));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.FIRST_NAME));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.LAST_NAME));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.EMAIL));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.SALT));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE));
-//    	insertColumnNameList.add(User.getColumnName(User.Columns.DELETED));
-//    	
-//    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
-//    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
-//    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
-//   	
-//    	usersDao.insert(user1, insertColumnNameList, keyHolderColumnNameList);
+    	User user1 = new User();
+    	user1.setWpiId("?????????x");
+    	user1.setUserName("user1x");
+    	user1.setFirstName("userx");
+    	user1.setLastName("onex");
+    	user1.setEmail("useronex@wpi.edu");
+    	user1.setEncryptedPassword("11111111x"); // simplified for now
+    	user1.setSalt("11111111x"); // also simplified for now
+    	user1.setAccountState("1x");; // assumes 1 = activated
+    	user1.setDeleted(false);
+    	
+    	List<String> insertColumnNameList = new ArrayList<>();
+    	List<String> keyHolderColumnNameList = new ArrayList<>();
+    	
+    	insertColumnNameList.add(User.getColumnName(User.Columns.WPI_ID));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.USER_NAME));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.FIRST_NAME));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.LAST_NAME));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.EMAIL));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.SALT));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE));
+    	insertColumnNameList.add(User.getColumnName(User.Columns.DELETED));
+    	
+    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
+    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.CREATED_AT));
+    	keyHolderColumnNameList.add(User.getColumnName(User.Columns.UPDATED_AT));
+   	
+    	usersDao.insert(user1, insertColumnNameList, keyHolderColumnNameList);
     	
     	
     	// UPDATE

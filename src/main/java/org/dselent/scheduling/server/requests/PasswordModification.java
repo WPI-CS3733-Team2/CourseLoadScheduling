@@ -33,7 +33,7 @@ public class PasswordModification
 	
 	public static enum BodyKey
 	{
-		ID,
+		USER_NAME,
 		OLD_PASSWORD,
 		NEW_PASSWORD;
 	}

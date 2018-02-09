@@ -49,11 +49,11 @@ public class RequestControllerTest
     @Test
     public void testRequestController() throws Exception
     {
-    	JSONObject jsonObject = new JSONObject();
+    	/*JSONObject jsonObject = new JSONObject();
     	jsonObject.put(CreateRequest.getParameterName(CreateRequest.ParameterKey.FACULTY_ID), "1");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_TYPE), "1");
     	//jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_STATE), "1");
-    	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.COURSE_ID), "1");
+    	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.COURSE_ID), "2");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.SECTION_ID), "3");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.DATA), "request content");
     	String jsonString = jsonObject.toString();
@@ -64,7 +64,7 @@ public class RequestControllerTest
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .characterEncoding("utf-8"))
         .andDo(MockMvcResultHandlers.print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk());*/
         //.andExpect(content().contentType("application/json"));
         
         /*JSONObject jsonObject = new JSONObject();
@@ -94,17 +94,17 @@ public class RequestControllerTest
         .andExpect(status().isOk());*/
         //.andExpect(content().contentType("application/json"));
     	
-//    	JSONObject jsonObject = new JSONObject();
-//    	String jsonString = jsonObject.toString();
-//        
-//    	System.out.println(jsonString);
-//    	
-//        this.mockMvc.perform(post("/request/view_pending_requests").content(jsonString)
-//        .contentType(MediaType.APPLICATION_JSON_VALUE)
-//        .characterEncoding("utf-8"))
-//        .andDo(MockMvcResultHandlers.print())
-//        .andExpect(status().isOk());
-//        //.andExpect(content().contentType("application/json"));
+    	JSONObject jsonObject = new JSONObject();
+    	String jsonString = jsonObject.toString();
+        
+    	System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/request/view_pending_requests").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
         
     }
     
