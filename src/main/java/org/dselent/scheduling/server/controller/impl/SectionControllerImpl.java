@@ -197,7 +197,7 @@ public class SectionControllerImpl implements SectionController
     }
 	
 	@Override
-	public ResponseEntity<String> view_section_calendars_of_course(Map<String, Object> request)
+	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, Object> request)
 			throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
