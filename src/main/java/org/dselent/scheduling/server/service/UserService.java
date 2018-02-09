@@ -30,12 +30,12 @@ public interface UserService
 
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
-    public boolean loginUser(String input_userName, String input_password) throws SQLException;
+    public User loginUser(String input_userName, String input_password) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
 	 * @param loginUserDto DTO container userName and password.
-	 * @return Boolean value showing login successfully or not.
+	 * @return User information of the logged in user, if
 	 * @throws SQLException
 	 */
     

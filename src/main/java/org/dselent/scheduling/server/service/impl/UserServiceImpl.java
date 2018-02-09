@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean loginUser(String input_userName, String input_password) throws SQLException
+	public User loginUser(String input_userName, String input_password) throws SQLException
 	{
 		
 		// extract the matched user data from the input userName
@@ -171,17 +171,17 @@ public class UserServiceImpl implements UserService {
 		{
 			// debugging message
 			System.out.println("The username does not exist.");
-			return false;
+			return null;
 		}
 		else if (input_password.equals(selectedUser.getEncryptedPassword())){
 			System.out.println("Login successfully.");
-			return true;
+			return selectedUser;
 		} 
 		else 
 		{
 			// debugging message
 			System.out.println("The password is wrong.");
-			return false;
+			return null;
 		}
 	}
 
