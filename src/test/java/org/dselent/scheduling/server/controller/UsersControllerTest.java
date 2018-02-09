@@ -43,12 +43,12 @@ public class UsersControllerTest {
 	public void testRegister() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "123456");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt236");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug236");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent236");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password136");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt236@wpi.edu");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "1234568");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt2368");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug2368");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent2368");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password1368");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt2368@wpi.edu");
 		jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), 1);
 		jsonObject.put(Register.getBodyName(Register.BodyKey.ROLE_ID), 1);
 		String jsonString = jsonObject.toString();
@@ -120,11 +120,11 @@ public class UsersControllerTest {
 		  //.andExpect(content().contentType("application/json")); 
 	}
 	
-	//@Test
+	@Test
 	public void DeleteUser() throws Exception{
 		
 		  JSONObject jsonObject = new JSONObject();
-		  jsonObject.put(DeleteUser.getBodyName(DeleteUser.BodyKey.ID), 7);
+		  jsonObject.put(DeleteUser.getBodyName(DeleteUser.BodyKey.ID), 17);
 		  String jsonString = jsonObject.toString();
 		  
 		  System.out.println(jsonString);

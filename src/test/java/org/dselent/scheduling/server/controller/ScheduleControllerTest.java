@@ -42,11 +42,11 @@ public class ScheduleControllerTest
 	 * Not really an using this as a JUnit test
 	 * More of an example on how to use the classes
 	 */
-    @Test
+    //@Test
     public void testCreateScheduleController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID), "1");
+    	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID), 13);
     	jsonObject.put(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SCHEDULE_NAME), "Test");
     	String jsonString = jsonObject.toString();
         

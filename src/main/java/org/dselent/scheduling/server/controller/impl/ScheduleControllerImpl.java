@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.ScheduleController;
-import org.dselent.scheduling.server.dto.CreateScheduleDto;
 import org.dselent.scheduling.server.dto.ViewScheduleDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateSchedule;
@@ -42,12 +41,12 @@ public class ScheduleControllerImpl implements ScheduleController
 		String facultyId = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID));
 		String scheduleName = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SCHEDULE_NAME));
 		
-		CreateScheduleDto.Builder builder = CreateScheduleDto.builder();
-		CreateScheduleDto createScheduleDto = builder.withFacultyId(facultyId)
-		.withScheduleName(scheduleName)
-		.build();
+//		CreateScheduleDto.Builder builder = CreateScheduleDto.builder();
+//		CreateScheduleDto createScheduleDto = builder.withFacultyId(facultyId)
+//		.withScheduleName(scheduleName)
+//		.build();
 		
-		scheduleService.create(createScheduleDto);
+		scheduleService.create(Integer.parseInt(facultyId), scheduleName);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);

@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dselent.scheduling.server.dao.CourseLoadAssociationDao;
-import org.dselent.scheduling.server.dao.CourseLoadDao;
+
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.FacultyDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
@@ -14,12 +13,13 @@ import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.CourseLoad;
-import org.dselent.scheduling.server.model.CourseLoadAssociation;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
+import org.dselent.scheduling.server.service.CourseLoadService;
+import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.service.UserService;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryTerm;
@@ -51,14 +51,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private FacultyDao facultyDao;
 	
-	@Autowired
-	private CourseLoadDao courseLoadDao;
-	
-	@Autowired
-	private CourseLoadAssociationDao courseLoadAssociationDao;
+//	@Autowired
+//	private CourseLoadDao courseLoadDao;
+//	
+//	@Autowired
+//	private CourseLoadAssociationDao courseLoadAssociationDao;
 	
 	@Autowired
 	private CustomDao customDao;
+	
+	@Autowired
+	private ScheduleService scheduleService;
+	
+	@Autowired
+	private CourseLoadService courseLoadService;
 
 	public UserServiceImpl() {
 		//
@@ -108,8 +114,7 @@ public class UserServiceImpl implements UserService {
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.EMAIL));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.ENCRYPTED_PASSWORD));
 		userInsertColumnNameList.add(User.getColumnName(User.Columns.SALT));
-		userInsertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE)); //
-		//userInsertColumnNameList.add(User.getColumnName(User.Columns.DELETED)); //
+		userInsertColumnNameList.add(User.getColumnName(User.Columns.ACCOUNT_STATE)); 
 
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.ID));
 		userKeyHolderColumnNameList.add(User.getColumnName(User.Columns.DELETED));
@@ -151,8 +156,9 @@ public class UserServiceImpl implements UserService {
 			rowsAffectedList.add(addUFA(faculty.getId(), user.getId()));
 			
 			CourseLoad courseLoad  = new CourseLoad();
-			rowsAffectedList.add(addCourseLoad(courseLoad));
-			rowsAffectedList.add(addCourseLoadAssociation(courseLoad.getId(), faculty.getId()));
+			rowsAffectedList.add(courseLoadService.addCourseLoad(courseLoad));
+			rowsAffectedList.add(courseLoadService.addCourseLoadAssociation(courseLoad.getId(), faculty.getId()));
+			rowsAffectedList.add(scheduleService.create(faculty.getId(), "default"));
 		}
 
 		return rowsAffectedList;
@@ -324,45 +330,17 @@ public class UserServiceImpl implements UserService {
 		if(ufa != null) {
 			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
 			
-			CourseLoadAssociation cla = courseLoadAssociationDao.findByFacultyId(ufa.getFacultyId());
-			int courseLoadId = cla.getCourseLoadId();
-			rowsAffectedList.add(deleteCourseLoadAssociation(ufa.getFacultyId()));
-			rowsAffectedList.add(deleteCourseLoad(courseLoadId));
+			
+			//int courseLoadId = cla.getCourseLoadId();
+			rowsAffectedList.add(courseLoadService.deleteCourseLoadAssociation(ufa.getFacultyId()));
+			rowsAffectedList.add(courseLoadService.deleteCourseLoad(ufa.getFacultyId()));
 			
 		}
 
 		return rowsAffectedList;
 	}
 	
-	private Integer deleteCourseLoad(int courseLoadId) throws SQLException{
-		String updateColumnName = CourseLoad.getColumnName(CourseLoad.Columns.DELETED);
-		
-		List<QueryTerm> updateQueryTermList = new ArrayList<>();
-		QueryTerm updateDeletedTerm = new QueryTerm();
-		
-		updateDeletedTerm.setColumnName(CourseLoad.getColumnName(CourseLoad.Columns.ID));
-		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		updateDeletedTerm.setValue(courseLoadId);
-		updateQueryTermList.add(updateDeletedTerm);
-
-		int result = courseLoadDao.update(updateColumnName, true, updateQueryTermList);
-		return result;
-	}
 	
-	private Integer deleteCourseLoadAssociation(int facultyId) throws SQLException{
-		String updateColumnName = CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.DELETED);
-		
-		List<QueryTerm> updateQueryTermList = new ArrayList<>();
-		QueryTerm updateDeletedTerm = new QueryTerm();
-		
-		updateDeletedTerm.setColumnName(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID));
-		updateDeletedTerm.setComparisonOperator(ComparisonOperator.EQUAL);
-		updateDeletedTerm.setValue(facultyId);
-		updateQueryTermList.add(updateDeletedTerm);
-
-		int result = courseLoadAssociationDao.update(updateColumnName, true, updateQueryTermList);
-		return result;
-	}
 	
 	private Integer addFaculty(Faculty faculty) throws SQLException{
 		
@@ -427,40 +405,7 @@ public class UserServiceImpl implements UserService {
 		return facultyDao.update(updateColumnName, true, updateQueryTermList);
 	}
 
-	private Integer addCourseLoad(CourseLoad courseLoad) throws SQLException{
-		courseLoad.setAmount(0);
-		
-		List<String> insertColumnNameList = new ArrayList<>();
-		List<String> keyHolderColumnNameList = new ArrayList<>();
-		
-		insertColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.AMOUNT));
-		
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.ID));
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.TYPE));
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.DELETED));
-		keyHolderColumnNameList.add(CourseLoad.getColumnName(CourseLoad.Columns.CREATED_AT));
-		
-		return courseLoadDao.insert(courseLoad, insertColumnNameList, keyHolderColumnNameList);
-		
-	}
-	
-	private Integer addCourseLoadAssociation(int courseLoadId, int facultyId) throws SQLException{
-		CourseLoadAssociation cla = new CourseLoadAssociation();
-		cla.setCourseLoadId(courseLoadId);
-		cla.setFacultyId(facultyId);
-		
-		List<String> insertColumnNameList = new ArrayList<>();
-		List<String> keyHolderColumnNameList = new ArrayList<>();
-		
-		insertColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.COURSE_LOAD_ID));
-		insertColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.FACULTY_ID));
-		
-		keyHolderColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.ID));
-		keyHolderColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.DELETED));
-		keyHolderColumnNameList.add(CourseLoadAssociation.getColumnName(CourseLoadAssociation.Columns.CREATED_AT));
-		
-		return courseLoadAssociationDao.insert(cla, insertColumnNameList, keyHolderColumnNameList);
-	}
+
 
 	@Override
 	public List<User> viewUserOfRoleId(Integer roleId) throws SQLException {

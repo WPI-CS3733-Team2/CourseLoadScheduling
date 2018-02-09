@@ -15,6 +15,7 @@ import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
+import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,8 @@ public class UsersControllerImpl implements UsersController
 {
 	@Autowired
     private UserService userService;
+	
+
     
 	/**
 	 * 
@@ -67,6 +70,9 @@ public class UsersControllerImpl implements UsersController
 		.withPassword(password)
 		.withRoleId(roleId)
 		.build();
+		
+		//success.add(userService.registerUser(registerUserDto));
+		//success.add(scheduleService.create(createScheduleDto))
 		
 		
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.registerUser(registerUserDto));

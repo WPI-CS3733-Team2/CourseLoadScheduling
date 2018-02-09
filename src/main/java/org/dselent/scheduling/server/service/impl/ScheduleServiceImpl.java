@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.ScheduleDao;
-import org.dselent.scheduling.server.dto.CreateScheduleDto;
 import org.dselent.scheduling.server.dto.ViewScheduleDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Schedule;
@@ -28,13 +27,13 @@ public class ScheduleServiceImpl implements ScheduleService
     }
 
 	@Override
-	public int create(CreateScheduleDto createScheduleDto) throws SQLException {
+	public int create(Integer facultyId, String scheduleName) throws SQLException {
 		int rowAffected;
 		
 		Schedule schedule = new Schedule();
 		
-		schedule.setFacultyId(Integer.parseInt(createScheduleDto.getFacultyId()));
-		schedule.setScheduleName(createScheduleDto.getScheduleName());
+		schedule.setFacultyId(facultyId);
+		schedule.setScheduleName(scheduleName);
 		
 		List<String> scheduleInsertColumnNameList = new ArrayList<>();
 		List<String> scheduleKeyHolderColumnNameList = new ArrayList<>();
@@ -48,6 +47,7 @@ public class ScheduleServiceImpl implements ScheduleService
 		rowAffected = scheduleDao.insert(schedule, scheduleInsertColumnNameList, scheduleKeyHolderColumnNameList);
 		return rowAffected;
 	}
+	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
