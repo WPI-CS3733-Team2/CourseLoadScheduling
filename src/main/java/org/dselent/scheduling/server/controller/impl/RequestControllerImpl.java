@@ -51,7 +51,6 @@ public class RequestControllerImpl implements RequestController
 		
 		String facultyId = request.get(CreateRequest.getParameterName(CreateRequest.ParameterKey.FACULTY_ID));
 		String requestType = request.get(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_TYPE));
-		//String requestState = request.get(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_STATE));
 		String courseId = request.get(CreateRequest.getBodyName(CreateRequest.BodyKey.COURSE_ID));
 		String sectionId = request.get(CreateRequest.getBodyName(CreateRequest.BodyKey.SECTION_ID));
 		String data = request.get(CreateRequest.getBodyName(CreateRequest.BodyKey.DATA));
@@ -59,13 +58,12 @@ public class RequestControllerImpl implements RequestController
 		CreateRequestDto.Builder builder = CreateRequestDto.builder();
 		CreateRequestDto createRequestDto = builder.withFacultyId(facultyId)
 		.withRequestType(requestType)
-		//.withRequestState(requestState)
 		.withCourseId(courseId)
 		.withSectionId(sectionId)
 		.withData(data)
 		.build();
 		
-		success.add(requestService.createRequest(createRequestDto));
+		requestService.createRequest(createRequestDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -80,12 +78,6 @@ public class RequestControllerImpl implements RequestController
 		List<Object> success = new ArrayList<Object>();
 				
 		String facultyId = request.get(ViewRequestHistory.getParameterName(ViewRequestHistory.ParameterKey.FACULTY_ID));
-		
-		//Since there's only one data value, this may not need a DTO.
-		//Maybe change later.
-		/*CreateRequestDto.Builder builder = CreateRequestDto.builder();
-		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
-		.build();*/
 				
 		success.add(requestService.viewRequestHistory(Integer.parseInt(facultyId)));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
@@ -103,14 +95,8 @@ public class RequestControllerImpl implements RequestController
 						
 		String requestId = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_ID));
 		String requestState = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_STATE));
-				
-		//Since there's only one data value, this may not need a DTO.
-		//Maybe change later.
-		/*CreateRequestDto.Builder builder = CreateRequestDto.builder();
-		CreateRequestDto viewRequestHistoryDto = builder.withFacultyId(facultyId)
-		.build();*/
 						
-		success.add(requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState)));
+		requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
