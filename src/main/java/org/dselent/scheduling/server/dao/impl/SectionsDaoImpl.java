@@ -9,6 +9,7 @@ import java.util.Map;
 import org.dselent.scheduling.server.dao.SectionsDao;
 import org.dselent.scheduling.server.extractor.SectionsExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -414,5 +415,27 @@ public class SectionsDaoImpl extends BaseDaoImpl<Section> implements SectionsDao
 	    }
 	    
 	    return section;
+	}
+
+
+	@Override
+	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList) {
+		String queryTemplate = QueryStringBuilder.generateUpdateString(Section.TABLE_NAME, columnName, queryTermList);
+		List<Object> objectList = new ArrayList<Object>();
+		for(Object obj: newValue) {
+			objectList.add(obj);
+		}
+		//objectList.add(newValue);
+		
+		for(QueryTerm queryTerm : queryTermList)
+		{
+			objectList.add(queryTerm.getValue());
+		}
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    int rowsAffected = jdbcTemplate.update(queryTemplate, parameters);
+	    
+		return rowsAffected;
 	}
 }

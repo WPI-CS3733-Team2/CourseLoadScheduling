@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface SectionController
 {
 	@RequestMapping(method=RequestMethod.POST, value=CreateSection.REQUEST_NAME)
-	public ResponseEntity<String> create_section(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> create_section(@RequestBody Map<String, Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=RemoveSection.REQUEST_NAME)
-	public ResponseEntity<String> remove_section(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> remove_section(@RequestBody Map<String,Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=ModifySectionCalendar.REQUEST_NAME)
-	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> modify_section_calendar(@RequestBody Map<String, Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=ModifySectionSchedule.REQUEST_NAME)
-	public ResponseEntity<String> modify_section_schedule(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> modify_section_schedule(@RequestBody Map<String, Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=ModifySectionTypeNamePop.REQUEST_NAME)
-	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, Object> request) throws Exception;
 }
 
 	

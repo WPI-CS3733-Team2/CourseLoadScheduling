@@ -12,10 +12,10 @@ import javax.annotation.Generated;
  */
 public class ModifySectionTypeNamePopDto
 {
-	private final String id;
+	private final Integer id;
 	private final String type;
 	private final String name;
-	private final String expected_population;
+	private final Integer expected_population;
 
 	// I added to the auto-generated code
 	@Generated("SparkTools")
@@ -46,7 +46,7 @@ public class ModifySectionTypeNamePopDto
 		}
 	}
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 	public String getName()
@@ -59,7 +59,7 @@ public class ModifySectionTypeNamePopDto
 		return type;
 	}
 
-	public String getExpectedPopulation()
+	public Integer getExpectedPopulation()
 	{
 		return expected_population;
 	}
@@ -138,17 +138,17 @@ public class ModifySectionTypeNamePopDto
 	@Generated("SparkTools")
 	public static final class Builder
 	{
-		private String id;
+		private Integer id;
 		private String name;
 		private String type;
-		private String expected_population;
+		private Integer expected_population;
 
 		private Builder()
 		{
 		}
 		
-		public Builder withId(String id) {				//
-			this.id = id;
+		public Builder withId(Integer id2) {				//
+			this.id = id2;
 			return this;
 		}
 		
@@ -164,7 +164,7 @@ public class ModifySectionTypeNamePopDto
 			return this;
 		}
 
-		public Builder withExpectedPopulation(String expected_population)
+		public Builder withExpectedPopulation(Integer expected_population)
 		{
 			this.expected_population = expected_population;
 			return this;

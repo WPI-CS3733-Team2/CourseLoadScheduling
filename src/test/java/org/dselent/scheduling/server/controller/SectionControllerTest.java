@@ -50,13 +50,13 @@ public class SectionControllerTest
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.CRN), "565050");
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.CRN), 565050);
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.NAME), "X02");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.TYPE), "Lab");
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION), "50");
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID), "1");
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID), "1");
-    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.YEAR), "2018");
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION), 50);
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID), 1);
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID), 1);
+    	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.YEAR), 2018);
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.SEMESTER), "A");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.DAYS), "MWF");
     	jsonObject.put(CreateSection.getBodyName(CreateSection.BodyKey.START_TIME), "0800");
@@ -82,7 +82,7 @@ public class SectionControllerTest
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(RemoveSection.getBodyName(RemoveSection.BodyKey.ID), "5");
+    	jsonObject.put(RemoveSection.getBodyName(RemoveSection.BodyKey.ID), 5);
     	
     	String jsonString = jsonObject.toString();
         
@@ -97,13 +97,13 @@ public class SectionControllerTest
         
     }
 	
-	@Test
+	//@Test
 	public void testSectionModifyCalendar() throws Exception
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID), "10");
-    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR), "2018");
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID), 10);
+    	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR), 2018);
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER), "B");
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS), "TR");
     	jsonObject.put(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME), "0800");
@@ -121,13 +121,13 @@ public class SectionControllerTest
         //.andExpect(content().contentType("application/json"));
         
     }
-	/*@Test
-	public void testSectionController() throws Exception
+	//@Test
+	public void testSectionModifySchedule() throws Exception
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID), "108");
-    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID), "9");
+    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID), 108);
+    	jsonObject.put(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID), 9);
     	
     	String jsonString = jsonObject.toString();
         
@@ -140,16 +140,16 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }*/
-	/*@Test
-	public void testSectionController() throws Exception
+    }
+	@Test
+	public void testSectionModifyInfo() throws Exception
     {
     	
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID), "108");
-    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE), "lecture");
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID), 10);
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE), "lecturexxxxx");
     	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME), "X04");
-    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION), "20");
+    	jsonObject.put(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION), 20);
     	
     	
     	String jsonString = jsonObject.toString();
@@ -163,5 +163,5 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }*/
+    }
 }

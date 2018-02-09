@@ -20,9 +20,9 @@ public interface SectionService
 {
 
 	public int create_section(CreateSectionDto createSectionDto) throws SQLException;
-	public List<Integer> remove_section(String id) throws SQLException;
+	public List<Integer> remove_section(Integer id) throws SQLException;
 	public List<Integer> modify_section_calendar(ModifySectionCalendarDto modifySectionCalendarDto) throws SQLException;
-	public void modify_section_schedule(String id, String schedule_id) throws SQLException;
-	public void modify_section_type_name_pop(ModifySectionTypeNamePopDto modifySectionTypeNamePopDto) throws SQLException;
+	public List<Integer> modify_section_schedule(Integer id, Integer schedule_id) throws SQLException;
+	public List<Integer> modify_section_type_name_pop(ModifySectionTypeNamePopDto modifySectionTypeNamePopDto) throws SQLException;
 
 }

@@ -13,13 +13,13 @@ import javax.annotation.Generated;
  */
 public class CreateSectionDto
 {
-	private final String crn;
+	private final Integer crn;
 	private final String name;
 	private final String type;
-	private final String expected_population;
-	private final String course_id;
-	private final String schedule_id;
-	private final String year;
+	private final Integer expected_population;
+	private final Integer course_id;
+	private final Integer schedule_id;
+	private final Integer year;
 	private final String semester;
 	private final String days;
 	private final String start_time;
@@ -85,7 +85,7 @@ public class CreateSectionDto
 		}
 	}
 	
-	public String getCrn() {
+	public Integer getCrn() {
 		return crn;
 	}
 	public String getName()
@@ -98,22 +98,22 @@ public class CreateSectionDto
 		return type;
 	}
 
-	public String getExpectedPopulation()
+	public Integer getExpectedPopulation()
 	{
 		return expected_population;
 	}
 
-	public String getCourseId()
+	public Integer getCourseId()
 	{
 		return course_id;
 	}
 
-	public String getScheduleId()
+	public Integer getScheduleId()
 	{
 		return schedule_id;
 	}
 	
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
@@ -229,13 +229,13 @@ public class CreateSectionDto
 	@Generated("SparkTools")
 	public static final class Builder
 	{
-		private String crn;
+		private Integer crn;
 		private String name;
 		private String type;
-		private String expected_population;
-		private String course_id;
-		private String schedule_id;
-		private String year;
+		private Integer expected_population;
+		private Integer course_id;
+		private Integer schedule_id;
+		private Integer year;
 		private String semester;
 		private String days;
 		private String start_time;
@@ -245,7 +245,7 @@ public class CreateSectionDto
 		{
 		}
 		
-		public Builder withCrn(String crn) {				//
+		public Builder withCrn(Integer crn) {				//
 			this.crn = crn;
 			return this;
 		}
@@ -262,25 +262,25 @@ public class CreateSectionDto
 			return this;
 		}
 
-		public Builder withExpectedPopulation(String expected_population)
+		public Builder withExpectedPopulation(Integer expected_population)
 		{
 			this.expected_population = expected_population;
 			return this;
 		}
 
-		public Builder withCourseId(String course_id)
+		public Builder withCourseId(Integer course_id)
 		{
 			this.course_id = course_id;
 			return this;
 		}
 		
-		public Builder withScheduleId(String schedule_id)
+		public Builder withScheduleId(Integer schedule_id)
 		{
 			this.schedule_id = schedule_id;
 			return this;
 		}
 
-		public Builder withYear(String year)
+		public Builder withYear(Integer year)
 		{
 			this.year = year;
 			return this;
