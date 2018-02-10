@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.FacultyDao;
+import org.dselent.scheduling.server.dao.SectionsDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UsersRolesLinksDao;
@@ -56,6 +57,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private CustomDao customDao;
+	
+	@Autowired
+	private SectionsDao sectionsDao;
 	
 	@Autowired
 	private ScheduleService scheduleService;
@@ -343,7 +347,7 @@ public class UserServiceImpl implements UserService {
 		UserFacultyAssociation ufa =userFacultyAssociationDao.findByUserId(id);
 		if(ufa != null) {
 			rowsAffectedList.add(deleteFaculty(ufa.getFacultyId()));
-			rowsAffectedList.addAll(dislinkFacultyWithSection(ufa.getFacultyId()));
+			rowsAffectedList.addAll(dislinkFacultyWithAllSection(ufa.getFacultyId()));
 			
 			//int courseLoadId = cla.getCourseLoadId();
 			rowsAffectedList.add(courseLoadService.deleteCourseLoadAssociation(ufa.getFacultyId()));
@@ -444,14 +448,28 @@ public class UserServiceImpl implements UserService {
 	public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception {
 		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
 		Integer scheduleId = scheduleOfFaculty.getId();
+		if(sectionsDao.findById(sectionId).getScheduleId() == scheduleId) {							//if already assigned, return 0
+			return 0;
+		}
 		sectionService.modify_section_schedule(sectionId, scheduleId);
 		return courseLoadService.increaseAmount(facultyId);
 	}
-
 	@Override
-	public List<Integer> dislinkFacultyWithSection(Integer facultyId) throws SQLException {
+	public Integer dislinkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception {
 		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
 		Integer scheduleId = scheduleOfFaculty.getId();
+		if(sectionsDao.findById(sectionId).getScheduleId() != scheduleId) {							//if not assigned, return 0
+			return 0;
+		}
+		sectionService.modify_section_schedule(sectionId, null);
+		return courseLoadService.decreaseAmount(facultyId);
+	}
+
+	@Override
+	public List<Integer> dislinkFacultyWithAllSection(Integer facultyId) throws SQLException {
+		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
+		Integer scheduleId = scheduleOfFaculty.getId();
+		
 		return sectionService.dislinkAll(scheduleId);
 	}
 	
@@ -459,6 +477,8 @@ public class UserServiceImpl implements UserService {
 		return new UserInfo(selectedUser.getId(), selectedUser.getWpiId(), selectedUser.getUserName(), selectedUser.getFirstName(), selectedUser.getLastName(), 
 				selectedUser.getEmail(),selectedUser.getAccountState(), (boolean)selectedUser.getDeleted(), roleId);
 	}
+
+	
 
 
 }

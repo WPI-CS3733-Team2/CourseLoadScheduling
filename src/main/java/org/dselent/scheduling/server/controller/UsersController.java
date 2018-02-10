@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.controller;
 import java.util.Map;
 
 import org.dselent.scheduling.server.requests.DeleteUser;
+import org.dselent.scheduling.server.requests.DislinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
@@ -42,6 +43,9 @@ public interface UsersController
     
     @RequestMapping(method=RequestMethod.POST, value=LinkFacultyWithSection.REQUEST_NAME)
     public ResponseEntity<String> linkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception;
+    
+    @RequestMapping(method=RequestMethod.POST, value=DislinkFacultyWithSection.REQUEST_NAME)
+    public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception;
 }
 
 	

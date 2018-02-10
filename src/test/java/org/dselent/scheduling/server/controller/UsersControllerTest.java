@@ -134,7 +134,7 @@ public class UsersControllerTest {
 		  //.andExpect(content().contentType("application/json")); 
 	}
 	
-	@Test
+	//@Test
 	public void TestViewUserOfRoleId() throws Exception{
 		  JSONObject jsonObject = new JSONObject();
 		  jsonObject.put(ViewUserOfRoleId.getBodyName(ViewUserOfRoleId.BodyKey.ROLE_ID), 1);
@@ -149,7 +149,7 @@ public class UsersControllerTest {
 	//@Test
 	public void TestGetFacultyCalendars() throws Exception{
 		  JSONObject jsonObject = new JSONObject();
-		  jsonObject.put(GetFacultyCalendars.getBodyName(GetFacultyCalendars.BodyKey.FACULTY_ID), 13);
+		  jsonObject.put(GetFacultyCalendars.getBodyName(GetFacultyCalendars.BodyKey.FACULTY_ID), 18);
 		  String jsonString = jsonObject.toString();
 		  
 		  System.out.println(jsonString);
@@ -158,16 +158,16 @@ public class UsersControllerTest {
 					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 	
-	//@Test
+	@Test
 	public void TestLinkFacultyWithSection() throws Exception{
 		  JSONObject jsonObject = new JSONObject();
-		  jsonObject.put(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.FACULTY_ID), 18);
+		  jsonObject.put(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.FACULTY_ID), 20);
 		  jsonObject.put(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.SECTION_ID), 10);
 		  String jsonString = jsonObject.toString();
 		  
 		  System.out.println(jsonString);
 		  
-		  this.mockMvc.perform(post("/user/link_faculty_with_section").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
+		  this.mockMvc.perform(post("/user/dislink_faculty_with_section").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
 					.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 }

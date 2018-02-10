@@ -63,8 +63,9 @@ public interface UserService
     
     public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
     
-    public  List<Integer> dislinkFacultyWithSection(Integer facultyId) throws SQLException;
+    public  List<Integer> dislinkFacultyWithAllSection(Integer facultyId) throws SQLException;
     
     public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
+    public Integer dislinkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
     
 }

@@ -201,6 +201,18 @@ public class UsersControllerImpl implements UsersController
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.linkFacultyWithSection(facultyId, sectionId));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
+
+
+
+	@Override
+	public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception {
+		System.out.println("linkFacultyWithSection reached");
+		String response = "";
+		Integer facultyId = (Integer) request.get(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.FACULTY_ID));
+		Integer sectionId = (Integer) request.get(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.SECTION_ID));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.dislinkFacultyWithSection(facultyId, sectionId));
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
 }
 
 	
