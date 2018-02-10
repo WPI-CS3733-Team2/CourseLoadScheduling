@@ -44,12 +44,12 @@ public class UsersControllerTest {
 	public void testRegister() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "1234568");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt2368");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug2368");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent2368");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password1368");
-		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt2368@wpi.edu");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.WPI_ID), "123");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.USER_NAME), "dselenttt23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.FIRST_NAME), "Doug23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.LAST_NAME), "Selent23");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.PASSWORD), "password13");
+		jsonObject.put(Register.getBodyName(Register.BodyKey.EMAIL), "dselenttt23@wpi.edu");
 		jsonObject.put(Register.getBodyName(Register.BodyKey.RANK), 1);
 		jsonObject.put(Register.getBodyName(Register.BodyKey.ROLE_ID), 1);
 		String jsonString = jsonObject.toString();
@@ -85,12 +85,12 @@ public class UsersControllerTest {
 				.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 
-	//@Test
+	@Test
 	public void TestLogin() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(Login.getBodyName(Login.BodyKey.USER_NAME), "dselenttt2");
-		jsonObject.put(Login.getBodyName(Login.BodyKey.PASSWORD), "2a$10$oZHCntfOaVZFVXyXVDp/1.XB5DzbQ7mhSJW9S4duTda06bQf2PHni");
+		jsonObject.put(Login.getBodyName(Login.BodyKey.USER_NAME), "dselenttt23");
+		jsonObject.put(Login.getBodyName(Login.BodyKey.PASSWORD), "$2a$10$cELmHewoN2kW41F78jDMa.xU1h/v8KQQQE1Bt.Ho8WVaoJ/qyhtfO");
 		String jsonString = jsonObject.toString();
 
 		System.out.println(jsonString);

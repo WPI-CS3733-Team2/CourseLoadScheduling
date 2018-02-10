@@ -16,6 +16,7 @@ import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.httpReturnObject.UserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
@@ -164,12 +165,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loginUser(String input_userName, String input_password) throws SQLException
+	public UserInfo loginUser(String input_userName, String input_password) throws SQLException
 	{
 		
 		// extract the matched user data from the input userName
 		User selectedUser = null;
 		selectedUser = usersDao.findByUserName(input_userName);
+		
 		
 
 		if(selectedUser == null)
@@ -178,9 +180,17 @@ public class UserServiceImpl implements UserService {
 			System.out.println("The username does not exist.");
 			return null;
 		}
+		else if(selectedUser.getDeleted() == true) 
+		{
+			System.out.println("The username does not exist.");
+			return null;
+		}
 		else if (input_password.equals(selectedUser.getEncryptedPassword())){
-			System.out.println("Login successfully.");
-			return selectedUser;
+			UsersRolesLink url = usersRolesLinksDao.findByUserId(selectedUser.getId());
+			System.out.println("Login successfully." + selectedUser);
+//			return null;
+			UserInfo userInfo = new UserInfo(selectedUser.getId(), selectedUser.getWpiId(), selectedUser.getUserName(), selectedUser.getFirstName(), selectedUser.getLastName(), selectedUser.getEmail(), url.getRoleId());
+			return userInfo;
 		} 
 		else 
 		{

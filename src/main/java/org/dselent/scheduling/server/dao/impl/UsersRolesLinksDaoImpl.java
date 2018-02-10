@@ -78,7 +78,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 	public UsersRolesLink findById(int id) throws SQLException
 	{
 		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.ID);
-		List<String> selectColumnNames = User.getColumnNameList();
+		List<String> selectColumnNames = UsersRolesLink.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
 		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, id, null);
@@ -216,7 +216,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 	@Override
 	public UsersRolesLink findByUserId(int uid) throws SQLException {
 		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.USER_ID);
-		List<String> selectColumnNames = User.getColumnNameList();
+		List<String> selectColumnNames = UsersRolesLink.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
 		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, uid, null);
@@ -242,7 +242,7 @@ public class UsersRolesLinksDaoImpl extends BaseDaoImpl<UsersRolesLink> implemen
 	@Override
 	public UsersRolesLink findByRoleId(int rid) throws SQLException {
 		String columnName = UsersRolesLink.getColumnName(UsersRolesLink.Columns.ROLE_ID);
-		List<String> selectColumnNames = User.getColumnNameList();
+		List<String> selectColumnNames = UsersRolesLink.getColumnNameList();
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
 		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, rid, null);
