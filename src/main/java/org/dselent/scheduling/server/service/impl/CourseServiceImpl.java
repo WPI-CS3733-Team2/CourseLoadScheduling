@@ -5,12 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CoursesDao;
+import org.dselent.scheduling.server.dao.CustomDao;
+import org.dselent.scheduling.server.dao.UsersDao;
+import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
 import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
+import org.dselent.scheduling.server.httpReturnObject.UserFaculty;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Course;
+import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.model.UserFacultyAssociation;
 import org.dselent.scheduling.server.service.CourseService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -25,6 +32,15 @@ public class CourseServiceImpl implements CourseService
 {
 	@Autowired
 	private CoursesDao coursesDao;
+	
+	@Autowired
+	private CustomDao customDao;
+	
+	@Autowired
+	private UsersDao usersDao;
+	
+	@Autowired
+	private UserFacultyAssociationDao userFacultyAssociationDao;
 	
     public CourseServiceImpl()
     {
@@ -176,6 +192,21 @@ public class CourseServiceImpl implements CourseService
 		
 		rowAffected = coursesDao.delete(queryTermList);
 		return rowAffected;
+	}
+
+	@Override
+	public List<UserFaculty> getCourseFaculties(Integer courseId) throws SQLException {
+		List<UserFaculty> result = new ArrayList<>();
+		List<Faculty> faculties = customDao.getFacultiesTeachingACourse(courseId);
+		for(Faculty faculty: faculties) {
+			int facultyId = faculty.getId();
+			UserFacultyAssociation ufa = userFacultyAssociationDao.findByFacultyId(facultyId);
+			int userId = ufa.getUserId();
+			User user = usersDao.findById(userId);
+			result.add(new UserFaculty(userId, user.getWpiId(), user.getUserName(), 
+					user.getFirstName(), user.getLastName(), user.getEmail(), user.getAccountState(), user.getDeleted(), facultyId, (int)faculty.getRank()));
+		}
+		return result;
 	}
     
 }

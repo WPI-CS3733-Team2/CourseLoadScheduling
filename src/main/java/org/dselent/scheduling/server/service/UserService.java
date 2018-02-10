@@ -65,4 +65,5 @@ public interface UserService
     public  List<Integer> dislinkFacultyWithSection(Integer facultyId) throws SQLException;
     
     public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
+    
 }

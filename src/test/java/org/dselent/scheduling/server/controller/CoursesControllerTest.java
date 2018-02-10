@@ -2,6 +2,7 @@ package org.dselent.scheduling.server.controller;
 
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.CreateCourse;
+import org.dselent.scheduling.server.requests.GetCourseFaculties;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.SearchCourse;
 import org.json.JSONObject;
@@ -83,7 +84,7 @@ public class CoursesControllerTest
         
     }
     
-    @Test
+    //@Test
     public void testSearchCourseController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
@@ -94,6 +95,24 @@ public class CoursesControllerTest
     	//System.out.println(jsonString);
     	
         this.mockMvc.perform(post("/course/search_course").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }
+    
+    @Test
+    public void testGetCourseFaculties() throws Exception
+    {
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(GetCourseFaculties.getBodyName(GetCourseFaculties.BodyKey.COURSE_ID), 1);
+    	String jsonString = jsonObject.toString();
+        
+    	//System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/course/get_course_faculties").content(jsonString)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .characterEncoding("utf-8"))
         .andDo(MockMvcResultHandlers.print())

@@ -8,13 +8,12 @@ import org.dselent.scheduling.server.controller.CourseController;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
 import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
-import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateCourse;
 import org.dselent.scheduling.server.requests.DeleteCourse;
+import org.dselent.scheduling.server.requests.GetCourseFaculties;
 import org.dselent.scheduling.server.requests.ModifyCourse;
-import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.SearchCourse;
 import org.dselent.scheduling.server.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +134,23 @@ public class CourseControllerImpl implements CourseController
 		courseService.deleteCourse(deleteCourseDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<String> getCourseFaculties(@RequestBody Map<String, Integer> request) throws Exception {
+		// Print is for testing purposes
+		System.out.println("controller reached");
+
+		// add any objects that need to be returned to the success list
+		String response = "";
+
+		
+		int courseId = request.get(GetCourseFaculties.getBodyName(GetCourseFaculties.BodyKey.COURSE_ID));
+
+
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.getCourseFaculties(courseId));
+
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	    	

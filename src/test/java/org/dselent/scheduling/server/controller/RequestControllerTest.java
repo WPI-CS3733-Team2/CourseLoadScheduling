@@ -50,11 +50,11 @@ public class RequestControllerTest
     public void testRequestController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(CreateRequest.getParameterName(CreateRequest.ParameterKey.FACULTY_ID), "1");
+    	jsonObject.put(CreateRequest.getParameterName(CreateRequest.ParameterKey.FACULTY_ID), "18");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_TYPE), "1");
     	//jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.REQUEST_STATE), "1");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.COURSE_ID), "1");
-    	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.SECTION_ID), "3");
+    	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.SECTION_ID), "11");
     	jsonObject.put(CreateRequest.getBodyName(CreateRequest.BodyKey.DATA), "request content");
     	String jsonString = jsonObject.toString();
         

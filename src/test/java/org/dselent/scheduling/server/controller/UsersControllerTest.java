@@ -70,8 +70,7 @@ public class UsersControllerTest {
 	public void TestSearch() throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL))
-		 jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),
-		 "?????????x");
+		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),"?????????x");
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME),
 		// "user1x");
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME), null);

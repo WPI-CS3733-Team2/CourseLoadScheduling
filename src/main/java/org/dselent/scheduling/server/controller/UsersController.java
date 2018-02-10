@@ -34,7 +34,6 @@ public interface UsersController
     @RequestMapping(method=RequestMethod.POST, value=UserSearch.REQUEST_NAME)
     public ResponseEntity<String> userSearch(@RequestBody Map<String, Object> request) throws Exception;
     
-    
     @RequestMapping(method=RequestMethod.POST, value=ViewUserOfRoleId.REQUEST_NAME)
     public ResponseEntity<String> viewUserOfRoleId(@RequestBody Map<String, Integer> request) throws Exception;
     
