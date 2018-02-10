@@ -188,9 +188,8 @@ public class UserServiceImpl implements UserService {
 		else if (input_password.equals(selectedUser.getEncryptedPassword())){
 			UsersRolesLink url = usersRolesLinksDao.findByUserId(selectedUser.getId());
 			System.out.println("Login successfully." + selectedUser);
-//			return null;
-			UserInfo userInfo = new UserInfo(selectedUser.getId(), selectedUser.getWpiId(), selectedUser.getUserName(), selectedUser.getFirstName(), selectedUser.getLastName(), selectedUser.getEmail(), url.getRoleId());
-			return userInfo;
+//			
+			return generateUserInfo(selectedUser,url.getRoleId());
 		} 
 		else 
 		{
@@ -235,7 +234,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
 	@Override
-	public List<User> searchUser(UserSearchDto dto) throws SQLException
+	public List<UserInfo> searchUser(UserSearchDto dto) throws SQLException
 	{
 		// 1. extract the matched user data from the input userName
 		String input_WpiId = dto.getWpiId();
@@ -312,7 +311,13 @@ public class UserServiceImpl implements UserService {
 		// return the selected users.
 		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
 		System.out.println("Selected Users: "+selectedUsers);
-		return selectedUsers;
+		
+		List<UserInfo> result = new ArrayList<>();
+		for(User user: selectedUsers) {
+			UsersRolesLink url = usersRolesLinksDao.findByUserId(user.getId());
+			result.add(generateUserInfo(user, (int)url.getRoleId()));
+		}
+		return result;
 		
 	}
 
@@ -415,13 +420,18 @@ public class UserServiceImpl implements UserService {
 
 		return facultyDao.update(updateColumnName, true, updateQueryTermList);
 	}
+	
 
 
 
 	@Override
-	public List<User> viewUserOfRoleId(Integer roleId) throws SQLException {
+	public List<UserInfo> viewUserOfRoleId(Integer roleId) throws SQLException {
+		List<UserInfo> result = new ArrayList<>();
 		List<User> users = customDao.getAllUsersWithRole(roleId);
-		return users;
+		for(User user: users) {
+			result.add(generateUserInfo(user, roleId));
+		}
+		return result;
 	}
 
 	@Override
@@ -443,6 +453,11 @@ public class UserServiceImpl implements UserService {
 		Schedule scheduleOfFaculty = scheduleService.findWithFacultyId(facultyId);
 		Integer scheduleId = scheduleOfFaculty.getId();
 		return sectionService.dislinkAll(scheduleId);
+	}
+	
+	private UserInfo generateUserInfo(User selectedUser, int roleId) {
+		return new UserInfo(selectedUser.getId(), selectedUser.getWpiId(), selectedUser.getUserName(), selectedUser.getFirstName(), selectedUser.getLastName(), 
+				selectedUser.getEmail(),selectedUser.getAccountState(), (boolean)selectedUser.getDeleted(), roleId);
 	}
 
 

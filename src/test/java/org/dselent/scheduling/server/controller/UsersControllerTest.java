@@ -71,8 +71,8 @@ public class UsersControllerTest {
 		JSONObject jsonObject = new JSONObject();
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL))
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),"?????????x");
-		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME),
-		// "user1x");
+		 jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME),
+		 "dselenttt23");
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME), null);
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME), null);
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL),
@@ -85,7 +85,7 @@ public class UsersControllerTest {
 				.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
 	}
 
-	@Test
+	//@Test
 	public void TestLogin() throws Exception {
 
 		JSONObject jsonObject = new JSONObject();
@@ -134,7 +134,7 @@ public class UsersControllerTest {
 		  //.andExpect(content().contentType("application/json")); 
 	}
 	
-	//@Test
+	@Test
 	public void TestViewUserOfRoleId() throws Exception{
 		  JSONObject jsonObject = new JSONObject();
 		  jsonObject.put(ViewUserOfRoleId.getBodyName(ViewUserOfRoleId.BodyKey.ROLE_ID), 1);

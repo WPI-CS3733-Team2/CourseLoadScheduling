@@ -50,7 +50,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public List<User> searchUser(UserSearchDto dto) throws SQLException;
+    public List<UserInfo> searchUser(UserSearchDto dto) throws SQLException;
     /**
 	 * search the input variables: wpiID, userName, firstName, lastName and email,
 	 * and return the selected list of user matching those values of input variables.
@@ -59,7 +59,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public List<User> viewUserOfRoleId(Integer roleId) throws SQLException;
+    public List<UserInfo> viewUserOfRoleId(Integer roleId) throws SQLException;
     
     public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
     

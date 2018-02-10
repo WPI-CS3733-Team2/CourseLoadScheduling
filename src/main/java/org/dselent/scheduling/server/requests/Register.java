@@ -23,7 +23,6 @@ public class Register
 	
 	public static enum HeaderKey
 	{
-		
 	}
 	
 	public static enum ParameterKey

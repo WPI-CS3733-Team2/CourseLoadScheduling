@@ -8,6 +8,8 @@ public class UserInfo {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String accountState;
+	private Boolean deleted;
 	private Integer roleId;
 
 	// methods
@@ -17,7 +19,7 @@ public class UserInfo {
 		return id;
 	}
 
-	public UserInfo(int id, String wpiId, String userName, String firstName, String lastName, String email, int roleId) {
+	public UserInfo(int id, String wpiId, String userName, String firstName, String lastName, String email, String account_state, boolean deleted, int roleId) {
 		super();
 		this.id = id;
 		this.wpiId = wpiId;
@@ -25,9 +27,12 @@ public class UserInfo {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		//this.salt = salt;
+		this.accountState = accountState;
+		this.deleted = deleted;
 		this.roleId = roleId;
 	}
+
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -35,7 +40,8 @@ public class UserInfo {
 	@Override
 	public String toString() {
 		return "UserInfo [id=" + id + ", wpiId=" + wpiId + ", userName=" + userName + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", roleId=" + roleId + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", accountState=" + accountState + ", deleted="
+				+ deleted + ", roleId=" + roleId + "]";
 	}
 
 	/* (non-Javadoc)
@@ -45,6 +51,8 @@ public class UserInfo {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((accountState == null) ? 0 : accountState.hashCode());
+		result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -67,6 +75,16 @@ public class UserInfo {
 		if (getClass() != obj.getClass())
 			return false;
 		UserInfo other = (UserInfo) obj;
+		if (accountState == null) {
+			if (other.accountState != null)
+				return false;
+		} else if (!accountState.equals(other.accountState))
+			return false;
+		if (deleted == null) {
+			if (other.deleted != null)
+				return false;
+		} else if (!deleted.equals(other.deleted))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -103,6 +121,34 @@ public class UserInfo {
 		} else if (!wpiId.equals(other.wpiId))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the accountState
+	 */
+	public String getAccountState() {
+		return accountState;
+	}
+
+	/**
+	 * @param accountState the accountState to set
+	 */
+	public void setAccountState(String accountState) {
+		this.accountState = accountState;
+	}
+
+	/**
+	 * @return the deleted
+	 */
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	/**
+	 * @param deleted the deleted to set
+	 */
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	/**

@@ -50,6 +50,7 @@ public class UsersControllerImpl implements UsersController
     {
     	// Print is for testing purposes
 		System.out.println("register controller reached");
+		//Integer roleIdOfCreator
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
