@@ -68,7 +68,7 @@ public class QueryStringBuilder
 		
 		return sb.toString();
 	}
-	
+		
 	public static String generateSelectString(String tableName, List<String> columnNames, List<QueryTerm> queryTermList, List<Pair<String, ColumnOrder>> orderByList)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -90,7 +90,7 @@ public class QueryStringBuilder
 		sb.append(SELECT_PIECE2);
 		sb.append(tableName);
 		
-		if(!queryTermList.isEmpty())
+		if(queryTermList != null && !queryTermList.isEmpty())
 		{
 			sb.append(SELECT_PIECE3);
 			
@@ -111,7 +111,7 @@ public class QueryStringBuilder
 			}
 		}
 		
-		if(!orderByList.isEmpty())
+		if(orderByList != null && !orderByList.isEmpty())
 		{
 			sb.append(SELECT_PIECE4);
 			
@@ -131,7 +131,7 @@ public class QueryStringBuilder
 		
 		return sb.toString();
 	}
-	
+		
 	public static String generateUpdateString(String tableName, String columnName, List<QueryTerm> queryTermList)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -143,7 +143,7 @@ public class QueryStringBuilder
 		sb.append(UPDATE_PIECE4);
 	
 		
-		if(!queryTermList.isEmpty())
+		if(queryTermList != null && !queryTermList.isEmpty())
 		{
 			sb.append(UPDATE_PIECE5);
 			
@@ -194,7 +194,7 @@ public class QueryStringBuilder
 		}
 			
 		
-		if(!queryTermList.isEmpty())
+		if(queryTermList != null && !queryTermList.isEmpty())
 		{
 			sb.append(UPDATE_PIECE5);
 			
@@ -227,7 +227,7 @@ public class QueryStringBuilder
 		sb.append(DELETE_PIECE1);
 		sb.append(tableName);
 		
-		if(!queryTermList.isEmpty())
+		if(queryTermList != null && !queryTermList.isEmpty())
 		{
 			sb.append(DELETE_PIECE2);
 			

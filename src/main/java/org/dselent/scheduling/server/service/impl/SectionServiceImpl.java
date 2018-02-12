@@ -218,7 +218,7 @@ public class SectionServiceImpl implements SectionService {
 		queryTermList.add(queryTerm);
     	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Section.Columns.CALENDAR_ID, ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair<>(Section.getColumnName(Section.Columns.CALENDAR_ID), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	List<Section> calendarIds = new ArrayList<>();
