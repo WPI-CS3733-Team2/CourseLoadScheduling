@@ -115,7 +115,7 @@ public class CourseControllerImpl implements CourseController
 	}
 
 	@Override
-	public ResponseEntity<String> deleteCourse(Map<String, String> request) throws Exception {
+	public ResponseEntity<String> deleteCourse(@RequestBody Map<String, String> request) throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
@@ -125,7 +125,7 @@ public class CourseControllerImpl implements CourseController
 		
 		String number = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NUMBER));
 		String name = request.get(DeleteCourse.getBodyName(DeleteCourse.BodyKey.NAME));
-		
+
 		DeleteCourseDto.Builder builder = DeleteCourseDto.builder();
 		DeleteCourseDto deleteCourseDto = builder.withName(name)
 		.withNumber(number)
