@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.requests.CreateCourse;
 import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.GetCourseFaculties;
@@ -44,7 +45,6 @@ public class CourseControllerImpl implements CourseController
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		List<Object> success = new ArrayList<Object>();
 		
 		String name = request.get(CreateCourse.getBodyName(CreateCourse.BodyKey.NAME));
 		String number = request.get(CreateCourse.getBodyName(CreateCourse.BodyKey.NUMBER));
@@ -56,8 +56,8 @@ public class CourseControllerImpl implements CourseController
 		.withFrequency(frequency)
 		.build();
 		
-		courseService.createCourse(createCourseDto);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		Course course = courseService.createCourse(createCourseDto);
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, course);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }

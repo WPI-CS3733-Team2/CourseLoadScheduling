@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CourseService
 {
-	public List<Integer> createCourse(CreateCourseDto createCourseDto) throws SQLException;
+	public Course createCourse(CreateCourseDto createCourseDto) throws SQLException;
 	public List<Integer> modifyCourse(ModifyCourseDto modifyCourseDto) throws SQLException;
 	public List<Course> searchCourse(SearchCourseDto searchCourseDto) throws SQLException;
 	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException;

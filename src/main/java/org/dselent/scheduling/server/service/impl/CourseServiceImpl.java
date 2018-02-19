@@ -49,10 +49,9 @@ public class CourseServiceImpl implements CourseService
 
     @Transactional
     @Override
-	public List<Integer> createCourse(CreateCourseDto dto) throws SQLException
+	public Course createCourse(CreateCourseDto dto) throws SQLException
 	{
-		List<Integer> rowsAffectedList = new ArrayList<>();
-				
+    	
 		Course course = new Course();
 		course.setName(dto.getName());
 		course.setNumber(dto.getNumber());
@@ -69,9 +68,8 @@ public class CourseServiceImpl implements CourseService
     	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.CREATED_AT));
     	courseKeyHolderColumnNameList.add(Course.getColumnName(Course.Columns.UPDATED_AT));
 		
-    	rowsAffectedList.add(coursesDao.insert(course, courseInsertColumnNameList, courseKeyHolderColumnNameList));
-		
-		return rowsAffectedList;
+    	coursesDao.insert(course, courseInsertColumnNameList, courseKeyHolderColumnNameList);
+		return course;
 	}
     
     @Transactional
