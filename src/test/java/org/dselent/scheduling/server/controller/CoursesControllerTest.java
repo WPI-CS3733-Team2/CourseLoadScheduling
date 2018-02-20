@@ -2,6 +2,7 @@ package org.dselent.scheduling.server.controller;
 
 import org.dselent.scheduling.server.config.AppConfig;
 import org.dselent.scheduling.server.requests.CreateCourse;
+import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.GetCourseFaculties;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.SearchCourse;
@@ -88,8 +89,7 @@ public class CoursesControllerTest
     public void testSearchCourseController() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(SearchCourse.getBodyName(SearchCourse.BodyKey.NAME), "Testing");
-    	jsonObject.put(SearchCourse.getBodyName(SearchCourse.BodyKey.NUMBER), "2222");
+    	jsonObject.put(SearchCourse.getBodyName(SearchCourse.BodyKey.FREQUENCY), "1");
     	String jsonString = jsonObject.toString();
         
     	//System.out.println(jsonString);
@@ -103,11 +103,29 @@ public class CoursesControllerTest
         
     }
     
+    //@Test
+    public void testDeleteCourseController() throws Exception
+    {
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(DeleteCourse.getBodyName(DeleteCourse.BodyKey.ID), "94");
+    	String jsonString = jsonObject.toString();
+        
+    	// System.out.println(jsonString);
+    	
+        this.mockMvc.perform(post("/course/delete_course").content(jsonString)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .characterEncoding("utf-8"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(status().isOk());
+        //.andExpect(content().contentType("application/json"));
+        
+    }
+    
     @Test
     public void testGetCourseFaculties() throws Exception
     {
     	JSONObject jsonObject = new JSONObject();
-    	jsonObject.put(GetCourseFaculties.getBodyName(GetCourseFaculties.BodyKey.COURSE_ID), 1);
+    	jsonObject.put(GetCourseFaculties.getBodyName(GetCourseFaculties.BodyKey.COURSE_ID), "1");
     	String jsonString = jsonObject.toString();
         
     	//System.out.println(jsonString);

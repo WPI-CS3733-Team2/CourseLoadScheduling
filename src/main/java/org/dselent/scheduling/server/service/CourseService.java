@@ -4,12 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.dselent.scheduling.server.dto.CreateCourseDto;
-import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.httpReturnObject.UserFaculty;
 import org.dselent.scheduling.server.model.Course;
-import org.dselent.scheduling.server.model.Faculty;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,10 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CourseService
 {
-	public List<Integer> createCourse(CreateCourseDto createCourseDto) throws SQLException;
-	public List<Integer> modifyCourse(ModifyCourseDto modifyCourseDto) throws SQLException;
+	public Course createCourse(CreateCourseDto createCourseDto) throws SQLException;
+	public Integer modifyCourse(ModifyCourseDto modifyCourseDto) throws SQLException;
 	public List<Course> searchCourse(SearchCourseDto searchCourseDto) throws SQLException;
-	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException;
-	public List<UserFaculty> getCourseFaculties(Integer courseId) throws SQLException;
+	public int deleteCourse(String id) throws SQLException;
+	public List<UserFaculty> getCourseFaculties(String courseId) throws SQLException;
 
 }

@@ -28,7 +28,7 @@ public interface CourseController
 	public ResponseEntity<String> deleteCourse(@RequestBody Map<String, String> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=GetCourseFaculties.REQUEST_NAME)
-	public ResponseEntity<String> getCourseFaculties(@RequestBody Map<String, Integer> request) throws Exception;
+	public ResponseEntity<String> getCourseFaculties(@RequestBody Map<String, String> request) throws Exception;
 }
 
 	
