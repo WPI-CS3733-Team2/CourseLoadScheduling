@@ -10,10 +10,13 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.httpReturnObject.UserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Section;
+import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.SectionService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -41,7 +44,7 @@ public class SectionServiceImpl implements SectionService {
 
 		Calendar calendar1 = new Calendar();
 
-		calendar1.setYear(dto.getYear());
+		calendar1.setYear(Integer.valueOf(dto.getYear()));
 		calendar1.setSemester(dto.getSemester());
 		calendar1.setDays(dto.getDays());
 		calendar1.setStartTime(dto.getStart_time());
@@ -61,19 +64,19 @@ public class SectionServiceImpl implements SectionService {
 
 		calendarDao.insert(calendar1, insertColumnNameList_cal, keyHolderColumnNameList_cal);
 
-		List<Calendar> matchList = customDao.getMatchDateCalendar(dto.getYear(), dto.getSemester(),
+		List<Calendar> matchList = customDao.getMatchDateCalendar(Integer.valueOf(dto.getYear()), dto.getSemester(),
 				dto.getDays(), dto.getStart_time(), dto.getEnd_time());
 		Calendar madeCalendar = matchList.get(0);
 		int calendarId = madeCalendar.getId();
 
 		Section section1 = new Section();
-		section1.setCrn(dto.getCrn());
+		section1.setCrn(Integer.valueOf(dto.getCrn()));
 		section1.setName(dto.getName());
 		section1.setType(dto.getType());
-		section1.setExpectedPopulation(dto.getExpectedPopulation());
-		section1.setCourseId(dto.getCourseId());
+		section1.setExpectedPopulation(Integer.valueOf(dto.getExpectedPopulation()));
+		section1.setCourseId(Integer.valueOf(dto.getCourseId()));
 		section1.setCalendarId(calendarId);
-		section1.setScheduleId(dto.getScheduleId());
+		section1.setScheduleId(Integer.valueOf(dto.getScheduleId()));
 
 		List<String> insertColumnNameList_sec = new ArrayList<>();
 		List<String> keyHolderColumnNameList_sec = new ArrayList<>();
@@ -110,10 +113,24 @@ public class SectionServiceImpl implements SectionService {
 	}
 	
 	public Section select_section(Integer id) throws SQLException {
-
-		Section section1 = sectionsDao.findById(id);
 		
-		return section1;
+		List<String> columnNamesList = new ArrayList<>();
+		columnNamesList.addAll(Section.getColumnNameList());
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		
+		String queryColumnName1 = Section.getColumnName(Section.Columns.ID);
+		QueryTerm queryTerm1 = new QueryTerm (queryColumnName1, ComparisonOperator.EQUAL, id, LogicalOperator.OR);
+		queryTerm1.setLogicalOperator(null);
+		queryTermList.add(queryTerm1);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> orderBy1 = new Pair<String, ColumnOrder>(Section.getColumnName(Section.Columns.ID), ColumnOrder.ASC);
+		orderByList.add(orderBy1);
+		
+		List<Section> selectedSection = sectionsDao.select(columnNamesList, queryTermList, orderByList);
+		System.out.println("Selected Section: "+selectedSection);
+
+		return selectedSection.get(0);
 	}
 
 
