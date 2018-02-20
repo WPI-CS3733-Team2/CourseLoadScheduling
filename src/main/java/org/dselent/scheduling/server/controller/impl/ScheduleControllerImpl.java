@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.ScheduleController;
-import org.dselent.scheduling.server.dto.ViewScheduleDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.requests.CreateSchedule;
 import org.dselent.scheduling.server.requests.ViewSchedule;
 import org.dselent.scheduling.server.service.ScheduleService;
@@ -41,12 +41,9 @@ public class ScheduleControllerImpl implements ScheduleController
 		String facultyId = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID));
 		String scheduleName = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SCHEDULE_NAME));
 		
-//		CreateScheduleDto.Builder builder = CreateScheduleDto.builder();
-//		CreateScheduleDto createScheduleDto = builder.withFacultyId(facultyId)
-//		.withScheduleName(scheduleName)
-//		.build();
+		Schedule createdSchedule = scheduleService.create(Integer.parseInt(facultyId), scheduleName);
+		success.add(createdSchedule);
 		
-		scheduleService.create(Integer.parseInt(facultyId), scheduleName);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -60,13 +57,12 @@ public class ScheduleControllerImpl implements ScheduleController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		String scheduleId = request.get(ViewSchedule.getParameterName(ViewSchedule.ParameterKey.SCHEDULE_NAME));
+		String scheduleIdString = request.get(ViewSchedule.getParameterName(ViewSchedule.ParameterKey.SCHEDULE_ID));
+		Integer scheduleId = Integer.parseInt(scheduleIdString);
 		
-		ViewScheduleDto.Builder builder = ViewScheduleDto.builder();
-		ViewScheduleDto viewScheduleDto = builder.withScheduleId(scheduleId)
-		.build();
+		List<Schedule> scheduleList = scheduleService.view(scheduleId);
+		success.add(scheduleList);
 		
-		scheduleService.view(viewScheduleDto);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
 		return new ResponseEntity<String>(response, HttpStatus.OK);

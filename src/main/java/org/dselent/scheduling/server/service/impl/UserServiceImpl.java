@@ -162,7 +162,12 @@ public class UserServiceImpl implements UserService {
 			CourseLoad courseLoad  = new CourseLoad();
 			rowsAffectedList.add(courseLoadService.addCourseLoad(courseLoad));
 			rowsAffectedList.add(courseLoadService.addCourseLoadAssociation(courseLoad.getId(), faculty.getId()));
-			rowsAffectedList.add(scheduleService.create(faculty.getId(), "default"));
+			
+			// Doug
+			// I changed this to return the created schedule and not the rows affected
+			// Not sure if having the missing entry from rowsAffectedList affects anything
+			// I assumed not
+			scheduleService.create(faculty.getId(), "default");
 		}
 
 		return rowsAffectedList;

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.ScheduleDao;
-import org.dselent.scheduling.server.dto.ViewScheduleDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.service.ScheduleService;
@@ -27,8 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService
     }
 
 	@Override
-	public int create(Integer facultyId, String scheduleName) throws SQLException {
-		int rowAffected;
+	public Schedule create(Integer facultyId, String scheduleName) throws SQLException {
 		
 		Schedule schedule = new Schedule();
 		
@@ -44,19 +42,20 @@ public class ScheduleServiceImpl implements ScheduleService
 		scheduleKeyHolderColumnNameList.add(Schedule.getColumnName(Schedule.Columns.ID));
 		scheduleKeyHolderColumnNameList.add(Schedule.getColumnName(Schedule.Columns.CREATED_AT));
 		
-		rowAffected = scheduleDao.insert(schedule, scheduleInsertColumnNameList, scheduleKeyHolderColumnNameList);
-		return rowAffected;
+		// I don't think I need the return value right now
+		scheduleDao.insert(schedule, scheduleInsertColumnNameList, scheduleKeyHolderColumnNameList);
+		
+		return schedule;
 	}
 	
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Schedule> view(ViewScheduleDto viewScheduleDto) throws SQLException {
+	public List<Schedule> view(Integer scheduleId) throws SQLException {
 		List<Schedule> affectedSchedules = new ArrayList<>();
 		
 		Schedule schedule = new Schedule();
 		
-		schedule.setScheduleName(viewScheduleDto.getScheduleName());
+		schedule.setId(scheduleId);
 		
 		List<String> columnNames = new ArrayList<>();
 		
@@ -64,15 +63,15 @@ public class ScheduleServiceImpl implements ScheduleService
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
 		
-		if (schedule.getScheduleName() != null) 
+		if (schedule.getId() != null) 
 		{
-			String queryColumnName = Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME);
-			QueryTerm queryTerm = new QueryTerm(queryColumnName,ComparisonOperator.EQUAL,schedule.getScheduleName(),null);
+			String queryColumnName = Schedule.getColumnName(Schedule.Columns.ID);
+			QueryTerm queryTerm = new QueryTerm(queryColumnName,ComparisonOperator.EQUAL,schedule.getId(),null);
 			queryTermList.add(queryTerm);
 		}
 		
 		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> orderBy = new Pair(Schedule.getColumnName(Schedule.Columns.ID), ColumnOrder.ASC);
+		Pair<String, ColumnOrder> orderBy = new Pair<String, ColumnOrder>(Schedule.getColumnName(Schedule.Columns.ID), ColumnOrder.ASC);
 		orderByList.add(orderBy);
 		
 		affectedSchedules = scheduleDao.select(columnNames, queryTermList, orderByList);
