@@ -9,7 +9,6 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.UsersDao;
 import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
-import org.dselent.scheduling.server.dto.DeleteCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
 import org.dselent.scheduling.server.httpReturnObject.UserFaculty;
@@ -74,9 +73,9 @@ public class CourseServiceImpl implements CourseService
     
     @Transactional
     @Override
-	public List<Integer> modifyCourse(ModifyCourseDto dto) throws SQLException
+	public Integer modifyCourse(ModifyCourseDto dto) throws SQLException
 	{
-    	List<Integer> rowsAffectedList = new ArrayList<>();
+    	Integer successful;
     	
     	Course course = new Course();
 		course.setName(dto.getName());
@@ -100,8 +99,8 @@ public class CourseServiceImpl implements CourseService
 		updateValues.add(course.getNumber());
 		updateValues.add(course.getFrequency());
 		
-		rowsAffectedList.add(coursesDao.updateColumns(updateColumnName, updateValues, queryTermList));
-		return rowsAffectedList;
+		successful = coursesDao.updateColumns(updateColumnName, updateValues, queryTermList);
+		return successful;
 	}
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -111,7 +110,7 @@ public class CourseServiceImpl implements CourseService
 		
 		String name = dto.getName();
 		String number = dto.getNumber();
-		String frequency = dto.getFrequency();										
+		String freqString = dto.getFrequency();										
     	
 		List<String> courseColumnNameList = new ArrayList<>();
     	
@@ -138,7 +137,8 @@ public class CourseServiceImpl implements CourseService
 			}
 			queryTermList.add(queryTerm);
 		}
-    	if (frequency != null) {
+    	if (freqString != null) {
+    		int frequency = Integer.parseInt(freqString);
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
 			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, frequency, LogicalOperator.AND);
 			if(firstTerm) {
@@ -159,43 +159,23 @@ public class CourseServiceImpl implements CourseService
     }
 
 	@Override
-	public int deleteCourse(DeleteCourseDto deleteCourseDto) throws SQLException {
-		int rowAffected;
-		
-		Course course = new Course();
-		course.setName(deleteCourseDto.getName());
-		course.setNumber(deleteCourseDto.getNumber());
+	public int deleteCourse(String id) throws SQLException {
+		int success;
 		
 		List<QueryTerm> queryTermList = new ArrayList<>();
-		boolean firstTerm = true;
 		
-		if (course.getName() != null) {
-			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getName(), LogicalOperator.AND);
-			if(firstTerm) {
-				queryTerm.setLogicalOperator(null);
-				firstTerm = false;
-			}
-			queryTermList.add(queryTerm);
-		}
-    	if (course.getNumber() != null) {
-			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, course.getNumber(), LogicalOperator.AND);
-			if(firstTerm) {
-				queryTerm.setLogicalOperator(null);
-				firstTerm = false;
-			}
-			queryTermList.add(queryTerm);
-		}
+		String queryColumnName = Course.getColumnName(Course.Columns.ID);
+		QueryTerm queryTerm = new QueryTerm(queryColumnName, ComparisonOperator.EQUAL, Integer.parseInt(id), null);
+		queryTermList.add(queryTerm);
 		
-		rowAffected = coursesDao.delete(queryTermList);
-		return rowAffected;
+		success = coursesDao.delete(queryTermList);
+		return success;
 	}
 
 	@Override
-	public List<UserFaculty> getCourseFaculties(Integer courseId) throws SQLException {
+	public List<UserFaculty> getCourseFaculties(String courseId) throws SQLException {
 		List<UserFaculty> result = new ArrayList<>();
-		List<Faculty> faculties = customDao.getFacultiesTeachingACourse(courseId);
+		List<Faculty> faculties = customDao.getFacultiesTeachingACourse(Integer.parseInt(courseId));
 		for(Faculty faculty: faculties) {
 			int facultyId = faculty.getId();
 			UserFacultyAssociation ufa = userFacultyAssociationDao.findByFacultyId(facultyId);
