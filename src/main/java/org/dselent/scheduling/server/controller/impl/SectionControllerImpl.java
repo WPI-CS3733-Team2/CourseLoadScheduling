@@ -130,8 +130,8 @@ public class SectionControllerImpl implements SectionController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		Integer id = (Integer)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID));
-		Integer year = (Integer)request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
+		Integer id = Integer.valueOf(request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.ID)).toString());
+		Integer year = Integer.valueOf(request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR)).toString());
 		String semester =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
 		String days =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
 		String start_time =(String) request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
@@ -160,8 +160,8 @@ public class SectionControllerImpl implements SectionController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		Integer id = (Integer)request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID));
-		Integer schedule_id = (Integer)request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID));
+		Integer id = Integer.valueOf(request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.ID)).toString());
+		Integer schedule_id = Integer.valueOf(request.get(ModifySectionSchedule.getBodyName(ModifySectionSchedule.BodyKey.SCHEDULE_ID)).toString());
 		
 		
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.modify_section_schedule(id, schedule_id));
@@ -178,13 +178,15 @@ public class SectionControllerImpl implements SectionController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		Integer id = (Integer)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID));
-		String type = (String)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE));
-		String name = (String)request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME));
-		Integer expected_population = (Integer) request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION));
+		Integer id = Integer.valueOf(request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.ID)).toString());
+		Integer crn = Integer.valueOf(request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.CRN)).toString());
+		String type = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.TYPE)).toString();
+		String name = request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.NAME)).toString();
+		Integer expected_population = Integer.valueOf(request.get(ModifySectionTypeNamePop.getBodyName(ModifySectionTypeNamePop.BodyKey.EXPECTED_POPULATION)).toString());
 		
 		ModifySectionTypeNamePopDto.Builder builder = ModifySectionTypeNamePopDto.builder();
 		ModifySectionTypeNamePopDto modifySectionTypeNamePopDto = builder.withId(id)
+		.withCrn(crn)
 		.withType(type)
 		.withName(name)
 		.withExpectedPopulation(expected_population)
