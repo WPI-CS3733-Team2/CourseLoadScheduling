@@ -33,12 +33,7 @@ public class ViewSectionCalendarsOfCourse
 	
 	public static enum BodyKey
 	{
-		CRN,
-		NAME,
-		TYPE,
-		EXPECTED_POPULATION,
 		COURSE_ID,
-		SCHEDULE_ID;
 	}
 	
 

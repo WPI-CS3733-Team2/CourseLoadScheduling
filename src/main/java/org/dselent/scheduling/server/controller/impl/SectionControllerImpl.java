@@ -197,14 +197,14 @@ public class SectionControllerImpl implements SectionController
     }
 	
 	@Override
-	public ResponseEntity<String> view_section_calendars_of_course(Map<String, Object> request)
+	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, String> request)
 			throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
 		// add any objects that need to be returned to the success list
 		String response = "";
-		Integer course_id = (Integer) request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.COURSE_ID));
+		String course_id = request.get(ViewSectionCalendarsOfCourse.getBodyName(ViewSectionCalendarsOfCourse.BodyKey.COURSE_ID));
 
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
 				sectionService.view_section_calendars_of_course(course_id));
