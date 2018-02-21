@@ -551,3 +551,20 @@ INSERT INTO public.sections(crn, name, type, expected_population, course_id, cal
 INSERT INTO public.sections(crn, name, type, expected_population, course_id, calendar_id, schedule_id) VALUES (23290, '191', 'lecture', 5, 40, 57, 15);
 INSERT INTO public.sections(crn, name, type, expected_population, course_id, calendar_id, schedule_id) VALUES (24358, '191', 'lecture', 55, 41, 58, 54);
 INSERT INTO public.sections(crn, name, type, expected_population, course_id, calendar_id, schedule_id) VALUES (24142, '191', 'lecture', 30, 42, 52, null);
+
+----------------POPULATE REQUEST_STATE ---------------
+
+INSERT INTO public.request_state(state) VALUES ('approved');
+INSERT INTO public.request_state(state) VALUES ('denied');
+INSERT INTO public.request_state(state) VALUES ('pending');
+
+----------------POPULATE REQUEST_TYPE ---------------
+
+INSERT INTO public.request_type(type) VALUES ('time');
+INSERT INTO public.request_type(type) VALUES ('section');
+INSERT INTO public.request_type(type) VALUES ('time and section');
+
+----------------POPULATE USER_ROLES ---------------
+
+INSERT INTO public.user_roles(role_name,deleted) VALUES ('admin',false);
+INSERT INTO public.user_roles(role_name,deleted) VALUES ('faculty',false);

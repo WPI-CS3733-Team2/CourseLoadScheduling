@@ -33,8 +33,7 @@ public class DeleteCourse
 	
 	public static enum BodyKey
 	{
-		NUMBER,
-		NAME,
+		ID,
 	}
 	
 

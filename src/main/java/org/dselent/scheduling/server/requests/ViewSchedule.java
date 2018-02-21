@@ -28,7 +28,7 @@ public class ViewSchedule
 	
 	public static enum ParameterKey
 	{
-		SCHEDULE_NAME;
+		SCHEDULE_ID;
 	}
 	
 	public static enum BodyKey

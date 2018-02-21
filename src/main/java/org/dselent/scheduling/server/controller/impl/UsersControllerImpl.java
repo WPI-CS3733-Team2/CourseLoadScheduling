@@ -205,7 +205,7 @@ public class UsersControllerImpl implements UsersController
 
 
 
-	@Override
+	/*@Override
 	public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception {
 		System.out.println("linkFacultyWithSection reached");
 		String response = "";
@@ -213,7 +213,7 @@ public class UsersControllerImpl implements UsersController
 		Integer sectionId = (Integer) request.get(LinkFacultyWithSection.getBodyName(LinkFacultyWithSection.BodyKey.SECTION_ID));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.dislinkFacultyWithSection(facultyId, sectionId));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
-	}
+	}*/
 }
 
 	

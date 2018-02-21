@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface SectionController
 {
 	@RequestMapping(method=RequestMethod.POST, value=CreateSection.REQUEST_NAME)
-	public ResponseEntity<String> create_section(@RequestBody Map<String, Object> request) throws Exception;
+	public ResponseEntity<String> create_section(@RequestBody Map<String, String> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=RemoveSection.REQUEST_NAME)
 	public ResponseEntity<String> remove_section(@RequestBody Map<String,Object> request) throws Exception;
@@ -38,7 +38,7 @@ public interface SectionController
 	public ResponseEntity<String> modify_section_type_name_pop(@RequestBody Map<String, Object> request) throws Exception;
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewSectionCalendarsOfCourse.REQUEST_NAME)
-	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, Object> request) throws Exception;
+	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, String> request) throws Exception;
 
 }
 
