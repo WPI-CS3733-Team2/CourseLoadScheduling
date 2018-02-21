@@ -10,13 +10,10 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
-import org.dselent.scheduling.server.httpReturnObject.UserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Section;
-import org.dselent.scheduling.server.model.User;
-import org.dselent.scheduling.server.model.UsersRolesLink;
 import org.dselent.scheduling.server.service.SectionService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -264,6 +261,29 @@ public class SectionServiceImpl implements SectionService {
     	selectedCalendars = calendarDao.select(calendarColumnNameList, queryTermList, orderByList);
     			
 		return selectedCalendars;
+	}
+	
+	@Override
+	public List<Section> view_sections_of_course(String courseId) throws SQLException {
+    	
+		List<String> sectionColumnNameList = new ArrayList<>();
+    	
+    	sectionColumnNameList.addAll(Section.getColumnNameList());
+    	
+    	List<QueryTerm> queryTermList = new ArrayList<>();
+    	
+    	String queryColumnName = Section.getColumnName(Section.Columns.COURSE_ID);
+		QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, Integer.parseInt(courseId), null);
+		queryTermList.add(queryTerm);
+    	
+    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderBy = new Pair<>(Section.getColumnName(Section.Columns.CALENDAR_ID), ColumnOrder.ASC);
+    	orderByList.add(orderBy);
+    	
+    	List<Section> sections = new ArrayList<>();
+    	sections = sectionsDao.select(sectionColumnNameList, queryTermList, orderByList);
+	
+    	return sections;
 	}
 
 	@Override
