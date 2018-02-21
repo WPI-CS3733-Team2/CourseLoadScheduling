@@ -19,7 +19,7 @@ public class UserInfo {
 		return id;
 	}
 
-	public UserInfo(int id, String wpiId, String userName, String firstName, String lastName, String email, String account_state, boolean deleted, int roleId) {
+	public UserInfo(int id, String wpiId, String userName, String firstName, String lastName, String email, String account_State, boolean deleted, int roleId) {
 		super();
 		this.id = id;
 		this.wpiId = wpiId;
@@ -27,7 +27,7 @@ public class UserInfo {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.accountState = accountState;
+		this.accountState = account_State;
 		this.deleted = deleted;
 		this.roleId = roleId;
 	}

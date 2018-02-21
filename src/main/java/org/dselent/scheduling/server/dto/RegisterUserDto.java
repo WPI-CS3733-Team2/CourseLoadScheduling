@@ -19,7 +19,7 @@ public class RegisterUserDto
 	private final String email;
 	private final String password;
 	private final Integer roleId;
-	private final Integer rank;
+	private Integer rank;
 
 	// I added to the auto-generated code
 	@Generated("SparkTools")
@@ -66,7 +66,8 @@ public class RegisterUserDto
 			throw new IllegalStateException("roleId cannot be null");
 		}
 		else if(this.rank == null) {
-			throw new IllegalStateException("rank cannot be null");
+			this.rank = 0;
+			// throw new IllegalStateException("rank cannot be null");
 		}
 	}
 	

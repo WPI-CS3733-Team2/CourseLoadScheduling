@@ -93,20 +93,26 @@ public class UserServiceImpl implements UserService {
 		// null values
 		// etc...
 
+			
 		String salt = KeyGenerators.string().generateKey();
+		
+		// temporarily deleted password encryption method
+		/*
 		String saltedPassword = dto.getPassword() + salt;
 		PasswordEncoder passwordEncorder = new BCryptPasswordEncoder();
 		String encryptedPassword = passwordEncorder.encode(saltedPassword);
-
+		*/
+		
 		User user = new User();
 		user.setWpiId(dto.getWPIid());
 		user.setUserName(dto.getUserName());
 		user.setFirstName(dto.getFirstName());
 		user.setLastName(dto.getLastName());
 		user.setEmail(dto.getEmail());
-		user.setEncryptedPassword(encryptedPassword);
+		// user.setEncryptedPassword(encryptedPassword);
+		user.setEncryptedPassword(dto.getPassword());
 		user.setSalt(salt);
-		user.setAccountState("Active"); //
+		user.setAccountState("1");		// varchar(255) accountState : 1 label as "Active"
 
 		List<String> userInsertColumnNameList = new ArrayList<>();
 		List<String> userKeyHolderColumnNameList = new ArrayList<>();
@@ -151,7 +157,7 @@ public class UserServiceImpl implements UserService {
 		
 		
 		//If role is faculty, add faculty&association
-		if(dto.getRoleId() == 1) {
+		if(dto.getRoleId() == 2) {
 			
 			Faculty faculty = new Faculty();
 			faculty.setRank(dto.getRank());
@@ -191,9 +197,9 @@ public class UserServiceImpl implements UserService {
 		}
 		else if (input_password.equals(selectedUser.getEncryptedPassword())){
 			UsersRolesLink url = usersRolesLinksDao.findByUserId(selectedUser.getId());
-			System.out.println("Login successfully." + selectedUser);
-//			
-			return generateUserInfo(selectedUser,url.getRoleId());
+			System.out.println("role id = " + url.getRoleId());
+			System.out.println("Login successfully." + selectedUser);			
+			return this.generateUserInfo(selectedUser, url.getRoleId());
 		} 
 		else 
 		{
