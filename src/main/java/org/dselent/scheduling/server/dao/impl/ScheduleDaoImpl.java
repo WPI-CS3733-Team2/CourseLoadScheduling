@@ -273,4 +273,29 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 	    
 	    return schedule;
 	}
+	
+	@Override
+	public Schedule findByFaculty(int facultyId) throws SQLException {
+		String columnName = Schedule.getColumnName(Schedule.Columns.FACULTY_ID);
+		List<String> selectColumnNames = Schedule.getColumnNameList();
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, facultyId, null);
+		queryTermList.add(idTerm);
+		
+		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
+		orderByList.add(order);
+		
+		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
+	
+		Schedule schedule = null;
+	    
+	    if(!scheduleList.isEmpty())
+	    {
+	    	schedule = scheduleList.get(0);
+	    }
+	    
+	    return schedule;
+	}
 }

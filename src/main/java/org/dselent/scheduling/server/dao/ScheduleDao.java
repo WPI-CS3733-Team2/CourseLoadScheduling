@@ -10,4 +10,5 @@ public interface ScheduleDao extends Dao<Schedule>
 {
 	public Schedule findByFacultyId(int faculty_id) throws SQLException;
 	public Schedule findByName(String name) throws SQLException;
+	public Schedule findByFaculty(int facultyId) throws SQLException;
 }

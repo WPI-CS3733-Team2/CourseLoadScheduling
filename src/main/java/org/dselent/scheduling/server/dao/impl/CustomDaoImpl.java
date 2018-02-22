@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
+import org.dselent.scheduling.server.extractor.SectionsExtractor;
 import org.dselent.scheduling.server.extractor.UsersExtractor;
 import org.dselent.scheduling.server.extractor.CalendarExtractor;
+import org.dselent.scheduling.server.extractor.CoursesExtractor;
 import org.dselent.scheduling.server.extractor.FacultyExtractor;
 import org.dselent.scheduling.server.miscellaneous.QueryPathConstants;
 import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
+import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -132,4 +136,62 @@ public class CustomDaoImpl implements CustomDao
 	    return calendarMatchList;
 	}
 	
+	@Override
+	public List<User> facultyCourseMapping(){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTY_COURSE_MAPPING_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> usersWithCoursesList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return usersWithCoursesList;
+	}
+	
+	@Override
+	public List<Calendar> getCalendarsOfSection(int sectionId){
+		CalendarExtractor extractor = new CalendarExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_CALENDARS_OF_SECTION_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("sectionId", sectionId);
+	    List<Calendar> calendarMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return calendarMatchList;
+	}
+	
+	@Override
+	public List<Course> getCoursesOfSchedule(int scheduleId){
+		CoursesExtractor extractor = new CoursesExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_COURSES_OF_SCHEDULE_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("scheduleId", scheduleId);
+	    List<Course> courseMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return courseMatchList;
+	}
+	
+	@Override
+	public List<Section> getSectionsInSchedule(int scheduleId){
+		SectionsExtractor extractor = new SectionsExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SECTIONS_IN_SCHEDULE_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("scheduleId", scheduleId);
+	    List<Section> sectionMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return sectionMatchList;
+	}
+	
+	@Override
+	public List<Faculty> getFacultyIDFromUser(int userId){
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_FACULTY_ID_FROM_USER_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("usersId", userId);
+	    List<Faculty> facultiesWithUserIDList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return facultiesWithUserIDList;
+	}
+	
+	@Override
+	public List<Course> getCoursesOfSection(int sectionId){
+		CoursesExtractor extractor = new CoursesExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_COURSES_OF_SECTION_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("id", sectionId);
+	    List<Course> courseMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return courseMatchList;
+	}
 }

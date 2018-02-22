@@ -3,8 +3,10 @@ package org.dselent.scheduling.server.dao;
 import java.util.List;
 
 import org.dselent.scheduling.server.model.Schedule;
+import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +31,10 @@ public interface CustomDao
 	public List<Calendar> getCalendarsOfAFaculty(int faculty_id);
 	public List<Faculty> getFacultiesWithUserWPIID(String wpi_id);
 	public List<Calendar> getMatchDateCalendar(int year, String semester, String days, String start_time, String end_time);
+	public List<User> facultyCourseMapping();
+	public List<Calendar> getCalendarsOfSection(int sectionId);
+	public List<Course> getCoursesOfSchedule(int scheduleId);
+	public List<Section> getSectionsInSchedule(int scheduleId);
+	public List<Faculty> getFacultyIDFromUser(int userId);
+	public List<Course> getCoursesOfSection(int sectionId);
 }

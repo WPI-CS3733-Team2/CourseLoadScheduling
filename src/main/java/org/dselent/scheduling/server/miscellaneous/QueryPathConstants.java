@@ -28,7 +28,13 @@ public class QueryPathConstants
 	private static String CALENDAR_OF_COURSE_PATH = BASE_QUERY_PATH + "GetCalendarsOfACourse" + SQL_EXTENSION;
 	private static String CALENDAR_OF_FACULTY_PATH = BASE_QUERY_PATH + "GetCalendarsOfAFaculty" + SQL_EXTENSION;
 	private static String FACULTIES_WITH_USER_WPI_ID_PATH = BASE_QUERY_PATH + "GetFacultiesWithUserWPIID" + SQL_EXTENSION;
-	private static String MATCH_DATE_CALENDAR_PATH = BASE_QUERY_PATH + "GetMatchDateCalendar" + SQL_EXTENSION; 
+	private static String MATCH_DATE_CALENDAR_PATH = BASE_QUERY_PATH + "GetMatchDateCalendar" + SQL_EXTENSION;
+	private static String FACULTY_COURSE_MAPPING_PATH = BASE_QUERY_PATH + "FacultyCourseMapping" + SQL_EXTENSION;
+	private static String GET_CALENDARS_OF_SECTION_PATH = BASE_QUERY_PATH + "GetCalendarsOfSection" + SQL_EXTENSION;
+	private static String GET_COURSES_OF_SCHEDULE_PATH = BASE_QUERY_PATH + "GetCoursesOfSchedule" + SQL_EXTENSION;
+	private static String GET_SECTIONS_IN_SCHEDULE_PATH = BASE_QUERY_PATH + "GetSectionsInSchedule" + SQL_EXTENSION;
+	private static String GET_FACULTY_ID_FROM_USER_PATH = BASE_QUERY_PATH + "GetFacultyIDFromUser" + SQL_EXTENSION;
+	private static String GET_COURSES_OF_SECTION_PATH = BASE_QUERY_PATH + "GetCourseOfSection" + SQL_EXTENSION;
 
 
 	
@@ -45,6 +51,13 @@ public class QueryPathConstants
 	public static String CALENDAR_OF_FACULTY_QUERY = readFile(CALENDAR_OF_FACULTY_PATH);
 	public static String FACULTIES_WITH_USER_WPI_ID_QUERY = readFile(FACULTIES_WITH_USER_WPI_ID_PATH);
 	public static String MATCH_DATE_CALENDAR_QUERY = readFile(MATCH_DATE_CALENDAR_PATH);
+	public static String FACULTY_COURSE_MAPPING_QUERY = readFile(FACULTY_COURSE_MAPPING_PATH);
+	public static String GET_CALENDARS_OF_SECTION_QUERY = readFile(GET_CALENDARS_OF_SECTION_PATH);
+	public static String GET_COURSES_OF_SCHEDULE_QUERY = readFile(GET_COURSES_OF_SCHEDULE_PATH);
+	public static String GET_SECTIONS_IN_SCHEDULE_QUERY = readFile(GET_SECTIONS_IN_SCHEDULE_PATH);
+	public static String GET_FACULTY_ID_FROM_USER_QUERY = readFile(GET_FACULTY_ID_FROM_USER_PATH);
+	public static String GET_COURSES_OF_SECTION_QUERY = readFile(GET_COURSES_OF_SECTION_PATH);
+	
 
 	
 	private QueryPathConstants()
