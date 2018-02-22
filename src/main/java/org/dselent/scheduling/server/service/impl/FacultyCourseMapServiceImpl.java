@@ -38,19 +38,15 @@ public class FacultyCourseMapServiceImpl implements FacultyCourseMapService
     //@Override
 	public List<Triple<String, String, String>> facultyCourseMap() throws SQLException
 	{
-    	System.out.println("Entered facultyCourseMap function in service");
     	List<User> usersWithCourse = customDao.facultyCourseMapping();
     	List<Triple<String, String, String>> facultyCourses = new ArrayList();
     	for (User person : usersWithCourse) {
-    		System.out.println("Entered person for loop" + person);
     		List<Faculty> facultyList = customDao.getFacultyIDFromUser(person.getId());
     		List<Schedule> scheduleList = customDao.searchScheduleByFaculty(facultyList.get(0).getId());
     		for (Schedule schedule : scheduleList) {
-        		System.out.println("Entered schedule for loop" + schedule);
     			List<Section> sectionList = customDao.getSectionsInSchedule(schedule.getId());
     			String coursesString = new String();
     			for (Section section : sectionList) {
-    				System.out.println("Entered section for loop " + section);
     				List<Calendar> calendarList = customDao.getCalendarsOfSection(section.getId());
     				List<Course> courseList = customDao.getCoursesOfSection(section.getId());
     				coursesString += (courseList.get(0).getNumber() + " " + calendarList.get(0).getSemester() + " " + section.getName() + ", ");

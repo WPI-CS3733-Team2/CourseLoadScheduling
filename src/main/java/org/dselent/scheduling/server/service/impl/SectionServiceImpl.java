@@ -125,7 +125,6 @@ public class SectionServiceImpl implements SectionService {
 		orderByList.add(orderBy1);
 		
 		List<Section> selectedSection = sectionsDao.select(columnNamesList, queryTermList, orderByList);
-		System.out.println("Selected Section: "+selectedSection);
 
 		return selectedSection.get(0);
 	}
