@@ -33,7 +33,7 @@ public class ViewSectionsOfCourse
 	
 	public static enum BodyKey
 	{
-		COURSE_ID,
+		COURSE_IDS,
 	}
 	
 
