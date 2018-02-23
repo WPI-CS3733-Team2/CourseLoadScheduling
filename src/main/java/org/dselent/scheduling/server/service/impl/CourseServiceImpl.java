@@ -149,7 +149,7 @@ public class CourseServiceImpl implements CourseService
 		}
     	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.NUMBER), ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.ID), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	List<Course> selectedCourses = new ArrayList<Course>();
