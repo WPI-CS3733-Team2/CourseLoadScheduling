@@ -3,15 +3,16 @@ package org.dselent.scheduling.server.dao.impl;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
+import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
-import org.dselent.scheduling.server.extractor.UsersExtractor;
+import org.dselent.scheduling.server.extractor.UsersInfoExtractor;
 import org.dselent.scheduling.server.extractor.CalendarExtractor;
 import org.dselent.scheduling.server.extractor.FacultyExtractor;
 import org.dselent.scheduling.server.miscellaneous.QueryPathConstants;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
-import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.model.custom.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -27,14 +28,31 @@ public class CustomDaoImpl implements CustomDao
 	// can make custom models and extractors as needed or reuse existing ones if applicable
 	
 	@Override
-	public List<User> getAllUsersWithRole(int roleId)
+	public List<UserInfo> getAllUsersWithRole(int roleId)
 	{
-		UsersExtractor extractor = new UsersExtractor();
+		UsersInfoExtractor extractor = new UsersInfoExtractor();
 		String queryTemplate = new String(QueryPathConstants.USERS_WITH_ROLE_QUERY);
 	    MapSqlParameterSource parameters = new MapSqlParameterSource();
 	    parameters.addValue("roleId", roleId);
-	    List<User> usersWithRoleList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    List<UserInfo> usersWithRoleList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return usersWithRoleList;
+	}
+	
+	@Override
+	public UserInfo getLoginInfo(String userName) throws InvalidUserNameException
+	{
+		UsersInfoExtractor extractor = new UsersInfoExtractor();
+		String queryTemplate = new String(QueryPathConstants.LOGIN_USER_INFO_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("userName", userName);
+	    List<UserInfo> usersInfoList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    
+	    if(usersInfoList.isEmpty())
+	    {
+	    	throw new InvalidUserNameException(userName, "Invalid userName: \"" + "\"" + userName + "\"");
+	    }
+	    
+	    return usersInfoList.get(0);
 	}
 
 	@Override

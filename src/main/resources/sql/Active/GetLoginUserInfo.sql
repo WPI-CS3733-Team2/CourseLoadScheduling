@@ -1,5 +1,3 @@
--- get all user information for users who have a specified roleId
-
 SELECT
 
 -- users
@@ -19,7 +17,7 @@ users.deleted AS users_deleted,
 --faculty
 faculty.id AS faculty_id,
 
-user_roles
+--user_roles
 user_roles.id AS user_roles_id,
 user_roles.role_name AS user_roles_role_name
 
@@ -29,5 +27,5 @@ LEFT OUTER JOIN faculty ON user_faculty_association.faculty_id = faculty.id
 -- exacty one role for a user
 INNER JOIN users_roles_links ON users.id = users_roles_links.user_id
 INNER JOIN user_roles ON users_roles_links.role_id = user_roles.id
-WHERE user_roles.id = :roleId
-AND users.deleted = false
+WHERE users.user_name = :userName
+AND users.deleted = false;

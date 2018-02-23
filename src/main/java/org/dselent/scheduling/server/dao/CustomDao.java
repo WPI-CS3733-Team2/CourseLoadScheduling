@@ -3,7 +3,8 @@ package org.dselent.scheduling.server.dao;
 import java.util.List;
 
 import org.dselent.scheduling.server.model.Schedule;
-import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.model.custom.UserInfo;
+import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Faculty;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,8 @@ public interface CustomDao
 {
 	// custom queries here
 	
-	public List<User> getAllUsersWithRole(int roleId);
+	public List<UserInfo> getAllUsersWithRole(int roleId);
+	public UserInfo getLoginInfo(String userName) throws InvalidUserNameException;
 	public List<Schedule> searchScheduleByFaculty(int faculty_id);
 	public List<Faculty> getFacultiesWithUserName(String userName);
 	public List<Faculty> getFacultiesWithUserEmail(String userEmail);

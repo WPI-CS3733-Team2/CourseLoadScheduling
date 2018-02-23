@@ -17,10 +17,12 @@ import org.dselent.scheduling.server.model.CourseLoad;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.dto.UserSearchDto;
-import org.dselent.scheduling.server.httpReturnObject.UserInfo;
+import org.dselent.scheduling.server.exceptions.InvalidPasswordException;
+import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UsersRolesLink;
+import org.dselent.scheduling.server.model.custom.UserInfo;
 import org.dselent.scheduling.server.service.CourseLoadService;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.service.SectionService;
@@ -173,39 +175,18 @@ public class UserServiceImpl implements UserService {
 		return rowsAffectedList;
 	}
 
-	@Override
-	public UserInfo loginUser(String input_userName, String input_password) throws SQLException
-	{
-		
-		// extract the matched user data from the input userName
-		User selectedUser = null;
-		selectedUser = usersDao.findByUserName(input_userName);
-		
-		
 
-		if(selectedUser == null)
+	@Override
+	public ReturnUserInfo loginUser(String inputUserName, String inputPassword) throws SQLException
+	{
+		UserInfo userInfo = customDao.getLoginInfo(inputUserName);
+		
+		if(!inputPassword.equals(userInfo.getUsersEncryptedPassword()))
 		{
-			// debugging message
-			System.out.println("The username does not exist.");
-			return null;
+			throw new InvalidPasswordException(inputUserName, "Invalid password");
 		}
-		else if(selectedUser.getDeleted() == true) 
-		{
-			System.out.println("The username does not exist.");
-			return null;
-		}
-		else if (input_password.equals(selectedUser.getEncryptedPassword())){
-			UsersRolesLink url = usersRolesLinksDao.findByUserId(selectedUser.getId());
-			System.out.println("Login successfully." + selectedUser);
-//			
-			return generateUserInfo(selectedUser,url.getRoleId());
-		} 
-		else 
-		{
-			// debugging message
-			System.out.println("The password is wrong.");
-			return null;
-		}
+		
+		return new ReturnUserInfo(userInfo);
 	}
 
     @Transactional
@@ -243,7 +224,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
 	@Override
-	public List<UserInfo> searchUser(UserSearchDto dto) throws SQLException
+	public List<ReturnUserInfo> searchUser(UserSearchDto dto) throws SQLException
 	{
 		// 1. extract the matched user data from the input userName
 		String input_WpiId = dto.getWpiId();
@@ -321,13 +302,40 @@ public class UserServiceImpl implements UserService {
 		List<User> selectedUsers = usersDao.select(columnNamesList, queryTermList, orderByList);
 		System.out.println("Selected Users: "+selectedUsers);
 		
-		List<UserInfo> result = new ArrayList<>();
-		for(User user: selectedUsers) {
-			UsersRolesLink url = usersRolesLinksDao.findByUserId(user.getId());
-			result.add(generateUserInfo(user, (int)url.getRoleId()));
-		}
-		return result;
+		List<ReturnUserInfo> result = new ArrayList<>();
 		
+		for(User user: selectedUsers)
+		{
+			UsersRolesLink url = usersRolesLinksDao.findByUserId(user.getId());
+			
+			// TODO fix this hack
+			// ideally a new custom query with parameter options should be written using UserIndo
+			
+			UserInfo userInfo = new UserInfo();
+			
+			userInfo.setUsersId(user.getId());
+			userInfo.setUsersWpiId(user.getWpiId());
+			userInfo.setUsersUserName(user.getUserName());
+			userInfo.setUsersFirstName(user.getFirstName());
+			userInfo.setUsersLastName(user.getLastName());
+			userInfo.setUsersEmail(user.getEmail());
+			userInfo.setUsersEncryptedPassword(user.getEncryptedPassword());
+			userInfo.setUsersSalt(user.getSalt());
+			userInfo.setUsersAccountState(user.getAccountState());
+			userInfo.setUsersCreatedAt(user.getCreatedAt());
+			userInfo.setUsersUpdatedAt(user.getUpdatedAt());
+			userInfo.setUsersDeleted(user.getDeleted());
+			// userInfo.setFacultyId(); currently null
+			userInfo.setUserRolesId(url.getId());
+			//userInfo.setUserRolesRoleName(); currently null
+
+			
+			result.add(new ReturnUserInfo(userInfo));
+			
+			// END OF HACK
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -434,13 +442,15 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<UserInfo> viewUserOfRoleId(Integer roleId) throws SQLException {
-		List<UserInfo> result = new ArrayList<>();
-		List<User> users = customDao.getAllUsersWithRole(roleId);
-		for(User user: users) {
-			result.add(generateUserInfo(user, roleId));
+	public List<ReturnUserInfo> viewUserOfRoleId(Integer roleId) throws SQLException {
+
+		List<ReturnUserInfo> resultList = new ArrayList<>();
+		List<UserInfo> users = customDao.getAllUsersWithRole(roleId);
+		
+		for(UserInfo user: users) {
+			resultList.add(new ReturnUserInfo(user));
 		}
-		return result;
+		return resultList;
 	}
 
 	@Override
@@ -477,13 +487,5 @@ public class UserServiceImpl implements UserService {
 		
 		return sectionService.dislinkAll(scheduleId);
 	}
-	
-	private UserInfo generateUserInfo(User selectedUser, int roleId) {
-		return new UserInfo(selectedUser.getId(), selectedUser.getWpiId(), selectedUser.getUserName(), selectedUser.getFirstName(), selectedUser.getLastName(), 
-				selectedUser.getEmail(),selectedUser.getAccountState(), (boolean)selectedUser.getDeleted(), roleId);
-	}
-
-	
-
 
 }

@@ -16,7 +16,6 @@ import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
-import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -10,7 +10,7 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
-import org.dselent.scheduling.server.httpReturnObject.UserInfo;
+import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
