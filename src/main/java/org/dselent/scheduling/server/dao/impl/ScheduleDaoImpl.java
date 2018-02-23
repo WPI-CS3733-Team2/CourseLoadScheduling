@@ -250,7 +250,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 
 
 	@Override
-	public Schedule findByName(String name) throws SQLException {
+	public List<Schedule> findByName(String name) throws SQLException {
 		String columnName = Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME);
 		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
@@ -263,39 +263,21 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 		orderByList.add(order);
 		
 		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
-	
-		Schedule schedule = null;
 	    
-	    if(!scheduleList.isEmpty())
-	    {
-	    	schedule = scheduleList.get(0);
-	    }
-	    
-	    return schedule;
+	    return scheduleList;
 	}
 	
 	@Override
-	public Schedule findByFaculty(int facultyId) throws SQLException {
-		String columnName = Schedule.getColumnName(Schedule.Columns.FACULTY_ID);
-		List<String> selectColumnNames = Schedule.getColumnNameList();
+	public List<Schedule> getAll() throws SQLException {
+		ScheduleExtractor extractor = new ScheduleExtractor();
+
+		List<Object> objectList = new ArrayList<Object>();
 		
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		QueryTerm idTerm = new QueryTerm(columnName, ComparisonOperator.EQUAL, facultyId, null);
-		queryTermList.add(idTerm);
-		
-		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-		Pair<String, ColumnOrder> order = new Pair<String, ColumnOrder>(columnName, ColumnOrder.ASC);
-		orderByList.add(order);
-		
-		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
-	
-		Schedule schedule = null;
+	    Object[] parameters = objectList.toArray();
+		 
+	    List<Schedule> scheduleList = jdbcTemplate.query("SELECT * FROM schedule", extractor, parameters);
 	    
-	    if(!scheduleList.isEmpty())
-	    {
-	    	schedule = scheduleList.get(0);
-	    }
-	    
-	    return schedule;
+	    return scheduleList;
 	}
+	
 }

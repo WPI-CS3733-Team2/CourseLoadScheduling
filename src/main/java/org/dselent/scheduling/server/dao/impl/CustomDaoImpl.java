@@ -194,4 +194,44 @@ public class CustomDaoImpl implements CustomDao
 	    List<Course> courseMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return courseMatchList;
 	}
+	
+	@Override
+	public List<Faculty> getFacultyIDFromUserSearch(String searchTerm){
+		FacultyExtractor extractor = new FacultyExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_FACULTY_ID_FROM_USER_SEARCH_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+	    List<Faculty> facultiesWithUserIDList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return facultiesWithUserIDList;
+	}
+	
+	@Override
+	public List<Schedule> getScheduleFromCourseSearch(String searchTerm){
+		ScheduleExtractor extractor = new ScheduleExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SCHEDULE_FROM_COURSE_SEARCH_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+		List<Schedule> scheduleByCourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return scheduleByCourseList;
+	}
+	
+	@Override
+	public List<Schedule> getScheduleFromName(String searchTerm){
+		ScheduleExtractor extractor = new ScheduleExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SCHEDULE_FROM_NAME_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+		List<Schedule> scheduleByNameList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return scheduleByNameList;
+	}
+	
+	@Override
+	public List<Schedule> getScheduleFromCalendarSearch(String searchTerm){
+		ScheduleExtractor extractor = new ScheduleExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SCHEDULE_FROM_CALENDAR_SEARCH_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+		List<Schedule> scheduleByCourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return scheduleByCourseList;
+	}
 }

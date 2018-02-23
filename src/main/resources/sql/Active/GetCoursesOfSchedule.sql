@@ -1,4 +1,4 @@
---Get sections in schedule
+--Get courses in schedule
 
 SELECT courses.*
 FROM courses

@@ -37,4 +37,8 @@ public interface CustomDao
 	public List<Section> getSectionsInSchedule(int scheduleId);
 	public List<Faculty> getFacultyIDFromUser(int userId);
 	public List<Course> getCoursesOfSection(int sectionId);
+	public List<Faculty> getFacultyIDFromUserSearch(String searchTerm);
+	public List<Schedule> getScheduleFromCourseSearch(String searchTerm);
+	public List<Schedule> getScheduleFromName(String searchTerm);
+	public List<Schedule> getScheduleFromCalendarSearch(String searchTerm);
 }
