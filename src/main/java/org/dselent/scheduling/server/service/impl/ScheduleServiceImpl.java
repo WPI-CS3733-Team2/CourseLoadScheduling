@@ -2,13 +2,22 @@ package org.dselent.scheduling.server.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.ScheduleDao;
+import org.dselent.scheduling.server.httpReturnObject.CalendarInfo;
+import org.dselent.scheduling.server.httpReturnObject.CourseInfo;
+import org.dselent.scheduling.server.httpReturnObject.SectionInfo;
+import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
+import org.dselent.scheduling.server.model.Section;
+import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -109,5 +118,49 @@ public class ScheduleServiceImpl implements ScheduleService
 			scheduleList = scheduleDao.getAll();
 		}
 		return scheduleList;
+	}
+	
+	@Override
+	public UserWithScheduleInfo specifics(Integer scheduleId) throws SQLException{
+		List<User> userList = customDao.getUserForSchedule(scheduleId);
+		User user = userList.get(0);
+		
+		List<CourseInfo> returnCourseList = new ArrayList<CourseInfo>();
+		List<Course> knownCoursesList = new ArrayList<Course>();
+		List<Section> sectionList = customDao.getSectionsInSchedule(scheduleId);
+		
+		for (Section section : sectionList) {
+			List<Calendar> calendarList = customDao.getCalendarsOfSection(section.getId());
+			Calendar calendar = calendarList.get(0);
+			
+			CalendarInfo returnCalendar = new CalendarInfo(calendar.getId(),
+					calendar.getYear(), calendar.getSemester(), calendar.getDays(),
+					calendar.getStartTime(), calendar.getEndTime());
+			
+			SectionInfo returnSection = new SectionInfo(section.getName(), section.getType(),
+					section.getExpectedPopulation(), section.getDeleted(), returnCalendar);
+
+			Course course = customDao.getCoursesOfSection(section.getId()).get(0);
+			
+			if (!knownCoursesList.contains(course)) {
+				knownCoursesList.add(course);
+				List<SectionInfo> returnSectionList = new ArrayList<SectionInfo>();
+				returnSectionList.add(returnSection);
+				CourseInfo returnCourse = new CourseInfo(course.getName(), course.getNumber(), returnSectionList);
+				returnCourseList.add(returnCourse);
+			}
+			else {
+				for (CourseInfo courseInfo : returnCourseList) {
+					if (course.getName().contentEquals(courseInfo.getCourseName())) {
+						courseInfo.getSectionsOfCourse().add(returnSection);
+					}
+				}
+			}
+		}
+		UserWithScheduleInfo returnUser = new UserWithScheduleInfo(user.getId(), user.getWpiId(), user.getUserName(),
+				user.getFirstName(), user.getLastName(), user.getEmail(), Integer.parseInt(user.getAccountState()),
+				Date.from(user.getCreatedAt()), Date.from(user.getUpdatedAt()), returnCourseList);
+		
+		return returnUser;
 	}
 }

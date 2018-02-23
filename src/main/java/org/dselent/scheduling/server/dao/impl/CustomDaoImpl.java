@@ -234,4 +234,14 @@ public class CustomDaoImpl implements CustomDao
 		List<Schedule> scheduleByCourseList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 		return scheduleByCourseList;
 	}
+	
+	@Override
+	public List<User> getUserForSchedule(int scheduleId){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_USER_FOR_SCHEDULE_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("scheduleId", scheduleId);
+	    List<User> usersWithSchedule = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return usersWithSchedule;
+	}
 }
