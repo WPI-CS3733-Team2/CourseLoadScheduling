@@ -4,10 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
-import org.dselent.scheduling.server.httpReturnObject.UserInfo;
+import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.model.Calendar;
-import org.dselent.scheduling.server.model.CourseLoad;
-import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,7 +30,7 @@ public interface UserService
 
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
-    public UserInfo loginUser(String input_userName, String input_password) throws SQLException;
+    public ReturnUserInfo loginUser(String input_userName, String input_password) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
@@ -50,7 +48,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public List<UserInfo> searchUser(UserSearchDto dto) throws SQLException;
+    public List<ReturnUserInfo> searchUser(UserSearchDto dto) throws SQLException;
     /**
 	 * search the input variables: wpiID, userName, firstName, lastName and email,
 	 * and return the selected list of user matching those values of input variables.
@@ -59,7 +57,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public List<UserInfo> viewUserOfRoleId(Integer roleId) throws SQLException;
+    public List<ReturnUserInfo> viewUserOfRoleId(Integer roleId) throws SQLException;
     
     public List<Calendar> getFacultyCalendars(Integer facultyId) throws SQLException;
     

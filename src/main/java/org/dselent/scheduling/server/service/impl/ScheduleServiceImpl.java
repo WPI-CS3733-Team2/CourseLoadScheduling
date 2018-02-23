@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.ScheduleDao;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
@@ -19,6 +21,8 @@ public class ScheduleServiceImpl implements ScheduleService
 {
 	@Autowired
 	private ScheduleDao scheduleDao;
+	@Autowired
+	private CustomDao customDao;
 	
     public ScheduleServiceImpl()
     {
@@ -83,4 +87,27 @@ public class ScheduleServiceImpl implements ScheduleService
 		return scheduleDao.findByFacultyId(facultyId);
 	}
     
+	@Override
+	public List<Schedule> search(String searchBy, String searchTerm) throws SQLException{
+		List<Schedule> scheduleList = new ArrayList();
+		if (searchBy.contentEquals("faculty")) {
+			List<Faculty> facultyList = customDao.getFacultyIDFromUserSearch(searchTerm);
+			for (Faculty faculty : facultyList) {
+				scheduleList.add(scheduleDao.findByFacultyId(faculty.getId()));
+			}
+		}
+		else if (searchBy.contentEquals("course")) {
+			scheduleList = customDao.getScheduleFromCourseSearch(searchTerm);
+		}
+		else if (searchBy.contentEquals("semester")) {
+			scheduleList = customDao.getScheduleFromCalendarSearch(searchTerm);
+		}
+		else if (searchBy.contentEquals("name")) {
+			scheduleList = customDao.getScheduleFromName(searchTerm);
+		}
+		else { //all will be returned
+			scheduleList = scheduleDao.getAll();
+		}
+		return scheduleList;
+	}
 }

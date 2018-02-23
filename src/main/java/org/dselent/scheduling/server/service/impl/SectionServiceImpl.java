@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
@@ -125,7 +126,6 @@ public class SectionServiceImpl implements SectionService {
 		orderByList.add(orderBy1);
 		
 		List<Section> selectedSection = sectionsDao.select(columnNamesList, queryTermList, orderByList);
-		System.out.println("Selected Section: "+selectedSection);
 
 		return selectedSection.get(0);
 	}
