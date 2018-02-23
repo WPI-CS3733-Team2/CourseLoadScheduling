@@ -26,6 +26,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Controller for handling requests related to the user such as logging in or registering.
  * Controller methods are the first methods reached by the request server-side (with special exception).
@@ -216,17 +218,17 @@ public class SectionControllerImpl implements SectionController
 	}
 	
 	@Override
-	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, String> request)
+	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, List<Integer>> request)
 			throws Exception {
 		// Print is for testing purposes
 		System.out.println("controller reached");
 
 		// add any objects that need to be returned to the success list
 		String response = "";
-		String course_id = request.get(ViewSectionsOfCourse.getBodyName(ViewSectionsOfCourse.BodyKey.COURSE_ID));
+		List<Integer> course_ids = request.get(ViewSectionsOfCourse.getBodyName(ViewSectionsOfCourse.BodyKey.COURSE_IDS));
 
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
-				sectionService.view_sections_of_course(course_id));
+				sectionService.view_sections_of_course(course_ids));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

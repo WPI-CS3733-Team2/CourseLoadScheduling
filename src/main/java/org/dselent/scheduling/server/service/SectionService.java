@@ -28,7 +28,7 @@ public interface SectionService
 	public List<Integer> modify_section_schedule(Integer id, Integer schedule_id) throws SQLException;
 	public List<Integer> modify_section_type_name_pop(ModifySectionTypeNamePopDto modifySectionTypeNamePopDto) throws SQLException;
 	public List<Calendar> view_section_calendars_of_course(String course_id) throws SQLException;
-	public List<Section> view_sections_of_course(String course_id) throws SQLException;
+	public List<Section> view_sections_of_course(List<Integer> course_id) throws SQLException;
 	public List<Integer> dislinkAll(Integer scheduleId) throws SQLException;
 	
 }

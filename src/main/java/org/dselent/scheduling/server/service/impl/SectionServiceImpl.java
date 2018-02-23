@@ -10,6 +10,7 @@ import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
+import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
@@ -263,25 +264,29 @@ public class SectionServiceImpl implements SectionService {
 	}
 	
 	@Override
-	public List<Section> view_sections_of_course(String courseId) throws SQLException {
+	public List<Section> view_sections_of_course(List<Integer> courseIds) throws SQLException {
     	
+		List<Section> sections = new ArrayList<>();
+		
 		List<String> sectionColumnNameList = new ArrayList<>();
     	
     	sectionColumnNameList.addAll(Section.getColumnNameList());
     	
-    	List<QueryTerm> queryTermList = new ArrayList<>();
-    	
-    	String queryColumnName = Section.getColumnName(Section.Columns.COURSE_ID);
-		QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, Integer.parseInt(courseId), null);
-		queryTermList.add(queryTerm);
-    	
+
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
     	Pair<String, ColumnOrder> orderBy = new Pair<>(Section.getColumnName(Section.Columns.CALENDAR_ID), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
-    	List<Section> sections = new ArrayList<>();
-    	sections = sectionsDao.select(sectionColumnNameList, queryTermList, orderByList);
-	
+    	for(int i = 0; i < courseIds.size(); i++) {
+	    	List<QueryTerm> queryTermList = new ArrayList<>();
+	    	
+	    	String queryColumnName = Section.getColumnName(Section.Columns.COURSE_ID);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseIds.get(i), null);
+			queryTermList.add(queryTerm);
+	    	
+	    	sections.addAll(sectionsDao.select(sectionColumnNameList, queryTermList, orderByList));
+    	}
+    	
     	return sections;
 	}
 
