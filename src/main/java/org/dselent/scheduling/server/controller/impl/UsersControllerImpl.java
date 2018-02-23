@@ -60,7 +60,8 @@ public class UsersControllerImpl implements UsersController
 		String lastName = (String) request.get(Register.getBodyName(Register.BodyKey.LAST_NAME));
 		String email = (String) request.get(Register.getBodyName(Register.BodyKey.EMAIL));
 		String password = (String) request.get(Register.getBodyName(Register.BodyKey.PASSWORD));
-		Integer roleId = (Integer) request.get(Register.getBodyName(Register.BodyKey.ROLE_ID)); 
+		Integer roleId = (Integer) request.get(Register.getBodyName(Register.BodyKey.ROLE_ID));
+		Integer rank = (Integer) request.get(Register.getBodyName(Register.BodyKey.RANK));
 
 		RegisterUserDto.Builder builder = RegisterUserDto.builder();
 		RegisterUserDto registerUserDto = builder.withWPIid(wpiId)
@@ -70,6 +71,7 @@ public class UsersControllerImpl implements UsersController
 		.withEmail(email)
 		.withPassword(password)
 		.withRoleId(roleId)
+		.withRank(rank)
 		.build();
 		
 		//success.add(userService.registerUser(registerUserDto));

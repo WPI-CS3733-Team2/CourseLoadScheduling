@@ -409,7 +409,7 @@ public class User extends Model
 		StringBuilder builder = new StringBuilder();
 		builder.append("Users [id=");
 		builder.append(id);
-		builder.append(", wpi_id=");				//
+		builder.append(", wpiId=");				//
 		builder.append(wpiId);					//
 		builder.append(", userName=");
 		builder.append(userName);
