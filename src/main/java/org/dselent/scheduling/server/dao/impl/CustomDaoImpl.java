@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.dao.impl;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CustomDao;
+import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
 import org.dselent.scheduling.server.extractor.SectionsExtractor;
@@ -56,6 +57,23 @@ public class CustomDaoImpl implements CustomDao
 	    if(usersInfoList.isEmpty())
 	    {
 	    	throw new InvalidUserNameException(userName, "Invalid userName: \"" + "\"" + userName + "\"");
+	    }
+	    
+	    return usersInfoList.get(0);
+	}
+	
+	@Override
+	public UserInfo getUserInfo(Integer userId) throws InvalidUserIdException
+	{
+		UsersInfoExtractor extractor = new UsersInfoExtractor();
+		String queryTemplate = new String(QueryPathConstants.USER_INFO_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("userId", userId);
+	    List<UserInfo> usersInfoList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    
+	    if(usersInfoList.isEmpty())
+	    {
+	    	throw new InvalidUserIdException(userId, "Invalid userId: \"" + "\"" + userId + "\"");
 	    }
 	    
 	    return usersInfoList.get(0);
