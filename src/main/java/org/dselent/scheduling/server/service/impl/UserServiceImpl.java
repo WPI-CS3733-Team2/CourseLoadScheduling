@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(dto.getEmail());
 		user.setEncryptedPassword(encryptedPassword);
 		user.setSalt(salt);
-		user.setAccountState("Active"); //
+		user.setAccountState("1"); //
 
 		List<String> userInsertColumnNameList = new ArrayList<>();
 		List<String> userKeyHolderColumnNameList = new ArrayList<>();
@@ -186,6 +186,13 @@ public class UserServiceImpl implements UserService {
 			throw new InvalidPasswordException(inputUserName, "Invalid password");
 		}
 		
+		return new ReturnUserInfo(userInfo);
+	}
+	
+	@Override
+	public ReturnUserInfo getAccountDetails(Integer userId) throws SQLException
+	{
+		UserInfo userInfo = customDao.getUserInfo(userId);		
 		return new ReturnUserInfo(userInfo);
 	}
 
