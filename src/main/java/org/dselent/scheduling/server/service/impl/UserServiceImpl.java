@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(dto.getEmail());
 		user.setEncryptedPassword(encryptedPassword);
 		user.setSalt(salt);
-		user.setAccountState("Active"); //
+		user.setAccountState("1"); //
 
 		List<String> userInsertColumnNameList = new ArrayList<>();
 		List<String> userKeyHolderColumnNameList = new ArrayList<>();
