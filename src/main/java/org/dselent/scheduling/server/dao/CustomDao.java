@@ -46,4 +46,5 @@ public interface CustomDao
 	public List<Schedule> getScheduleFromName(String searchTerm);
 	public List<Schedule> getScheduleFromCalendarSearch(String searchTerm);
 	public List<User> getUserForSchedule(int scheduleId);
+	List<User> facultyUserMapping(int facultyId);
 }
