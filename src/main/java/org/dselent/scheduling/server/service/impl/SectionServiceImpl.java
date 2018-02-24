@@ -274,7 +274,7 @@ public class SectionServiceImpl implements SectionService {
     	
 
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair<>(Section.getColumnName(Section.Columns.CALENDAR_ID), ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderBy = new Pair<>(Section.getColumnName(Section.Columns.COURSE_ID), ColumnOrder.ASC);
     	orderByList.add(orderBy);
     	
     	for(int i = 0; i < courseIds.size(); i++) {
