@@ -166,6 +166,16 @@ public class CustomDaoImpl implements CustomDao
 	}
 	
 	@Override
+	public List<User> facultyUserMapping(int facultyId){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.FACULTY_USER_MAPPING_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("facultyId", facultyId);
+	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return selectedUserList;
+	}
+	
+	@Override
 	public List<Calendar> getCalendarsOfSection(int sectionId){
 		CalendarExtractor extractor = new CalendarExtractor();
 		String queryTemplate = new String(QueryPathConstants.GET_CALENDARS_OF_SECTION_QUERY);
