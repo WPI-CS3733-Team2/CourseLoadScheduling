@@ -1,5 +1,6 @@
 package org.dselent.scheduling.server.controller.impl;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class RequestControllerImpl implements RequestController
 	
 	public ResponseEntity<String> changeState(@RequestBody Map<String, String> request) throws Exception{
 		// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("changeState controller reached");
 						    	
 		// add any objects that need to be returned to the success list
 		String response = "";
@@ -95,8 +96,9 @@ public class RequestControllerImpl implements RequestController
 						
 		String requestId = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_ID));
 		String requestState = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_STATE));
-						
-		requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
+		
+		List<Integer> rowsAffected = requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
+		success.addAll(rowsAffected);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -104,7 +106,7 @@ public class RequestControllerImpl implements RequestController
 	
 	public ResponseEntity<String> viewPending(@RequestBody Map<String, String> request) throws Exception{
 		// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("viewPending controller reached");
 								    	
 		// add any objects that need to be returned to the success list
 		String response = "";

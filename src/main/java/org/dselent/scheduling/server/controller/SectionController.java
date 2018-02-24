@@ -42,7 +42,7 @@ public interface SectionController
 	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, String> request) throws Exception;
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewSectionsOfCourse.REQUEST_NAME)
-	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, String> request) throws Exception;
+	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, List<Integer>> request) throws Exception;
 
 }
 

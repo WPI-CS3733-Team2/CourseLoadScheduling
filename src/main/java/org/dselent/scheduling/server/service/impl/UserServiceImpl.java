@@ -300,6 +300,10 @@ public class UserServiceImpl implements UserService {
 
 		}
 		
+		String queryColumnName6 = User.getColumnName(User.Columns.DELETED);
+		QueryTerm queryTerm6 = new QueryTerm(queryColumnName6, ComparisonOperator.EQUAL, false, LogicalOperator.AND);
+		queryTermList.add(queryTerm6);
+		
 		// 4. create a sort list and pack sorting data
 		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
 		Pair<String, ColumnOrder> orderBy1 = new Pair<String, ColumnOrder>(User.getColumnName(User.Columns.FIRST_NAME), ColumnOrder.ASC);
@@ -319,6 +323,7 @@ public class UserServiceImpl implements UserService {
 			// ideally a new custom query with parameter options should be written using UserIndo
 			
 			UserInfo userInfo = new UserInfo();
+			System.out.println("Changes made.");
 			
 			userInfo.setUsersId(user.getId());
 			userInfo.setUsersWpiId(user.getWpiId());

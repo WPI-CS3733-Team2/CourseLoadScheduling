@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author dselent
  *
  */
-public class ViewSectionsOfCourse
+public class ScheduleSpecifics
 {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "view_course_sections";
+	public static final String REQUEST_NAME = "schedule_specifics";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -28,12 +28,12 @@ public class ViewSectionsOfCourse
 	
 	public static enum ParameterKey
 	{
-
+		ID;
 	}
 	
 	public static enum BodyKey
 	{
-		COURSE_IDS,
+
 	}
 	
 
@@ -61,7 +61,7 @@ public class ViewSectionsOfCourse
 		
 	};
 	
-	private ViewSectionsOfCourse()
+	private ScheduleSpecifics()
 	{
 		
 	};

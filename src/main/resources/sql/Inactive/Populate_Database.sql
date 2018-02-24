@@ -65,7 +65,69 @@ INSERT INTO users(wpi_id, user_name, first_name, last_name, email, encrypted_pas
 
 ----------------POPULATE FACULTY ---------------
 
-INSERT INTO faculty(rank) VALUES(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1),(1);
+INSERT INTO faculty(rank, assigned) VALUES
+(1, FALSE), --1
+(1, TRUE), --2
+(1, FALSE), --3
+(1, FALSE), --4
+(1, TRUE), --5
+(1, FALSE), --6
+(1, TRUE), --7
+(1, TRUE), --8
+(1, FALSE), --9
+(1, FALSE), --10
+(1, FALSE), --11
+(1, FALSE), --12
+(1, TRUE), --13
+(1, TRUE), --14
+(1, TRUE), --15
+(1, TRUE), --16
+(1, TRUE), --17
+(1, TRUE), --18
+(1, FALSE), --19
+(1, TRUE), --20
+(1, FALSE), --21
+(1, TRUE), --22
+(1, TRUE), --23
+(1, FALSE), --24
+(1, TRUE), --25
+(1, TRUE), --26
+(1, TRUE),--27
+(1, FALSE), --28
+(1, FALSE), --29
+(1, FALSE), --30
+(1, TRUE), --31
+(1, TRUE), --32
+(1, FALSE), --33
+(1, FALSE), --34
+(1, FALSE), --35
+(1, TRUE), --36
+(1, TRUE), --37
+(1, TRUE), --38
+(1, TRUE), --39
+(1, FALSE), --40
+(1, FALSE), --41
+(1, FALSE), --42
+(1, FALSE), --43
+(1, FALSE), --44
+(1, FALSE), --45
+(1, FALSE), --46
+(1, FALSE), --47
+(1, FALSE), --48
+(1, FALSE), --49
+(1, FALSE), --50
+(1, FALSE), --51
+(1, TRUE), --52
+(1, FALSE), --53
+(1, TRUE), --54
+(1, FALSE), --55
+(1, TRUE), --56
+(1, TRUE), --57
+(1, TRUE), --58
+(1, TRUE), --59
+(1, FALSE), --60
+(1, FALSE), --61
+(1, TRUE); --62
 
 -------------POPULATE ASSOCIATION-------------
 
@@ -557,6 +619,7 @@ INSERT INTO public.sections(crn, name, type, expected_population, course_id, cal
 INSERT INTO public.request_state(state) VALUES ('approved');
 INSERT INTO public.request_state(state) VALUES ('denied');
 INSERT INTO public.request_state(state) VALUES ('pending');
+INSERT INTO public.request_state(state) VALUES ('deleted');
 
 ----------------POPULATE REQUEST_TYPE ---------------
 
