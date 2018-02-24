@@ -557,6 +557,7 @@ INSERT INTO public.sections(crn, name, type, expected_population, course_id, cal
 INSERT INTO public.request_state(state) VALUES ('approved');
 INSERT INTO public.request_state(state) VALUES ('denied');
 INSERT INTO public.request_state(state) VALUES ('pending');
+INSERT INTO public.request_state(state) VALUES ('deleted');
 
 ----------------POPULATE REQUEST_TYPE ---------------
 

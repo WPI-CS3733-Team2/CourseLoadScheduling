@@ -69,18 +69,14 @@ public class RequestDaoImpl extends BaseDaoImpl<Request> implements RequestDao
 	{
 		RequestExtractor extractor = new RequestExtractor();
 		String queryTemplate = QueryStringBuilder.generateSelectString(Request.TABLE_NAME, selectColumnNameList, queryTermList, orderByList);
-
 		List<Object> objectList = new ArrayList<Object>();
-		
 		for(QueryTerm queryTerm : queryTermList)
 		{
 			objectList.add(queryTerm.getValue());
 		}
-		
 	    Object[] parameters = objectList.toArray();
 		 
 	    List<Request> requestList = jdbcTemplate.query(queryTemplate, extractor, parameters);
-	    
 	    return requestList;
 	}
 

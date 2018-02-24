@@ -9,9 +9,9 @@ WHERE id IN
 	(
 			SELECT users.id
 			FROM users
-			WHERE users.first_name LIKE '%'||:searchTerm||'%'
-				OR users.last_name LIKE '%'||:searchTerm||'%'
-				OR users.user_name LIKE '%'||:searchTerm||'%'
+			WHERE UPPER(users.first_name) LIKE UPPER('%'||:searchTerm||'%')
+				OR UPPER(users.last_name) LIKE UPPER('%'||:searchTerm||'%')
+				OR UPPER(users.user_name) LIKE UPPER('%'||:searchTerm||'%')
 	)
 )
 ORDER BY faculty.id ASC;

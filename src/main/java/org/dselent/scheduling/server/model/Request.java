@@ -347,6 +347,10 @@ public class Request extends Model {
 			builder.append(section);
 			builder.append(", data=");
 			builder.append(data);
+			builder.append(", createdAt=");
+			builder.append(createdAt);
+			builder.append(", updatedAt=");
+			builder.append(updatedAt);
 			builder.append("]");
 			return builder.toString();
 		}
