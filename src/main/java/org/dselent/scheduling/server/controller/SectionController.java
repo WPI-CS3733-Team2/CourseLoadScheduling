@@ -11,6 +11,7 @@ import org.dselent.scheduling.server.requests.ModifySectionTypeNamePop;
 import org.dselent.scheduling.server.requests.RemoveSection;
 import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ViewSectionCalendarsOfCourse;
+import org.dselent.scheduling.server.requests.ViewSectionsOfCourse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,9 @@ public interface SectionController
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewSectionCalendarsOfCourse.REQUEST_NAME)
 	public ResponseEntity<String> view_section_calendars_of_course(@RequestBody Map<String, String> request) throws Exception;
+
+	@RequestMapping(method=RequestMethod.POST, value=ViewSectionsOfCourse.REQUEST_NAME)
+	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, List<Integer>> request) throws Exception;
 
 }
 

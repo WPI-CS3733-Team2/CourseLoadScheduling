@@ -4,11 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.dselent.scheduling.server.config.AppConfig;
-import org.dselent.scheduling.server.dao.impl.CustomDaoImpl;
-import org.dselent.scheduling.server.model.Calendar;
-import org.dselent.scheduling.server.model.Faculty;
-import org.dselent.scheduling.server.model.Schedule;
-import org.dselent.scheduling.server.model.User;
+import org.dselent.scheduling.server.model.custom.UserInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +29,7 @@ public class CustomDaoTest
     {
     	//@SuppressWarnings("unused")
     		
-		List<User> userList = customDao.getAllUsersWithRole(1);
+		List<UserInfo> userList = customDao.getAllUsersWithRole(1);
     	//List<Schedule> scheduleList = customDao.searchScheduleByFaculty(1);
     	//List<Calendar> calendarList = customDao.getCalendarsInSchedule(3);
     	//List<Calendar> calendarList = customDao.getCalendarsOfAFaculty(1);

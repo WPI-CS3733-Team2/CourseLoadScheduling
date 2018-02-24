@@ -38,7 +38,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 			// exception in exception handler...
 			jpe.printStackTrace();
 		}
-		
 		ResponseEntity<String> responseEntity = new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		return responseEntity;
 	}

@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.ScheduleController;
+import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.requests.CreateSchedule;
+import org.dselent.scheduling.server.requests.ScheduleSpecifics;
+import org.dselent.scheduling.server.requests.SearchSchedule;
 import org.dselent.scheduling.server.requests.ViewSchedule;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +65,40 @@ public class ScheduleControllerImpl implements ScheduleController
 		
 		List<Schedule> scheduleList = scheduleService.view(scheduleId);
 		success.add(scheduleList);
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<String> search(@RequestBody Map<String, String> request) throws Exception{
+		// Print is for testing purposes
+		System.out.println("controller reached");
+								    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		
+		String searchBy = request.get(SearchSchedule.getParameterName(SearchSchedule.ParameterKey.SEARCH_BY));
+		String searchTerm = request.get(SearchSchedule.getParameterName(SearchSchedule.ParameterKey.SEARCH_TERM));
+		
+		List<Schedule> scheduleList = scheduleService.search(searchBy, searchTerm);
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, scheduleList);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<String> specifics(@RequestBody Map<String, String> request) throws Exception{
+		// Print is for testing purposes
+		System.out.println("controller reached");
+								    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		Integer scheduleId = Integer.parseInt(request.get(ScheduleSpecifics.getParameterName(ScheduleSpecifics.ParameterKey.ID)));
+		
+		UserWithScheduleInfo user = scheduleService.specifics(scheduleId);
+		success.add(user);
 		
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		

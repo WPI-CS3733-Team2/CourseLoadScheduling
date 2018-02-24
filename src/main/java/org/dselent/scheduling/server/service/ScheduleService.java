@@ -3,6 +3,7 @@ package org.dselent.scheduling.server.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.model.Schedule;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,6 @@ public interface ScheduleService
 	public Schedule create(Integer facultyId, String scheduleName) throws SQLException;
 	public List<Schedule> view(Integer id) throws SQLException;
 	public Schedule findWithFacultyId(Integer facultyId) throws SQLException;
+	public List<Schedule> search(String searchBy, String searchTerm) throws SQLException;
+	public UserWithScheduleInfo specifics(Integer scheduleId) throws SQLException;
 }

@@ -250,7 +250,7 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 
 
 	@Override
-	public Schedule findByName(String name) throws SQLException {
+	public List<Schedule> findByName(String name) throws SQLException {
 		String columnName = Schedule.getColumnName(Schedule.Columns.SCHEDULE_NAME);
 		List<String> selectColumnNames = Schedule.getColumnNameList();
 		
@@ -263,14 +263,21 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule> implements ScheduleDa
 		orderByList.add(order);
 		
 		List<Schedule> scheduleList = select(selectColumnNames, queryTermList, orderByList);
-	
-		Schedule schedule = null;
 	    
-	    if(!scheduleList.isEmpty())
-	    {
-	    	schedule = scheduleList.get(0);
-	    }
-	    
-	    return schedule;
+	    return scheduleList;
 	}
+	
+	@Override
+	public List<Schedule> getAll() throws SQLException {
+		ScheduleExtractor extractor = new ScheduleExtractor();
+
+		List<Object> objectList = new ArrayList<Object>();
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    List<Schedule> scheduleList = jdbcTemplate.query("SELECT * FROM schedule", extractor, parameters);
+	    
+	    return scheduleList;
+	}
+	
 }

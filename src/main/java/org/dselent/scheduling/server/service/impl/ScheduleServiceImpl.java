@@ -2,11 +2,22 @@ package org.dselent.scheduling.server.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.ScheduleDao;
+import org.dselent.scheduling.server.httpReturnObject.CalendarInfo;
+import org.dselent.scheduling.server.httpReturnObject.CourseInfo;
+import org.dselent.scheduling.server.httpReturnObject.SectionInfo;
+import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.Course;
+import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
+import org.dselent.scheduling.server.model.Section;
+import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.service.ScheduleService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -19,6 +30,8 @@ public class ScheduleServiceImpl implements ScheduleService
 {
 	@Autowired
 	private ScheduleDao scheduleDao;
+	@Autowired
+	private CustomDao customDao;
 	
     public ScheduleServiceImpl()
     {
@@ -83,4 +96,72 @@ public class ScheduleServiceImpl implements ScheduleService
 		return scheduleDao.findByFacultyId(facultyId);
 	}
     
+	@Override
+	public List<Schedule> search(String searchBy, String searchTerm) throws SQLException{
+		List<Schedule> scheduleList = new ArrayList();
+		if (searchBy.contentEquals("faculty")) {
+			List<Faculty> facultyList = customDao.getFacultyIDFromUserSearch(searchTerm);
+			for (Faculty faculty : facultyList) {
+				scheduleList.add(scheduleDao.findByFacultyId(faculty.getId()));
+			}
+		}
+		else if (searchBy.contentEquals("course")) {
+			scheduleList = customDao.getScheduleFromCourseSearch(searchTerm);
+		}
+		else if (searchBy.contentEquals("semester")) {
+			scheduleList = customDao.getScheduleFromCalendarSearch(searchTerm);
+		}
+		else if (searchBy.contentEquals("name")) {
+			scheduleList = customDao.getScheduleFromName(searchTerm);
+		}
+		else { //all will be returned
+			scheduleList = scheduleDao.getAll();
+		}
+		return scheduleList;
+	}
+	
+	@Override
+	public UserWithScheduleInfo specifics(Integer scheduleId) throws SQLException{
+		List<User> userList = customDao.getUserForSchedule(scheduleId);
+		User user = userList.get(0);
+		
+		List<CourseInfo> returnCourseList = new ArrayList<CourseInfo>();
+		List<Course> knownCoursesList = new ArrayList<Course>();
+		List<Section> sectionList = customDao.getSectionsInSchedule(scheduleId);
+		
+		for (Section section : sectionList) {
+			List<Calendar> calendarList = customDao.getCalendarsOfSection(section.getId());
+			Calendar calendar = calendarList.get(0);
+			
+			CalendarInfo returnCalendar = new CalendarInfo(calendar.getId(),
+					calendar.getYear(), calendar.getSemester(), calendar.getDays(),
+					calendar.getStartTime(), calendar.getEndTime());
+			
+			SectionInfo returnSection = new SectionInfo(section.getId(), section.getName(), section.getType(),
+					section.getExpectedPopulation(), returnCalendar, section.getCrn(),
+					section.getCourseId(), section.getCalendarId(), section.getScheduleId());
+
+			Course course = customDao.getCoursesOfSection(section.getId()).get(0);
+			
+			if (!knownCoursesList.contains(course)) {
+				knownCoursesList.add(course);
+				List<SectionInfo> returnSectionList = new ArrayList<SectionInfo>();
+				returnSectionList.add(returnSection);
+				CourseInfo returnCourse = new CourseInfo(course.getId(), course.getName(), course.getNumber(), course.getFrequency(), returnSectionList);
+				returnCourseList.add(returnCourse);
+			}
+			else {
+				for (CourseInfo courseInfo : returnCourseList) {
+					if (course.getName().contentEquals(courseInfo.getCourseName())) {
+						courseInfo.getSectionsOfCourse().add(returnSection);
+					}
+				}
+			}
+		}
+		UserWithScheduleInfo returnUser = new UserWithScheduleInfo(user.getId(), user.getWpiId(), user.getUserName(),
+				user.getFirstName(), user.getLastName(), user.getEmail(), Integer.parseInt(user.getAccountState()),
+				Date.from(user.getCreatedAt()), Date.from(user.getUpdatedAt()), returnCourseList);
+		
+		return returnUser;
+	}
 }
