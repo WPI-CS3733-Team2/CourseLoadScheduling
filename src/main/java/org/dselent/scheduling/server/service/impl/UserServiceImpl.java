@@ -188,6 +188,13 @@ public class UserServiceImpl implements UserService {
 		
 		return new ReturnUserInfo(userInfo);
 	}
+	
+	@Override
+	public ReturnUserInfo getAccountDetails(Integer userId) throws SQLException
+	{
+		UserInfo userInfo = customDao.getUserInfo(userId);		
+		return new ReturnUserInfo(userInfo);
+	}
 
     @Transactional
 	@Override

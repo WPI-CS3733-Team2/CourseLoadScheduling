@@ -1,6 +1,7 @@
 package org.dselent.scheduling.server.controller.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.dselent.scheduling.server.controller.UsersController;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator.ResponseKey;
+import org.dselent.scheduling.server.requests.AccountDetails;
 import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
@@ -96,8 +99,6 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
 	}
-
-	
 	
 	public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception 
     {
@@ -115,7 +116,19 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	
+	public ResponseEntity<String> getAccountDetails(@RequestBody Map<String, String> request) throws Exception 
+    {
+		System.out.println("account details controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		
+		Integer userId = Integer.parseInt(request.get(AccountDetails.getBodyName(AccountDetails.BodyKey.USER_ID)));
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getAccountDetails(userId));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
 	
 	public ResponseEntity<String> passwordModification(@RequestBody Map<String, Object> request) throws Exception 
     {
