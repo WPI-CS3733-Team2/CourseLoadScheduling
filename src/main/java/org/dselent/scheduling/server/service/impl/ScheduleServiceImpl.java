@@ -137,8 +137,9 @@ public class ScheduleServiceImpl implements ScheduleService
 					calendar.getYear(), calendar.getSemester(), calendar.getDays(),
 					calendar.getStartTime(), calendar.getEndTime());
 			
-			SectionInfo returnSection = new SectionInfo(section.getName(), section.getType(),
-					section.getExpectedPopulation(), section.getDeleted(), returnCalendar);
+			SectionInfo returnSection = new SectionInfo(section.getId(), section.getName(), section.getType(),
+					section.getExpectedPopulation(), returnCalendar, section.getCrn(),
+					section.getCourseId(), section.getCalendarId(), section.getScheduleId());
 
 			Course course = customDao.getCoursesOfSection(section.getId()).get(0);
 			
@@ -146,7 +147,7 @@ public class ScheduleServiceImpl implements ScheduleService
 				knownCoursesList.add(course);
 				List<SectionInfo> returnSectionList = new ArrayList<SectionInfo>();
 				returnSectionList.add(returnSection);
-				CourseInfo returnCourse = new CourseInfo(course.getName(), course.getNumber(), returnSectionList);
+				CourseInfo returnCourse = new CourseInfo(course.getId(), course.getName(), course.getNumber(), course.getFrequency(), returnSectionList);
 				returnCourseList.add(returnCourse);
 			}
 			else {
