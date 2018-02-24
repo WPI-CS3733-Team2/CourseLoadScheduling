@@ -42,7 +42,7 @@ public class RequestServiceImpl implements RequestService {
 
 		request.setData(dto.getData());	
 		request.setState(pendingInt()); //Should automatically be "pending"
-		//For now, coded as if 1=accepted,2=denied,and 3=pending
+		//For now, coded as if 1=accepted, 2=denied, 3=pending, and 4=deleted.
 		//May need another custom DAO to retrieve whatever row in the table is "pending"
 
 		List<String> requestInsertColumnNameList = new ArrayList<>();
@@ -159,7 +159,6 @@ public class RequestServiceImpl implements RequestService {
     	Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
     	orderByList0.add(orderPair0);
     	
-		//@SuppressWarnings("unused")
 		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0, selectQueryTermList0, orderByList0);
 		
     	return selectedRequestStateList.get(0).getId();

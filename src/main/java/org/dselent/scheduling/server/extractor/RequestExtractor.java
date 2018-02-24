@@ -32,6 +32,7 @@ public class RequestExtractor extends Extractor<List<Request>>{
 			result.setSection(rs.getInt(Request.getColumnName(Request.Columns.SECTION)));
 			result.setData(rs.getString(Request.getColumnName(Request.Columns.DATA)));
 			result.setCreatedAt(rs.getTimestamp(Request.getColumnName(Request.Columns.CREATED_AT)));
+			result.setUpdatedAt(rs.getTimestamp(Request.getColumnName(Request.Columns.UPDATED_AT)));
 		
 			resultList.add(result);
 		}
