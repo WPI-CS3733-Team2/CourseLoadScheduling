@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.RequestDao;
 import org.dselent.scheduling.server.dao.RequestStateDao;
 import org.dselent.scheduling.server.dto.CreateRequestDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Request;
 import org.dselent.scheduling.server.model.RequestState;
+import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.service.RequestService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -24,6 +26,8 @@ public class RequestServiceImpl implements RequestService {
 	private RequestDao requestDao;
 	@Autowired
 	private RequestStateDao requestStateDao;
+	@Autowired
+	private CustomDao customDao;
 
 	public RequestServiceImpl() {
 
@@ -115,6 +119,7 @@ public class RequestServiceImpl implements RequestService {
     	// to vary among group members
     	Integer pending = pendingInt();
     	String selectColumnName = Request.getColumnName(Request.Columns.STATE);
+    	String orderColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
     	Integer selectData = pending;
     	
     	List<QueryTerm> selectQueryTermList = new ArrayList<>();
@@ -128,7 +133,7 @@ public class RequestServiceImpl implements RequestService {
     	List<String> selectColumnNameList = Request.getColumnNameList();
     	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(orderColumnName, ColumnOrder.ASC);
     	orderByList.add(orderPair1);
     	
 		//@SuppressWarnings("unused")
@@ -163,5 +168,16 @@ public class RequestServiceImpl implements RequestService {
 		
     	return selectedRequestStateList.get(0).getId();
     }
+
+	public List<String> getRequestFacultiesInfo() throws SQLException {
+		List<User> usersWithFacultyId = customDao.getUsersByFacultyIds();
+		List<String> nameList = new ArrayList<String>();
+		for (User user : usersWithFacultyId) {
+			String firstName = user.getFirstName();
+			String lastName = user.getLastName();
+			nameList.add(firstName+" "+lastName);
+		}
+		return nameList;
+	}
 
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 
 //import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.CreateRequest;
+import org.dselent.scheduling.server.requests.ViewFacultiesInfo;
 import org.dselent.scheduling.server.requests.ViewRequestHistory;
 import org.dselent.scheduling.server.requests.ChangeRequestState;
 import org.dselent.scheduling.server.requests.ViewPendingRequests;
@@ -26,6 +27,9 @@ public interface RequestController
 	
 	@RequestMapping(method=RequestMethod.POST, value=ViewPendingRequests.REQUEST_NAME)
 	public ResponseEntity<String> viewPending(@RequestBody Map<String, String> request) throws Exception;
+
+	@RequestMapping(method=RequestMethod.POST, value=ViewFacultiesInfo.REQUEST_NAME)
+	public ResponseEntity<String> getFacultisInfo(@RequestBody Map<String, String> request) throws Exception;
 }
 
 	

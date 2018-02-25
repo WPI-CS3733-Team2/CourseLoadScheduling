@@ -30,7 +30,6 @@ public class QueryPathConstants
 	private static String FACULTIES_WITH_USER_WPI_ID_PATH = BASE_QUERY_PATH + "GetFacultiesWithUserWPIID" + SQL_EXTENSION;
 	private static String MATCH_DATE_CALENDAR_PATH = BASE_QUERY_PATH + "GetMatchDateCalendar" + SQL_EXTENSION;
 	private static String FACULTY_COURSE_MAPPING_PATH = BASE_QUERY_PATH + "FacultyCourseMapping" + SQL_EXTENSION;
-	private static String FACULTY_USER_MAPPING_PATH = BASE_QUERY_PATH + "FacultyUserMapping" + SQL_EXTENSION;
 	private static String GET_CALENDARS_OF_SECTION_PATH = BASE_QUERY_PATH + "GetCalendarsOfSection" + SQL_EXTENSION;
 	private static String GET_COURSES_OF_SCHEDULE_PATH = BASE_QUERY_PATH + "GetCoursesOfSchedule" + SQL_EXTENSION;
 	private static String GET_SECTIONS_IN_SCHEDULE_PATH = BASE_QUERY_PATH + "GetSectionsInSchedule" + SQL_EXTENSION;
@@ -43,6 +42,7 @@ public class QueryPathConstants
 	private static String GET_USER_FOR_SCHEDULE_PATH = BASE_QUERY_PATH + "GetUserForSchedule" + SQL_EXTENSION;
 	private static String LOGIN_USER_INFO_PATH = BASE_QUERY_PATH + "GetUserInfo" + SQL_EXTENSION; 
 	private static String USER_INFO_PATH = BASE_QUERY_PATH + "GetUserInfo" + SQL_EXTENSION;
+	private static String GET_USERS_BY_FACULTY_IDS_PATH = BASE_QUERY_PATH + "GetUsersByFacultyIds" + SQL_EXTENSION;
 
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +59,6 @@ public class QueryPathConstants
 	public static String FACULTIES_WITH_USER_WPI_ID_QUERY = readFile(FACULTIES_WITH_USER_WPI_ID_PATH);
 	public static String MATCH_DATE_CALENDAR_QUERY = readFile(MATCH_DATE_CALENDAR_PATH);
 	public static String FACULTY_COURSE_MAPPING_QUERY = readFile(FACULTY_COURSE_MAPPING_PATH);
-	public static String FACULTY_USER_MAPPING_QUERY = readFile(FACULTY_USER_MAPPING_PATH);
 	public static String GET_CALENDARS_OF_SECTION_QUERY = readFile(GET_CALENDARS_OF_SECTION_PATH);
 	public static String GET_COURSES_OF_SCHEDULE_QUERY = readFile(GET_COURSES_OF_SCHEDULE_PATH);
 	public static String GET_SECTIONS_IN_SCHEDULE_QUERY = readFile(GET_SECTIONS_IN_SCHEDULE_PATH);
@@ -72,6 +71,7 @@ public class QueryPathConstants
 	public static String GET_USER_FOR_SCHEDULE_QUERY = readFile(GET_USER_FOR_SCHEDULE_PATH);
 	public static String LOGIN_USER_INFO_QUERY = readFile(LOGIN_USER_INFO_PATH);
 	public static String USER_INFO_QUERY = readFile(USER_INFO_PATH);
+	public static String GET_USERS_BY_FACULTY_IDS_QUERY = readFile(GET_USERS_BY_FACULTY_IDS_PATH);
 
 	
 	private QueryPathConstants()

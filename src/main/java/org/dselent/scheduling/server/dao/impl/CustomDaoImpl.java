@@ -184,16 +184,6 @@ public class CustomDaoImpl implements CustomDao
 	}
 	
 	@Override
-	public List<User> facultyUserMapping(int facultyId){
-		UsersExtractor extractor = new UsersExtractor();
-		String queryTemplate = new String(QueryPathConstants.FACULTY_USER_MAPPING_QUERY);
-	    MapSqlParameterSource parameters = new MapSqlParameterSource();
-	    parameters.addValue("facultyId", facultyId);
-	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
-	    return selectedUserList;
-	}
-	
-	@Override
 	public List<Calendar> getCalendarsOfSection(int sectionId){
 		CalendarExtractor extractor = new CalendarExtractor();
 		String queryTemplate = new String(QueryPathConstants.GET_CALENDARS_OF_SECTION_QUERY);
@@ -291,5 +281,14 @@ public class CustomDaoImpl implements CustomDao
 	    parameters.addValue("scheduleId", scheduleId);
 	    List<User> usersWithSchedule = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return usersWithSchedule;
+	}
+	
+	@Override
+	public List<User> getUsersByFacultyIds(){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_USERS_BY_FACULTY_IDS_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return selectedUserList;
 	}
 }
