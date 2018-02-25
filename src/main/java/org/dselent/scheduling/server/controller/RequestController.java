@@ -8,6 +8,7 @@ import org.dselent.scheduling.server.requests.ViewFacultiesInfo;
 import org.dselent.scheduling.server.requests.ViewRequestHistory;
 import org.dselent.scheduling.server.requests.ChangeRequestState;
 import org.dselent.scheduling.server.requests.ViewPendingRequests;
+import org.dselent.scheduling.server.requests.ViewPendingRequestsDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public interface RequestController
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewFacultiesInfo.REQUEST_NAME)
 	public ResponseEntity<String> getFacultisInfo(@RequestBody Map<String, String> request) throws Exception;
+
+	@RequestMapping(method=RequestMethod.POST, value=ViewPendingRequestsDetails.REQUEST_NAME)
+	public ResponseEntity<String> getpendingRequestsDetails(Map<String, String> request) throws Exception;
 }
 
 	

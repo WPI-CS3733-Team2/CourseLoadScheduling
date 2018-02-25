@@ -15,9 +15,11 @@ import org.dselent.scheduling.server.extractor.CalendarExtractor;
 import org.dselent.scheduling.server.extractor.CoursesExtractor;
 import org.dselent.scheduling.server.extractor.FacultyExtractor;
 import org.dselent.scheduling.server.miscellaneous.QueryPathConstants;
+import org.dselent.scheduling.server.miscellaneous.Triple;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.model.Request;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
@@ -318,5 +320,21 @@ public class CustomDaoImpl implements CustomDao
 	    MapSqlParameterSource parameters = new MapSqlParameterSource();
 	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return selectedUserList;
+	}
+	
+	@Override
+	public User getFacultyUser(int facultyId){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_FACULTY_USER_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("facultyId", facultyId);
+	    List<User> facultyUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    
+	    if(facultyUserList.isEmpty())
+	    {
+	    	throw new InvalidUserIdException(facultyId, "Invalid facultyId: \"" + "\"" + facultyId + "\"");
+	    }
+	    
+	    return facultyUserList.get(0);
 	}
 }

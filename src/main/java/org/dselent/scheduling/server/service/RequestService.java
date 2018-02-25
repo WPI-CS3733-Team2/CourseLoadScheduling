@@ -5,6 +5,7 @@ import java.util.List;
 
 //import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.CreateRequestDto;
+import org.dselent.scheduling.server.miscellaneous.Triple;
 //import org.dselent.scheduling.server.dto.ViewRequestHistoryDto;
 import org.dselent.scheduling.server.model.Request;
 //import org.dselent.scheduling.server.model.User;
@@ -61,5 +62,13 @@ public interface RequestService
 	 * @throws SQLException
 	 */
 	public List<String> getRequestFacultiesInfo() throws SQLException;
+	
+	/**
+	 * get the list of triple, including request, faculty's full name, and course name.
+	 * 
+	 * @return A list of triple
+	 * @throws SQLException
+	 */
+	public List<Triple<Request, String, String>> getRequestInfo() throws SQLException;
 	
 }
