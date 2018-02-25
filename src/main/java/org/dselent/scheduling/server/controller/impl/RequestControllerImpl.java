@@ -12,6 +12,7 @@ import org.dselent.scheduling.server.dto.CreateRequestDto;
 //import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.CreateRequest;
 import org.dselent.scheduling.server.requests.ViewFacultiesInfo;
+import org.dselent.scheduling.server.requests.ViewPendingRequestsDetails;
 import org.dselent.scheduling.server.requests.ViewRequestHistory;
 import org.dselent.scheduling.server.requests.ChangeRequestState;
 import org.dselent.scheduling.server.service.RequestService;
@@ -131,6 +132,23 @@ public class RequestControllerImpl implements RequestController
 		String facultyIdList = request.get(ViewFacultiesInfo.getBodyName(ViewFacultiesInfo.BodyKey.TEST));
 		
 		success.add(requestService.getRequestFacultiesInfo());
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<String> getpendingRequestsDetails(@RequestBody Map<String, String> request) throws Exception{
+		// Print is for testing purposes
+		System.out.println("getpendingRequestsDetails controller reached");
+		
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String test = request.get(ViewPendingRequestsDetails.getBodyName(ViewPendingRequestsDetails.BodyKey.TEST));
+		
+		success.add(requestService.getRequestInfo());
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
 		return new ResponseEntity<String>(response, HttpStatus.OK);

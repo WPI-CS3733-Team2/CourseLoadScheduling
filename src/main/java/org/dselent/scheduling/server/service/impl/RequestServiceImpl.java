@@ -4,11 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.RequestDao;
 import org.dselent.scheduling.server.dao.RequestStateDao;
 import org.dselent.scheduling.server.dto.CreateRequestDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.miscellaneous.Triple;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Request;
 import org.dselent.scheduling.server.model.RequestState;
 import org.dselent.scheduling.server.model.User;
@@ -28,6 +31,8 @@ public class RequestServiceImpl implements RequestService {
 	private RequestStateDao requestStateDao;
 	@Autowired
 	private CustomDao customDao;
+	@Autowired
+	private CoursesDao coursesDao;
 
 	public RequestServiceImpl() {
 
@@ -178,6 +183,23 @@ public class RequestServiceImpl implements RequestService {
 			nameList.add(firstName+" "+lastName);
 		}
 		return nameList;
+	}
+	
+	public List<Triple<Request, String, String>> getRequestInfo() throws SQLException {
+		// Triple<Request, String, String> = request, FacultyFullName(firstName + LastName), courseNumber(varchar)
+		List<Triple<Request, String, String>> requestInfo = new ArrayList<Triple<Request, String, String>>();
+		List<Request> pendingRequestList = viewPendingRequests();
+		for (Request request : pendingRequestList) {
+			int facultyId = request.getFacultyId();
+			int courseId = request.getCourse();
+			User user = customDao.getFacultyUser(facultyId);
+			String fullName = user.getFirstName() + " " + user.getLastName();
+			Course course = coursesDao.findById(courseId);
+			String courseName = course.getNumber();
+			Triple<Request, String, String> triple = new Triple(request, fullName, courseName);
+			requestInfo.add(triple);
+		}
+		return requestInfo;
 	}
 
 }

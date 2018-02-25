@@ -6,17 +6,9 @@ import java.util.List;
 import org.dselent.scheduling.server.miscellaneous.RequestParameterConverter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Defines information for the register request including the keys for the
- * header, parameters, and body and the request type (RequestMethod).
- * 
- * @author dselent
- *
- */
-public class CreateSection
-{
+public class ViewPendingRequestsDetails {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "create_sections";
+	public static final String REQUEST_NAME = "view_pending_requests_details";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -33,19 +25,7 @@ public class CreateSection
 	
 	public static enum BodyKey
 	{
-		SECTIONS,
-		SECTION,
-		CRN,
-		NAME,
-		TYPE,
-		EXPECTED_POPULATION,
-		COURSE_ID,
-		SCHEDULE_ID,
-		YEAR,
-		SEMESTER,
-		DAYS,
-		START_TIME,
-		END_TIME;
+		TEST;
 	}
 	
 
@@ -73,7 +53,7 @@ public class CreateSection
 		
 	};
 	
-	private CreateSection()
+	private ViewPendingRequestsDetails()
 	{
 		
 	};

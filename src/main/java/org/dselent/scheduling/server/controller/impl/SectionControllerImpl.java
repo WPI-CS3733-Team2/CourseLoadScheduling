@@ -8,9 +8,7 @@ import org.dselent.scheduling.server.controller.SectionController;
 import org.dselent.scheduling.server.dto.CreateSectionDto;
 import org.dselent.scheduling.server.dto.ModifySectionCalendarDto;
 import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
-import org.dselent.scheduling.server.dto.ViewSectionCalendarsOfCourseDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
-import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.requests.CreateSection;
 import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ViewSectionCalendarsOfCourse;
@@ -25,8 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Controller for handling requests related to the user such as logging in or registering.
@@ -48,44 +44,52 @@ public class SectionControllerImpl implements SectionController
 	 * @return A ResponseEntity for the response object(s) and the status code
 	 * @throws Exception 
 	 */
-	public ResponseEntity<String> create_section(@RequestBody Map<String, String> request) throws Exception 
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<String> create_section(@RequestBody Map<String, Object> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
     	
 		// add any objects that need to be returned to the success list
 		String response = "";
-		//List<Object> success = new ArrayList<Object>();
 		
-		String crn = request.get(CreateSection.getBodyName(CreateSection.BodyKey.CRN));
-		String name = request.get(CreateSection.getBodyName(CreateSection.BodyKey.NAME));
-		String type = request.get(CreateSection.getBodyName(CreateSection.BodyKey.TYPE));
-		String expected_population = request.get(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION));
-		String course_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID));
-		String schedule_id = request.get(CreateSection.getBodyName(CreateSection.BodyKey.SCHEDULE_ID));
-		String year = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
-		String semester = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
-		String days = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
-		String start_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
-		String end_time = request.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
 		
-		CreateSectionDto.Builder builder = CreateSectionDto.builder();
-		CreateSectionDto createSectionDto = builder.withCrn(crn)
-		.withName(name)
-		.withType(type)
-		.withExpectedPopulation(expected_population)
-		.withCourseId(course_id)
-		.withScheduleId(schedule_id)
-		.withYear(year)
-		.withSemester(semester)
-		.withDays(days)
-		.withStartTime(start_time)
-		.withEndTime(end_time)
-		.build();
 		
-		//;
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.create_section(createSectionDto));
+		List<Object> sectionsList = (List<Object>) request.get(CreateSection.getBodyName(CreateSection.BodyKey.SECTIONS));
 
+		for(int i = 0; i < sectionsList.size(); i++) {
+			Map<String, Object> sectionRaw = (Map<String, Object>) sectionsList.get(i);
+			
+			Map<String, String> sectionInfo = (Map<String, String>) sectionRaw.get(CreateSection.getBodyName(CreateSection.BodyKey.SECTION));
+			//List<Object> success = new ArrayList<Object>();
+			
+			String crn = (String) sectionInfo.get(CreateSection.getBodyName(CreateSection.BodyKey.CRN));
+			String name = (String) sectionInfo.get(CreateSection.getBodyName(CreateSection.BodyKey.NAME));
+			String type = (String) sectionInfo.get(CreateSection.getBodyName(CreateSection.BodyKey.TYPE));
+			String expected_population = (String) sectionInfo.get(CreateSection.getBodyName(CreateSection.BodyKey.EXPECTED_POPULATION));
+			String course_id = (String) sectionInfo.get(CreateSection.getBodyName(CreateSection.BodyKey.COURSE_ID));
+			String year = (String) sectionInfo.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.YEAR));
+			String semester = (String) sectionInfo.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.SEMESTER));
+			String days = (String) sectionInfo.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.DAYS));
+			String start_time = (String) sectionInfo.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.START_TIME));
+			String end_time = (String) sectionInfo.get(ModifySectionCalendar.getBodyName(ModifySectionCalendar.BodyKey.END_TIME));
+			
+			CreateSectionDto.Builder builder = CreateSectionDto.builder();
+			CreateSectionDto createSectionDto = builder.withCrn(crn)
+			.withName(name)
+			.withType(type)
+			.withExpectedPopulation(expected_population)
+			.withCourseId(course_id)
+			.withYear(year)
+			.withSemester(semester)
+			.withDays(days)
+			.withStartTime(start_time)
+			.withEndTime(end_time)
+			.build();
+			
+			//;
+			response += JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.create_section(createSectionDto));
+		}
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	

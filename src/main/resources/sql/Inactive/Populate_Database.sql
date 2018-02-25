@@ -696,3 +696,10 @@ INSERT INTO users_roles_links(user_id, role_id) VALUES(59, 2);
 INSERT INTO users_roles_links(user_id, role_id) VALUES(60, 2);
 INSERT INTO users_roles_links(user_id, role_id) VALUES(61, 2);
 INSERT INTO users_roles_links(user_id, role_id) VALUES(62, 2);
+
+----------------POPULATE REQUESTs---------------------
+
+INSERT INTO public.requests(faculty_id, type, state, course, section, data) VALUES (1, 1, 1, 5, 3, 'I wanna teach this course. by No.1 faculty');
+INSERT INTO public.requests(faculty_id, type, state, course, section, data) VALUES (2, 2, 2, 20, 5, 'I wanna teach this course. by No.2 faculty');
+INSERT INTO public.requests(faculty_id, type, state, course, section, data) VALUES (3, 3, 3, 30, 6, 'I wanna teach this course. by No.3 faculty');
+INSERT INTO public.requests(faculty_id, type, state, course, section, data) VALUES (4, 2, 3, 25, 8, 'I wanna teach this course. by No.4 faculty');
