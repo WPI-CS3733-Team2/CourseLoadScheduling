@@ -1,7 +1,9 @@
 package org.dselent.scheduling.server.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
@@ -264,4 +266,31 @@ public class CustomDaoImpl implements CustomDao
 	    List<User> usersWithSchedule = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return usersWithSchedule;
 	}
+	
+	@Override
+	public List<Pair<User, Integer>> getUnassignedFacultyUser(){
+		List<Pair<User, Integer>> facultyNoCourse = new ArrayList<Pair<User, Integer>>();
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_UNASSIGNED_FACULTY_USER_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> usersWithNoCourses = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    for (User user : usersWithNoCourses) {
+	    	List<Faculty> faculty = getFacultyIDFromUser(user.getId());
+	    	Pair<User, Integer> pair = new Pair(user, faculty.get(0).getId());
+	    	facultyNoCourse.add(pair);
+	    }
+	    
+	    return facultyNoCourse;
+	}
+	
+	@Override
+	public List<Section> getSectionsFromCourseSearch(String searchTerm){
+		SectionsExtractor extractor = new SectionsExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SECTIONS_FROM_COURSE_SEARCH_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+	    List<Section> sectionMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return sectionMatchList;
+	}
+	
 }

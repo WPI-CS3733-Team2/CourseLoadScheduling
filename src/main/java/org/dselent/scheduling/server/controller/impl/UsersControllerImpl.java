@@ -9,11 +9,13 @@ import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.DeleteUser;
+import org.dselent.scheduling.server.requests.FacultyCourseMap;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
+import org.dselent.scheduling.server.requests.UnassignedUser;
 import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
 import org.dselent.scheduling.server.service.UserService;
@@ -203,8 +205,6 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 
-
-
 	/*@Override
 	public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception {
 		System.out.println("linkFacultyWithSection reached");
@@ -214,6 +214,16 @@ public class UsersControllerImpl implements UsersController
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.dislinkFacultyWithSection(facultyId, sectionId));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}*/
+	
+	@Override
+	public ResponseEntity<String> getUnassignedUser(@RequestBody Map<String, Object> request) throws Exception {
+		System.out.println("unassigned users reached");
+		String response = "";
+		String test = request.get(UnassignedUser.getBodyName(UnassignedUser.BodyKey.TEST)).toString();
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getUnassignedUsers());
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
 }
 
 	

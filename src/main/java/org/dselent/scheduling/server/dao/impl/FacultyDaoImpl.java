@@ -96,7 +96,6 @@ public class FacultyDaoImpl extends BaseDaoImpl<Faculty> implements FacultyDao {
 
 	@Override
 	public int update(String columnName, Object newValue, List<QueryTerm> queryTermList) throws SQLException {
-		// TODO Auto-generated method stub
 		String queryTemplate = QueryStringBuilder.generateUpdateString(Faculty.TABLE_NAME, columnName, queryTermList);
 
 		List<Object> objectList = new ArrayList<Object>();

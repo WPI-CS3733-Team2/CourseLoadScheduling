@@ -1,18 +1,25 @@
 package org.dselent.scheduling.server.controller.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.dselent.scheduling.server.controller.ScheduleController;
+import org.dselent.scheduling.server.dao.FacultyDao;
+import org.dselent.scheduling.server.dao.SectionsDao;
 import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
+import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.requests.CreateSchedule;
 import org.dselent.scheduling.server.requests.ScheduleSpecifics;
 import org.dselent.scheduling.server.requests.SearchSchedule;
 import org.dselent.scheduling.server.requests.ViewSchedule;
 import org.dselent.scheduling.server.service.ScheduleService;
+import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
+import org.dselent.scheduling.server.sqlutils.QueryTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,19 +40,48 @@ public class ScheduleControllerImpl implements ScheduleController
 	@Autowired
     private ScheduleService scheduleService;
 	
+	@Autowired
+	private SectionsDao sectionsDao;
+	
+	@Autowired
+	private FacultyDao facultyDao;
+	
 	public ResponseEntity<String> create(@RequestBody Map<String, String> request) throws Exception{
-		// Print is for testing purposes
 		System.out.println("controller reached");
 		    	
-		// add any objects that need to be returned to the success list
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
 		String facultyId = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.FACULTY_ID));
 		String scheduleName = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SCHEDULE_NAME));
-		
+		String sectionIdsCSV = request.get(CreateSchedule.getBodyName(CreateSchedule.BodyKey.SECTION_IDS));
 		Schedule createdSchedule = scheduleService.create(Integer.parseInt(facultyId), scheduleName);
-		success.add(createdSchedule);
+		
+		String [] idArray = sectionIdsCSV.replace("[", "").replace("]", "").replace(" ", "").split(",");
+		List<String> sectionIds = Arrays.asList(idArray);
+		
+		for(String id: sectionIds) {
+			Integer numId = Integer.parseInt(id);
+			
+			List<QueryTerm> queryTermList = new ArrayList<>();
+			String queryColumnName = Section.getColumnName(Section.Columns.ID);
+			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, numId, null);
+			queryTermList.add(IdTerm);
+
+			String updateColumnName = Section.getColumnName(Section.Columns.SCHEDULE_ID);
+			sectionsDao.update(updateColumnName, createdSchedule.getId(), queryTermList);
+			
+		}
+		
+		List<QueryTerm> queryTermList = new ArrayList<>();
+		String queryColumnName = Faculty.getColumnName(Faculty.Columns.ID);
+		QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, Integer.parseInt(facultyId), null);
+		queryTermList.add(IdTerm);
+		String updateColumnName = Faculty.getColumnName(Faculty.Columns.ASSIGNED);
+		facultyDao.update(updateColumnName, true, queryTermList);
+		
+		UserWithScheduleInfo user = scheduleService.specifics(createdSchedule.getId());
+		success.add(user);
 		
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 

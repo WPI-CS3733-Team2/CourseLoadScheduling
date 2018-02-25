@@ -5,7 +5,9 @@ import java.util.List;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -65,5 +67,7 @@ public interface UserService
     
     public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
     public Integer dislinkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
+    
+    public  List<Pair<User, Integer>> getUnassignedUsers() throws SQLException;
     
 }

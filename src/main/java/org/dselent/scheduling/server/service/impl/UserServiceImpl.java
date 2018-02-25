@@ -492,5 +492,11 @@ public class UserServiceImpl implements UserService {
 		
 		return sectionService.dislinkAll(scheduleId);
 	}
+	
+	@Override
+	public List<Pair<User, Integer>> getUnassignedUsers() throws SQLException{
+		List<Pair<User, Integer>> users = customDao.getUnassignedFacultyUser();
+		return users;
+	}
 
-}
+} 

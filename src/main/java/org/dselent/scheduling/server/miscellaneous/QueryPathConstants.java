@@ -41,6 +41,8 @@ public class QueryPathConstants
 	private static String GET_SCHEDULE_FROM_CALENDAR_SEARCH_PATH = BASE_QUERY_PATH + "GetScheduleFromCalendarSearch" + SQL_EXTENSION;
 	private static String GET_USER_FOR_SCHEDULE_PATH = BASE_QUERY_PATH + "GetUserForSchedule" + SQL_EXTENSION;
 	private static String LOGIN_USER_INFO_PATH = BASE_QUERY_PATH + "GetLoginUserInfo" + SQL_EXTENSION;
+	private static String GET_UNASSIGNED_FACULTY_USER_PATH = BASE_QUERY_PATH + "GetUnassignedFacultyUser" + SQL_EXTENSION;
+	private static String GET_SECTIONS_FROM_COURSE_SEARCH_PATH = BASE_QUERY_PATH + "GetSectionsFromCourseSearch" + SQL_EXTENSION;
 
 
 	
@@ -69,6 +71,8 @@ public class QueryPathConstants
 	public static String GET_SCHEDULE_FROM_CALENDAR_SEARCH_QUERY = readFile(GET_SCHEDULE_FROM_CALENDAR_SEARCH_PATH);
 	public static String GET_USER_FOR_SCHEDULE_QUERY = readFile(GET_USER_FOR_SCHEDULE_PATH);
 	public static String LOGIN_USER_INFO_QUERY = readFile(LOGIN_USER_INFO_PATH);
+	public static String GET_UNASSIGNED_FACULTY_USER_QUERY = readFile(GET_UNASSIGNED_FACULTY_USER_PATH);
+	public static String GET_SECTIONS_FROM_COURSE_SEARCH_QUERY = readFile(GET_SECTIONS_FROM_COURSE_SEARCH_PATH);
 
 	
 	private QueryPathConstants()

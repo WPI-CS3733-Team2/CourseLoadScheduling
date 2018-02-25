@@ -9,6 +9,7 @@ import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
+import org.dselent.scheduling.server.requests.UnassignedUser;
 import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,9 @@ public interface UsersController
     
     //@RequestMapping(method=RequestMethod.POST, value=DislinkFacultyWithSection.REQUEST_NAME)
     //public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception;
+
+    @RequestMapping(method=RequestMethod.POST, value=UnassignedUser.REQUEST_NAME)
+    public ResponseEntity<String> getUnassignedUser(@RequestBody Map<String, Object> request) throws Exception;
 }
 
 	
