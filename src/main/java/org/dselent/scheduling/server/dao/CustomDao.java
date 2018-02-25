@@ -6,6 +6,7 @@ import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.custom.UserInfo;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.model.Calendar;
@@ -46,5 +47,7 @@ public interface CustomDao
 	public List<Schedule> getScheduleFromName(String searchTerm);
 	public List<Schedule> getScheduleFromCalendarSearch(String searchTerm);
 	public List<User> getUserForSchedule(int scheduleId);
-	List<User> facultyUserMapping(int facultyId);
+	public List<Pair<User, Integer>> getUnassignedFacultyUser();
+	public List<Section> getSectionsFromCourseSearch(String searchTerm);
+	public List<User> getUsersByFacultyIds();
 }

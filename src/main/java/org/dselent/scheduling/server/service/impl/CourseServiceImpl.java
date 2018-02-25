@@ -2,6 +2,7 @@ package org.dselent.scheduling.server.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.dselent.scheduling.server.dao.CoursesDao;
@@ -11,10 +12,16 @@ import org.dselent.scheduling.server.dao.UserFacultyAssociationDao;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
+import org.dselent.scheduling.server.httpReturnObject.CalendarInfo;
+import org.dselent.scheduling.server.httpReturnObject.CourseInfo;
+import org.dselent.scheduling.server.httpReturnObject.SectionInfo;
 import org.dselent.scheduling.server.httpReturnObject.UserFaculty;
+import org.dselent.scheduling.server.httpReturnObject.UserWithScheduleInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UserFacultyAssociation;
 import org.dselent.scheduling.server.service.CourseService;
@@ -185,6 +192,46 @@ public class CourseServiceImpl implements CourseService
 					user.getFirstName(), user.getLastName(), user.getEmail(), user.getAccountState(), user.getDeleted(), facultyId, (int)faculty.getRank()));
 		}
 		return result;
+	}
+	
+	@Override
+	public List<CourseInfo> getUnassignedCourseSection(String searchTerm) throws SQLException{
+		List<CourseInfo> returnCourseList = new ArrayList<CourseInfo>();
+		List<Course> knownCoursesList = new ArrayList<Course>();
+		List<Section> sectionList = customDao.getSectionsFromCourseSearch(searchTerm);
+		
+		for (Section section : sectionList) {
+			if(section.getScheduleId() == 0) {
+				List<Calendar> calendarList = customDao.getCalendarsOfSection(section.getId());
+				Calendar calendar = calendarList.get(0);
+				
+				CalendarInfo returnCalendar = new CalendarInfo(calendar.getId(),
+						calendar.getYear(), calendar.getSemester(), calendar.getDays(),
+						calendar.getStartTime(), calendar.getEndTime());
+				
+				SectionInfo returnSection = new SectionInfo(section.getId(), section.getName(), section.getType(),
+						section.getExpectedPopulation(), returnCalendar, section.getCrn(),
+						section.getCourseId(), section.getCalendarId(), section.getScheduleId());
+
+				Course course = customDao.getCoursesOfSection(section.getId()).get(0);
+				
+				if (!knownCoursesList.contains(course)) {
+					knownCoursesList.add(course);
+					List<SectionInfo> returnSectionList = new ArrayList<SectionInfo>();
+					returnSectionList.add(returnSection);
+					CourseInfo returnCourse = new CourseInfo(course.getId(), course.getName(), course.getNumber(), course.getFrequency(), returnSectionList);
+					returnCourseList.add(returnCourse);
+				}
+				else {
+					for (CourseInfo courseInfo : returnCourseList) {
+						if (course.getName().contentEquals(courseInfo.getCourseName())) {
+							courseInfo.getSectionsOfCourse().add(returnSection);
+						}
+					}
+				}
+			}
+		}	
+		return returnCourseList;
 	}
     
 }

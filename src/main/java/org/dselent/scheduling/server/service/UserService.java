@@ -5,7 +5,9 @@ import java.util.List;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
+import org.dselent.scheduling.server.model.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,7 +42,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public int changePassword(Object input_id, String input_oldPassword, String input_newPassword) throws SQLException;
+    public int changePassword(Integer userId, String oldPassword, String newPassword) throws SQLException;
 	/**
 	 * check if the old password match existing one under certain user, 
 	 * and update the new password to old one in the database
@@ -66,5 +68,7 @@ public interface UserService
     
     public Integer linkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
     public Integer dislinkFacultyWithSection(Integer facultyId, Integer sectionId) throws Exception;
+    
+    public  List<Pair<User, Integer>> getUnassignedUsers() throws SQLException;
     
 }

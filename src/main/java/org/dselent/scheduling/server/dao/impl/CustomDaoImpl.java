@@ -1,7 +1,9 @@
 package org.dselent.scheduling.server.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
@@ -184,16 +186,6 @@ public class CustomDaoImpl implements CustomDao
 	}
 	
 	@Override
-	public List<User> facultyUserMapping(int facultyId){
-		UsersExtractor extractor = new UsersExtractor();
-		String queryTemplate = new String(QueryPathConstants.FACULTY_USER_MAPPING_QUERY);
-	    MapSqlParameterSource parameters = new MapSqlParameterSource();
-	    parameters.addValue("facultyId", facultyId);
-	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
-	    return selectedUserList;
-	}
-	
-	@Override
 	public List<Calendar> getCalendarsOfSection(int sectionId){
 		CalendarExtractor extractor = new CalendarExtractor();
 		String queryTemplate = new String(QueryPathConstants.GET_CALENDARS_OF_SECTION_QUERY);
@@ -291,5 +283,40 @@ public class CustomDaoImpl implements CustomDao
 	    parameters.addValue("scheduleId", scheduleId);
 	    List<User> usersWithSchedule = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return usersWithSchedule;
+	}
+	
+	@Override
+	public List<Pair<User, Integer>> getUnassignedFacultyUser(){
+		List<Pair<User, Integer>> facultyNoCourse = new ArrayList<Pair<User, Integer>>();
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_UNASSIGNED_FACULTY_USER_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> usersWithNoCourses = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    for (User user : usersWithNoCourses) {
+	    	List<Faculty> faculty = getFacultyIDFromUser(user.getId());
+	    	Pair<User, Integer> pair = new Pair<User,Integer>(user, faculty.get(0).getId());
+	    	facultyNoCourse.add(pair);
+	    }
+	    
+	    return facultyNoCourse;
+	}
+	
+	@Override
+	public List<Section> getSectionsFromCourseSearch(String searchTerm){
+		SectionsExtractor extractor = new SectionsExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_SECTIONS_FROM_COURSE_SEARCH_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+	    List<Section> sectionMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return sectionMatchList;
+	}
+	
+	@Override
+	public List<User> getUsersByFacultyIds(){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_USERS_BY_FACULTY_IDS_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return selectedUserList;
 	}
 }

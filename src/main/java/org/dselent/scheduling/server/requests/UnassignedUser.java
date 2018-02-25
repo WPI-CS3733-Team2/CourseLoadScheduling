@@ -7,16 +7,16 @@ import org.dselent.scheduling.server.miscellaneous.RequestParameterConverter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Defines information for the register request including the keys for the
+ * Defines information for the user searching request including the keys for the
  * header, parameters, and body and the request type (RequestMethod).
  * 
- * @author dselent
+ *
  *
  */
-public class CreateSchedule
+public class UnassignedUser
 {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "create_schedule";
+	public static final String REQUEST_NAME = "unassigned_user";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -28,17 +28,14 @@ public class CreateSchedule
 	
 	public static enum ParameterKey
 	{
-	
+
 	}
 	
 	public static enum BodyKey
 	{
-		FACULTY_ID,
-		SCHEDULE_NAME,
-		SECTION_IDS;
+		TEST;
 	}
 	
-
 	
 	static
 	{
@@ -63,7 +60,7 @@ public class CreateSchedule
 		
 	};
 	
-	private CreateSchedule()
+	private UnassignedUser()
 	{
 		
 	};
