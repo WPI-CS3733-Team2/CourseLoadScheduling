@@ -6,6 +6,7 @@
 /vpproject
 /gradle
 .classpath
+.metadata
 src/main/resources/application.properties
 src/main/resources/application.properties
 *.properties
