@@ -54,4 +54,12 @@ public interface RequestService
 	 */
 	public List<Request> viewPendingRequests() throws SQLException;
 	
+	/**
+	 * get the list of faculty name that has certain faculty id numbers
+	 * 
+	 * @return A list of faculty name
+	 * @throws SQLException
+	 */
+	public List<String> getRequestFacultiesInfo() throws SQLException;
+	
 }

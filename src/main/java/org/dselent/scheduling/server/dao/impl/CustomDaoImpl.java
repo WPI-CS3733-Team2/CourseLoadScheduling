@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.dao.CustomDao;
+import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.extractor.ScheduleExtractor;
 import org.dselent.scheduling.server.extractor.SectionsExtractor;
@@ -58,6 +59,23 @@ public class CustomDaoImpl implements CustomDao
 	    if(usersInfoList.isEmpty())
 	    {
 	    	throw new InvalidUserNameException(userName, "Invalid userName: \"" + "\"" + userName + "\"");
+	    }
+	    
+	    return usersInfoList.get(0);
+	}
+	
+	@Override
+	public UserInfo getUserInfo(Integer userId) throws InvalidUserIdException
+	{
+		UsersInfoExtractor extractor = new UsersInfoExtractor();
+		String queryTemplate = new String(QueryPathConstants.USER_INFO_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("userId", userId);
+	    List<UserInfo> usersInfoList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    
+	    if(usersInfoList.isEmpty())
+	    {
+	    	throw new InvalidUserIdException(userId, "Invalid userId: \"" + "\"" + userId + "\"");
 	    }
 	    
 	    return usersInfoList.get(0);
@@ -276,7 +294,7 @@ public class CustomDaoImpl implements CustomDao
 	    List<User> usersWithNoCourses = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    for (User user : usersWithNoCourses) {
 	    	List<Faculty> faculty = getFacultyIDFromUser(user.getId());
-	    	Pair<User, Integer> pair = new Pair(user, faculty.get(0).getId());
+	    	Pair<User, Integer> pair = new Pair<User,Integer>(user, faculty.get(0).getId());
 	    	facultyNoCourse.add(pair);
 	    }
 	    
@@ -293,4 +311,12 @@ public class CustomDaoImpl implements CustomDao
 	    return sectionMatchList;
 	}
 	
+	@Override
+	public List<User> getUsersByFacultyIds(){
+		UsersExtractor extractor = new UsersExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_USERS_BY_FACULTY_IDS_QUERY);
+	    MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return selectedUserList;
+	}
 }

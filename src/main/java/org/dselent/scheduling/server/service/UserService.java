@@ -33,6 +33,7 @@ public interface UserService
 	public List<Integer> deleteUser(Integer id) throws SQLException;
 	
     public ReturnUserInfo loginUser(String input_userName, String input_password) throws SQLException;
+    public ReturnUserInfo getAccountDetails(Integer userId) throws SQLException;
 	/**
 	 * login user into the system
 	 * Check if the password matches the existing one in a certain user
