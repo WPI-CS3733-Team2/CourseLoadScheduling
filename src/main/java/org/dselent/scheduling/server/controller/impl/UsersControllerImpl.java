@@ -1,7 +1,6 @@
 package org.dselent.scheduling.server.controller.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,16 +8,13 @@ import org.dselent.scheduling.server.controller.UsersController;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
-import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator.ResponseKey;
 import org.dselent.scheduling.server.requests.AccountDetails;
 import org.dselent.scheduling.server.requests.DeleteUser;
-import org.dselent.scheduling.server.requests.FacultyCourseMap;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
 import org.dselent.scheduling.server.requests.Login;
 import org.dselent.scheduling.server.requests.PasswordModification;
 import org.dselent.scheduling.server.requests.Register;
-import org.dselent.scheduling.server.requests.UnassignedUser;
 import org.dselent.scheduling.server.requests.UserSearch;
 import org.dselent.scheduling.server.requests.ViewUserOfRoleId;
 import org.dselent.scheduling.server.service.UserService;
@@ -141,7 +137,7 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		Object id = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
+		Integer id = (Integer) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
 		String oldPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
 		String newPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
 		
@@ -232,7 +228,7 @@ public class UsersControllerImpl implements UsersController
 	public ResponseEntity<String> getUnassignedUser(@RequestBody Map<String, Object> request) throws Exception {
 		System.out.println("unassigned users reached");
 		String response = "";
-		String test = request.get(UnassignedUser.getBodyName(UnassignedUser.BodyKey.TEST)).toString();
+		//String test = request.get(UnassignedUser.getBodyName(UnassignedUser.BodyKey.TEST)).toString();
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getUnassignedUsers());
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

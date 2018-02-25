@@ -18,6 +18,7 @@ import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.exceptions.InvalidPasswordException;
+import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
@@ -198,31 +199,29 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
 	@Override
-	public int changePassword(Object input_id, String input_OldPassword, String input_NewPassword) throws SQLException
+	public int changePassword(Integer userId, String oldPassword, String newPassword) throws SQLException
 	{
-
-		User selectedUser = usersDao.findById((int)input_id);
+		User selectedUser = usersDao.findById(userId);
 		
 		if(selectedUser == null)
 		{
-			// debugging message
-			throw new SQLException("user ID is wrong.");
+			throw new InvalidUserIdException(userId, "Invalid userId: \"" + "\"" + userId + "\"");
 		}
-		else if (!input_OldPassword.equals(selectedUser.getEncryptedPassword())){
-			// debugging message
-			throw new SQLException("The old password is wrong.");
+		else if (!oldPassword.equals(selectedUser.getEncryptedPassword()))
+		{
+			throw new InvalidPasswordException(userId, "Invalid password");
 		} 
 		else 
 		{
 			//pack the query terms first (only one query term)
 			List<QueryTerm> queryTermList = new ArrayList<>();
 			String queryColumnName = User.getColumnName(User.Columns.ID);
-			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_id, null);
+			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, userId, null);
 			queryTermList.add(IdTerm);
 			
 			// Update the new password.
 			String updateColumnName = User.getColumnName(User.Columns.ENCRYPTED_PASSWORD);
-			int rowsAffected = usersDao.update(updateColumnName, input_NewPassword, queryTermList);
+			int rowsAffected = usersDao.update(updateColumnName, newPassword, queryTermList);
 			
 			return rowsAffected;
 		}

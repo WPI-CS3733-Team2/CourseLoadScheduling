@@ -42,7 +42,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public int changePassword(Object input_id, String input_oldPassword, String input_newPassword) throws SQLException;
+    public int changePassword(Integer userId, String oldPassword, String newPassword) throws SQLException;
 	/**
 	 * check if the old password match existing one under certain user, 
 	 * and update the new password to old one in the database
