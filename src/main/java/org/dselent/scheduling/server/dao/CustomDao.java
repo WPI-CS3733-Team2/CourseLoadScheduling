@@ -50,5 +50,6 @@ public interface CustomDao
 	public List<Pair<User, Integer>> getUnassignedFacultyUser();
 	public List<Section> getSectionsFromCourseSearch(String searchTerm);
 	public List<User> getUsersByFacultyIds();
-	User getFacultyUser(int facultyId);
+	public User getFacultyUser(int facultyId);
+	public List<UserInfo> getUserFromSearch(String searchTerm);
 }

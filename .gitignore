@@ -13,3 +13,7 @@ src/main/resources/application.properties
 src/main/resources/application.properties
 .classpath
 build.gradle
+/.metadata/
+.classpath
+src/main/resources/application.properties
+/src/main/resources/application.properties

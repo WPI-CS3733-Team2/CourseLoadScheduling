@@ -51,7 +51,7 @@ public interface UserService
 	 * @throws SQLException
 	 */
     
-    public List<ReturnUserInfo> searchUser(UserSearchDto dto) throws SQLException;
+    public List<ReturnUserInfo> searchUser(String searchTerm) throws SQLException;
     /**
 	 * search the input variables: wpiID, userName, firstName, lastName and email,
 	 * and return the selected list of user matching those values of input variables.

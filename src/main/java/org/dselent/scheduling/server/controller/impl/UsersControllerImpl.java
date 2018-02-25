@@ -173,23 +173,24 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		String wpiId =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
+		/*String wpiId =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
 		String userName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
 		String firstName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME));
 		String lastName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME));
-		String email =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));
+		String email =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));*/
+		String query =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.QUERY));
 
 
-		UserSearchDto.Builder builder = UserSearchDto.builder();
+		/*UserSearchDto.Builder builder = UserSearchDto.builder();
 		UserSearchDto userSearchDto = builder.withWpiId(wpiId)
 		.withUserName(userName)
 		.withFirstName(firstName)
 		.withLastName(lastName)
 		.withEmail(email)
-		.build();
+		.build();*/
 		
 		
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(userSearchDto));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(query));
 		//System.out.println(response);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
