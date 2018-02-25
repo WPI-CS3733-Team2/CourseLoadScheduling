@@ -15,6 +15,7 @@ import org.dselent.scheduling.server.requests.DeleteCourse;
 import org.dselent.scheduling.server.requests.GetCourseFaculties;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.SearchCourse;
+import org.dselent.scheduling.server.requests.SearchUnassignedCourseSection;
 import org.dselent.scheduling.server.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -146,7 +147,21 @@ public class CourseControllerImpl implements CourseController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
-	    	
+	
+	@Override
+	public ResponseEntity<String> searchUnassignedCourseSection(@RequestBody Map<String, String> request) throws Exception
+	{
+		System.out.println("search unassigned controller reached");
+
+		String response = "";
+		
+		String searchTerm = request.get(SearchUnassignedCourseSection.getBodyName(SearchUnassignedCourseSection.BodyKey.SEARCH_TERM));
+
+
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.getUnassignedCourseSection(searchTerm));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
 }
 
 	

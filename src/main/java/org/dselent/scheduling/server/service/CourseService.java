@@ -6,6 +6,7 @@ import java.util.List;
 import org.dselent.scheduling.server.dto.CreateCourseDto;
 import org.dselent.scheduling.server.dto.ModifyCourseDto;
 import org.dselent.scheduling.server.dto.SearchCourseDto;
+import org.dselent.scheduling.server.httpReturnObject.CourseInfo;
 import org.dselent.scheduling.server.httpReturnObject.UserFaculty;
 import org.dselent.scheduling.server.model.Course;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,6 @@ public interface CourseService
 	public List<Course> searchCourse(SearchCourseDto searchCourseDto) throws SQLException;
 	public int deleteCourse(String id) throws SQLException;
 	public List<UserFaculty> getCourseFaculties(String courseId) throws SQLException;
+	public List<CourseInfo> getUnassignedCourseSection(String searchTerm) throws SQLException;
 
 }

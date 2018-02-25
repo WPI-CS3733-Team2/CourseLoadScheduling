@@ -1,5 +1,6 @@
 package org.dselent.scheduling.server.controller.impl;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.dto.CreateRequestDto;
 //import org.dselent.scheduling.server.requests.Register;
 import org.dselent.scheduling.server.requests.CreateRequest;
+import org.dselent.scheduling.server.requests.ViewFacultiesInfo;
+import org.dselent.scheduling.server.requests.ViewPendingRequestsDetails;
 import org.dselent.scheduling.server.requests.ViewRequestHistory;
 import org.dselent.scheduling.server.requests.ChangeRequestState;
 import org.dselent.scheduling.server.service.RequestService;
@@ -87,7 +90,7 @@ public class RequestControllerImpl implements RequestController
 	
 	public ResponseEntity<String> changeState(@RequestBody Map<String, String> request) throws Exception{
 		// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("changeState controller reached");
 						    	
 		// add any objects that need to be returned to the success list
 		String response = "";
@@ -95,8 +98,9 @@ public class RequestControllerImpl implements RequestController
 						
 		String requestId = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_ID));
 		String requestState = request.get(ChangeRequestState.getBodyName(ChangeRequestState.BodyKey.REQUEST_STATE));
-						
-		requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
+		
+		List<Integer> rowsAffected = requestService.changeRequestState(Integer.parseInt(requestId),Integer.parseInt(requestState));
+		success.addAll(rowsAffected);
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -104,13 +108,47 @@ public class RequestControllerImpl implements RequestController
 	
 	public ResponseEntity<String> viewPending(@RequestBody Map<String, String> request) throws Exception{
 		// Print is for testing purposes
-		System.out.println("controller reached");
+		System.out.println("viewPending controller reached");
 								    	
 		// add any objects that need to be returned to the success list
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
 		success.add(requestService.viewPendingRequests());
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<String> getFacultisInfo(@RequestBody Map<String, String> request) throws Exception{
+		// Print is for testing purposes
+		System.out.println("getUsersByFacultyIds controller reached");
+		
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String facultyIdList = request.get(ViewFacultiesInfo.getBodyName(ViewFacultiesInfo.BodyKey.TEST));
+		
+		success.add(requestService.getRequestFacultiesInfo());
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<String> getpendingRequestsDetails(@RequestBody Map<String, String> request) throws Exception{
+		// Print is for testing purposes
+		System.out.println("getpendingRequestsDetails controller reached");
+		
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Object> success = new ArrayList<Object>();
+		
+		String test = request.get(ViewPendingRequestsDetails.getBodyName(ViewPendingRequestsDetails.BodyKey.TEST));
+		
+		success.add(requestService.getRequestInfo());
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 		
 		return new ResponseEntity<String>(response, HttpStatus.OK);

@@ -6,6 +6,8 @@ import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.custom.UserInfo;
+import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
@@ -24,6 +26,7 @@ public interface CustomDao
 	// custom queries here
 	public List<UserInfo> getAllUsersWithRole(int roleId);
 	public UserInfo getLoginInfo(String userName) throws InvalidUserNameException;
+	public UserInfo getUserInfo(Integer userId) throws InvalidUserIdException;
 	public List<Schedule> searchScheduleByFaculty(int faculty_id);
 	public List<Faculty> getFacultiesWithUserName(String userName);
 	public List<Faculty> getFacultiesWithUserEmail(String userEmail);
@@ -43,4 +46,10 @@ public interface CustomDao
 	public List<Schedule> getScheduleFromCourseSearch(String searchTerm);
 	public List<Schedule> getScheduleFromName(String searchTerm);
 	public List<Schedule> getScheduleFromCalendarSearch(String searchTerm);
+	public List<User> getUserForSchedule(int scheduleId);
+	public List<Pair<User, Integer>> getUnassignedFacultyUser();
+	public List<Section> getSectionsFromCourseSearch(String searchTerm);
+	public List<User> getUsersByFacultyIds();
+	public User getFacultyUser(int facultyId);
+	public List<UserInfo> getUserFromSearch(String searchTerm);
 }

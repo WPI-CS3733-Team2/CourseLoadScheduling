@@ -33,11 +33,12 @@ public class UserSearch
 	
 	public static enum BodyKey
 	{
-		WPI_ID,
+		/*WPI_ID,
 		USER_NAME,
 		FIRST_NAME,
 		LAST_NAME,
-		EMAIL;
+		EMAIL;*/
+		QUERY
 	}
 	
 	

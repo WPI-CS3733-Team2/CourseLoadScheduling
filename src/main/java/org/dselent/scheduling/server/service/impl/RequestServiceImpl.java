@@ -4,12 +4,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dselent.scheduling.server.dao.CoursesDao;
+import org.dselent.scheduling.server.dao.CustomDao;
 import org.dselent.scheduling.server.dao.RequestDao;
 import org.dselent.scheduling.server.dao.RequestStateDao;
 import org.dselent.scheduling.server.dto.CreateRequestDto;
 import org.dselent.scheduling.server.miscellaneous.Pair;
+import org.dselent.scheduling.server.miscellaneous.Triple;
+import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Request;
 import org.dselent.scheduling.server.model.RequestState;
+import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.service.RequestService;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
@@ -24,6 +29,10 @@ public class RequestServiceImpl implements RequestService {
 	private RequestDao requestDao;
 	@Autowired
 	private RequestStateDao requestStateDao;
+	@Autowired
+	private CustomDao customDao;
+	@Autowired
+	private CoursesDao coursesDao;
 
 	public RequestServiceImpl() {
 
@@ -42,7 +51,7 @@ public class RequestServiceImpl implements RequestService {
 
 		request.setData(dto.getData());	
 		request.setState(pendingInt()); //Should automatically be "pending"
-		//For now, coded as if 1=accepted,2=denied,and 3=pending
+		//For now, coded as if 1=accepted, 2=denied, 3=pending, and 4=deleted.
 		//May need another custom DAO to retrieve whatever row in the table is "pending"
 
 		List<String> requestInsertColumnNameList = new ArrayList<>();
@@ -115,6 +124,7 @@ public class RequestServiceImpl implements RequestService {
     	// to vary among group members
     	Integer pending = pendingInt();
     	String selectColumnName = Request.getColumnName(Request.Columns.STATE);
+    	String orderColumnName = Request.getColumnName(Request.Columns.FACULTY_ID);
     	Integer selectData = pending;
     	
     	List<QueryTerm> selectQueryTermList = new ArrayList<>();
@@ -128,7 +138,7 @@ public class RequestServiceImpl implements RequestService {
     	List<String> selectColumnNameList = Request.getColumnNameList();
     	
     	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(selectColumnName, ColumnOrder.ASC);
+    	Pair<String, ColumnOrder> orderPair1 = new Pair<String, ColumnOrder>(orderColumnName, ColumnOrder.ASC);
     	orderByList.add(orderPair1);
     	
 		//@SuppressWarnings("unused")
@@ -159,10 +169,37 @@ public class RequestServiceImpl implements RequestService {
     	Pair<String, ColumnOrder> orderPair0 = new Pair<String, ColumnOrder>(selectColumnName0, ColumnOrder.ASC);
     	orderByList0.add(orderPair0);
     	
-		//@SuppressWarnings("unused")
 		List<RequestState> selectedRequestStateList = requestStateDao.select(selectColumnNameList0, selectQueryTermList0, orderByList0);
 		
     	return selectedRequestStateList.get(0).getId();
     }
+
+	public List<String> getRequestFacultiesInfo() throws SQLException {
+		List<User> usersWithFacultyId = customDao.getUsersByFacultyIds();
+		List<String> nameList = new ArrayList<String>();
+		for (User user : usersWithFacultyId) {
+			String firstName = user.getFirstName();
+			String lastName = user.getLastName();
+			nameList.add(firstName+" "+lastName);
+		}
+		return nameList;
+	}
+	
+	public List<Triple<Request, String, String>> getRequestInfo() throws SQLException {
+		// Triple<Request, String, String> = request, FacultyFullName(firstName + LastName), courseNumber(varchar)
+		List<Triple<Request, String, String>> requestInfo = new ArrayList<Triple<Request, String, String>>();
+		List<Request> pendingRequestList = viewPendingRequests();
+		for (Request request : pendingRequestList) {
+			int facultyId = request.getFacultyId();
+			int courseId = request.getCourse();
+			User user = customDao.getFacultyUser(facultyId);
+			String fullName = user.getFirstName() + " " + user.getLastName();
+			Course course = coursesDao.findById(courseId);
+			String courseName = course.getNumber();
+			Triple<Request, String, String> triple = new Triple(request, fullName, courseName);
+			requestInfo.add(triple);
+		}
+		return requestInfo;
+	}
 
 }

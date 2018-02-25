@@ -1,5 +1,4 @@
--- get all user information for users who have a specified roleId
-
+--Get list of users with a partial match to the query in any of the given five fields
 SELECT
 
 -- users
@@ -23,11 +22,22 @@ faculty.id AS faculty_id,
 user_roles.id AS user_roles_id,
 user_roles.role_name AS user_roles_role_name
 
+--users.*
 FROM users
 LEFT OUTER JOIN user_faculty_association ON users.id = user_faculty_association.user_id
 LEFT OUTER JOIN faculty ON user_faculty_association.faculty_id = faculty.id
 -- exacty one role for a user
 INNER JOIN users_roles_links ON users.id = users_roles_links.user_id
 INNER JOIN user_roles ON users_roles_links.role_id = user_roles.id
-WHERE user_roles.id = :roleId
-AND users.deleted = false
+WHERE users.id IN
+(
+	SELECT users.id
+	FROM users
+	WHERE UPPER(users.first_name) LIKE UPPER('%'||:searchTerm||'%')
+	OR UPPER(users.last_name) LIKE UPPER('%'||:searchTerm||'%')
+	OR UPPER(users.user_name) LIKE UPPER('%'||:searchTerm||'%')
+	OR UPPER(users.wpi_id) LIKE UPPER('%'||:searchTerm||'%')
+	OR UPPER(users.email) LIKE UPPER('%'||:searchTerm||'%')
+	AND users.deleted = false
+)
+ORDER BY users.id ASC;

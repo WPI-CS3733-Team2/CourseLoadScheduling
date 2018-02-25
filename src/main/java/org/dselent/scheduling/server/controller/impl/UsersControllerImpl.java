@@ -7,7 +7,10 @@ import java.util.Map;
 import org.dselent.scheduling.server.controller.UsersController;
 import org.dselent.scheduling.server.dto.RegisterUserDto;
 import org.dselent.scheduling.server.dto.UserSearchDto;
+import org.dselent.scheduling.server.exceptions.InvalidPasswordException;
+import org.dselent.scheduling.server.exceptions.InvalidUserNameException;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
+import org.dselent.scheduling.server.requests.AccountDetails;
 import org.dselent.scheduling.server.requests.DeleteUser;
 import org.dselent.scheduling.server.requests.GetFacultyCalendars;
 import org.dselent.scheduling.server.requests.LinkFacultyWithSection;
@@ -96,8 +99,6 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 		
 	}
-
-	
 	
 	public ResponseEntity<String> login(@RequestBody Map<String, String> request) throws Exception 
     {
@@ -115,9 +116,21 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
+	public ResponseEntity<String> getAccountDetails(@RequestBody Map<String, String> request) throws Exception 
+    {
+		System.out.println("account details controller reached");
+    	
+		// add any objects that need to be returned to the success list
+		String response = "";
+		
+		Integer userId = Integer.parseInt(request.get(AccountDetails.getBodyName(AccountDetails.BodyKey.USER_ID)));
+		
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getAccountDetails(userId));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
 	
-	
-	public ResponseEntity<String> passwordModification(@RequestBody Map<String, Object> request) throws Exception 
+	public ResponseEntity<String> passwordModification(@RequestBody Map<String, String> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("passwordModification controller reached");
@@ -126,14 +139,29 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		List<Object> success = new ArrayList<Object>();
 		
-		Object id = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID));
-		String oldPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
-		String newPassword =(String) request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
+		Integer id = Integer.parseInt(request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.ID)));
+		String oldPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.OLD_PASSWORD));
+		String newPassword = request.get(PasswordModification.getBodyName(PasswordModification.BodyKey.NEW_PASSWORD));
 		
-		userService.changePassword(id, oldPassword, newPassword);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		HttpStatus statusCode = HttpStatus.OK;
+		
+		try
+		{
+			userService.changePassword(id, oldPassword, newPassword);
+			response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
+		}
+		catch(InvalidUserNameException e1)
+		{
+			response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.ERROR, e1.getMessage());
+			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		catch(InvalidPasswordException e2)
+		{
+			response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.ERROR, e2.getMessage());
+			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 
-		return new ResponseEntity<String>(response, HttpStatus.OK);
+		return new ResponseEntity<String>(response, statusCode);
     }
 	
 	public ResponseEntity<String> userSearch(@RequestBody Map<String, Object> request) throws Exception 
@@ -145,23 +173,24 @@ public class UsersControllerImpl implements UsersController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		String wpiId =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
+		/*String wpiId =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID));
 		String userName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.USER_NAME));
 		String firstName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.FIRST_NAME));
 		String lastName =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.LAST_NAME));
-		String email =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));
+		String email =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL));*/
+		String query =(String) request.get(UserSearch.getBodyName(UserSearch.BodyKey.QUERY));
 
 
-		UserSearchDto.Builder builder = UserSearchDto.builder();
+		/*UserSearchDto.Builder builder = UserSearchDto.builder();
 		UserSearchDto userSearchDto = builder.withWpiId(wpiId)
 		.withUserName(userName)
 		.withFirstName(firstName)
 		.withLastName(lastName)
 		.withEmail(email)
-		.build();
+		.build();*/
 		
 		
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(userSearchDto));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.searchUser(query));
 		//System.out.println(response);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
@@ -203,8 +232,6 @@ public class UsersControllerImpl implements UsersController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 
-
-
 	/*@Override
 	public ResponseEntity<String> dislinkFacultyWithSection(@RequestBody Map<String, Object> request) throws Exception {
 		System.out.println("linkFacultyWithSection reached");
@@ -214,6 +241,16 @@ public class UsersControllerImpl implements UsersController
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.dislinkFacultyWithSection(facultyId, sectionId));
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}*/
+	
+	@Override
+	public ResponseEntity<String> getUnassignedUser(@RequestBody Map<String, Object> request) throws Exception {
+		System.out.println("unassigned users reached");
+		String response = "";
+		//String test = request.get(UnassignedUser.getBodyName(UnassignedUser.BodyKey.TEST)).toString();
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, userService.getUnassignedUsers());
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
 }
 
 	

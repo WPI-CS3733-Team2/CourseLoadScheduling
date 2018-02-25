@@ -18,6 +18,7 @@ import org.dselent.scheduling.server.model.Faculty;
 import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.dto.UserSearchDto;
 import org.dselent.scheduling.server.exceptions.InvalidPasswordException;
+import org.dselent.scheduling.server.exceptions.InvalidUserIdException;
 import org.dselent.scheduling.server.httpReturnObject.ReturnUserInfo;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.User;
@@ -108,7 +109,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(dto.getEmail());
 		user.setEncryptedPassword(encryptedPassword);
 		user.setSalt(salt);
-		user.setAccountState("Active"); //
+		user.setAccountState("1"); //
 
 		List<String> userInsertColumnNameList = new ArrayList<>();
 		List<String> userKeyHolderColumnNameList = new ArrayList<>();
@@ -188,34 +189,39 @@ public class UserServiceImpl implements UserService {
 		
 		return new ReturnUserInfo(userInfo);
 	}
+	
+	@Override
+	public ReturnUserInfo getAccountDetails(Integer userId) throws SQLException
+	{
+		UserInfo userInfo = customDao.getUserInfo(userId);		
+		return new ReturnUserInfo(userInfo);
+	}
 
     @Transactional
 	@Override
-	public int changePassword(Object input_id, String input_OldPassword, String input_NewPassword) throws SQLException
+	public int changePassword(Integer userId, String oldPassword, String newPassword) throws SQLException
 	{
-
-		User selectedUser = usersDao.findById((int)input_id);
+		User selectedUser = usersDao.findById(userId);
 		
 		if(selectedUser == null)
 		{
-			// debugging message
-			throw new SQLException("user ID is wrong.");
+			throw new InvalidUserIdException(userId, "Invalid userId: \"" + "\"" + userId + "\"");
 		}
-		else if (!input_OldPassword.equals(selectedUser.getEncryptedPassword())){
-			// debugging message
-			throw new SQLException("The old password is wrong.");
+		else if (!oldPassword.equals(selectedUser.getEncryptedPassword()))
+		{
+			throw new InvalidPasswordException(userId, "Invalid password");
 		} 
 		else 
 		{
 			//pack the query terms first (only one query term)
 			List<QueryTerm> queryTermList = new ArrayList<>();
 			String queryColumnName = User.getColumnName(User.Columns.ID);
-			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, input_id, null);
+			QueryTerm IdTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, userId, null);
 			queryTermList.add(IdTerm);
 			
 			// Update the new password.
 			String updateColumnName = User.getColumnName(User.Columns.ENCRYPTED_PASSWORD);
-			int rowsAffected = usersDao.update(updateColumnName, input_NewPassword, queryTermList);
+			int rowsAffected = usersDao.update(updateColumnName, newPassword, queryTermList);
 			
 			return rowsAffected;
 		}
@@ -224,10 +230,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
 	@Override
-	public List<ReturnUserInfo> searchUser(UserSearchDto dto) throws SQLException
+	public List<ReturnUserInfo> searchUser(String searchTerm) throws SQLException
 	{
+    	List<ReturnUserInfo> resultList = new ArrayList<>();
+		List<UserInfo> users = customDao.getUserFromSearch(searchTerm);
+		
+		for(UserInfo user: users) {
+			resultList.add(new ReturnUserInfo(user));
+		}
+		return resultList;
 		// 1. extract the matched user data from the input userName
-		String input_WpiId = dto.getWpiId();
+		/*String input_WpiId = dto.getWpiId();
 		String input_userName = dto.getUserName();
 		String input_firstName = dto.getFirstName();
 		String input_lastName = dto.getLastName();
@@ -238,12 +251,12 @@ public class UserServiceImpl implements UserService {
 		columnNamesList.addAll(User.getColumnNameList());
 		
 		// 3. create a query terms list and pack the query terms data
-		List<QueryTerm> queryTermList = new ArrayList<>();
+		List<QueryTerm> queryTermList = new ArrayList<>();*/
 		
 		/* startingFlag is used to mark the first queryTerm with "Not Null" value. When one queryTerm is the first one to add
 		 * into queryTermList, then its logicalOperator (default in OR) should be set to null.
 		 */
-		boolean startingQueryFlag = true;
+		/*boolean startingQueryFlag = true;
 		if (input_WpiId != null) {
 			String queryColumnName1 = User.getColumnName(User.Columns.WPI_ID);
 			QueryTerm queryTerm1 = new QueryTerm (queryColumnName1, ComparisonOperator.EQUAL, input_WpiId, LogicalOperator.OR);
@@ -293,6 +306,10 @@ public class UserServiceImpl implements UserService {
 
 		}
 		
+		String queryColumnName6 = User.getColumnName(User.Columns.DELETED);
+		QueryTerm queryTerm6 = new QueryTerm(queryColumnName6, ComparisonOperator.EQUAL, false, LogicalOperator.AND);
+		queryTermList.add(queryTerm6);
+		
 		// 4. create a sort list and pack sorting data
 		List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
 		Pair<String, ColumnOrder> orderBy1 = new Pair<String, ColumnOrder>(User.getColumnName(User.Columns.FIRST_NAME), ColumnOrder.ASC);
@@ -312,6 +329,7 @@ public class UserServiceImpl implements UserService {
 			// ideally a new custom query with parameter options should be written using UserIndo
 			
 			UserInfo userInfo = new UserInfo();
+			System.out.println("Changes made.");
 			
 			userInfo.setUsersId(user.getId());
 			userInfo.setUsersWpiId(user.getWpiId());
@@ -335,7 +353,7 @@ public class UserServiceImpl implements UserService {
 			// END OF HACK
 		}
 		
-		return result;
+		return result;*/
 	}
 
 	@Override
@@ -487,5 +505,11 @@ public class UserServiceImpl implements UserService {
 		
 		return sectionService.dislinkAll(scheduleId);
 	}
+	
+	@Override
+	public List<Pair<User, Integer>> getUnassignedUsers() throws SQLException{
+		List<Pair<User, Integer>> users = customDao.getUnassignedFacultyUser();
+		return users;
+	}
 
-}
+} 
