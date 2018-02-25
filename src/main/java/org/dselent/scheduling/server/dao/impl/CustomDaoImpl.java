@@ -319,4 +319,14 @@ public class CustomDaoImpl implements CustomDao
 	    List<User> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 	    return selectedUserList;
 	}
+	
+	@Override
+	public List<UserInfo> getUserFromSearch(String searchTerm){
+		UsersInfoExtractor extractor = new UsersInfoExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_USER_FROM_SEARCH_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("searchTerm", searchTerm);
+		List<UserInfo> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+		return selectedUserList;
+	}
 }

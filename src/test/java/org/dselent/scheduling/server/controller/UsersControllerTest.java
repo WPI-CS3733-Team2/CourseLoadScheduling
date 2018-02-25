@@ -67,7 +67,7 @@ public class UsersControllerTest {
 	}
 
 	//@Test
-	public void TestSearch() throws Exception {
+	/*public void TestSearch() throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.EMAIL))
 		// jsonObject.put(UserSearch.getBodyName(UserSearch.BodyKey.WPI_ID),"?????????x");
@@ -83,7 +83,7 @@ public class UsersControllerTest {
 
 		this.mockMvc.perform(post("/user/search_user").content(jsonString).contentType(MediaType.APPLICATION_JSON_VALUE)
 				.characterEncoding("utf-8")).andDo(MockMvcResultHandlers.print()).andExpect(status().isOk());
-	}
+	}*/
 
 	//@Test
 	public void TestLogin() throws Exception {

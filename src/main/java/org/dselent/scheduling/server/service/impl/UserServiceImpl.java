@@ -230,10 +230,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
 	@Override
-	public List<ReturnUserInfo> searchUser(UserSearchDto dto) throws SQLException
+	public List<ReturnUserInfo> searchUser(String searchTerm) throws SQLException
 	{
+    	List<ReturnUserInfo> resultList = new ArrayList<>();
+		List<UserInfo> users = customDao.getUserFromSearch(searchTerm);
+		
+		for(UserInfo user: users) {
+			resultList.add(new ReturnUserInfo(user));
+		}
+		return resultList;
 		// 1. extract the matched user data from the input userName
-		String input_WpiId = dto.getWpiId();
+		/*String input_WpiId = dto.getWpiId();
 		String input_userName = dto.getUserName();
 		String input_firstName = dto.getFirstName();
 		String input_lastName = dto.getLastName();
@@ -244,12 +251,12 @@ public class UserServiceImpl implements UserService {
 		columnNamesList.addAll(User.getColumnNameList());
 		
 		// 3. create a query terms list and pack the query terms data
-		List<QueryTerm> queryTermList = new ArrayList<>();
+		List<QueryTerm> queryTermList = new ArrayList<>();*/
 		
 		/* startingFlag is used to mark the first queryTerm with "Not Null" value. When one queryTerm is the first one to add
 		 * into queryTermList, then its logicalOperator (default in OR) should be set to null.
 		 */
-		boolean startingQueryFlag = true;
+		/*boolean startingQueryFlag = true;
 		if (input_WpiId != null) {
 			String queryColumnName1 = User.getColumnName(User.Columns.WPI_ID);
 			QueryTerm queryTerm1 = new QueryTerm (queryColumnName1, ComparisonOperator.EQUAL, input_WpiId, LogicalOperator.OR);
@@ -346,7 +353,7 @@ public class UserServiceImpl implements UserService {
 			// END OF HACK
 		}
 		
-		return result;
+		return result;*/
 	}
 
 	@Override
