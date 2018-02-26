@@ -347,4 +347,38 @@ public class CustomDaoImpl implements CustomDao
 		List<UserInfo> selectedUserList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
 		return selectedUserList;
 	}
+	
+	@Override
+	public List<Course> getCourseSearch(String searchTerm){
+		CoursesExtractor extractor = new CoursesExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_COURSE_SEARCH_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+	    List<Course> courseMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return courseMatchList;
+	}
+	@Override
+	public List<String> findAllCourseNumbers(){
+		List<String> courseNumList = new ArrayList<String>();
+		CoursesExtractor extractor = new CoursesExtractor();
+		String queryTemplate = new String(QueryPathConstants.FIND_ALL_COURSE_NUMBERS_QUERY);
+		List<Course> courseList = namedParameterJdbcTemplate.query(queryTemplate,extractor);
+		for(int i=0;i<courseList.size();i++) {
+			courseNumList.add(courseList.get(i).getNumber());
+		}
+		
+		return courseNumList;
+	}
+	
+	@Override
+	public List<Integer> findAllCRNs(){
+		List<Integer> crnList = new ArrayList<Integer>();
+		SectionsExtractor extractor = new SectionsExtractor();
+		String queryTemplate = new String(QueryPathConstants.FIND_ALL_SECTIONS_QUERY);
+		List<Section> sectionList = namedParameterJdbcTemplate.query(queryTemplate, extractor);
+		for(int i=0;i<sectionList.size();i++) {
+			crnList.add(sectionList.get(i).getCrn());
+		}
+		return crnList;
+	}
 }

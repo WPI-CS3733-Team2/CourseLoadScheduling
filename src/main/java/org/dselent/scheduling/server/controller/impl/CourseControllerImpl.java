@@ -162,6 +162,18 @@ public class CourseControllerImpl implements CourseController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
+	
+	@Override
+	public ResponseEntity<String> searchCourseNumbers(@RequestBody Map<String, String> request) throws Exception
+	{
+		System.out.println("search findCourseNumbers controller reached");
+
+		String response = "";
+
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, courseService.searchCourseNumbers());
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
 }
 
 	

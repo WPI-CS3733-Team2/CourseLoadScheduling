@@ -66,7 +66,7 @@ public class RequestControllerImpl implements RequestController
 		.withData(data)
 		.build();
 		
-		requestService.createRequest(createRequestDto);
+		success.add(requestService.createRequest(createRequestDto));
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, success);
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class RequestControllerImpl implements RequestController
 	@Override
 	public ResponseEntity<String> getpendingRequestsDetails(@RequestBody Map<String, String> request) throws Exception{
 		// Print is for testing purposes
-		System.out.println("getpendingRequestsDetails controller reached");
+		System.out.println("getPendingRequestsDetails controller reached");
 		
 		// add any objects that need to be returned to the success list
 		String response = "";

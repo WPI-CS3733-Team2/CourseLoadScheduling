@@ -14,4 +14,5 @@ public interface CoursesDao extends Dao<Course>
 	public Course findByName(String name) throws SQLException;
 	public Course findByFrequency(Integer frequency) throws SQLException;
 	public Integer updateColumns(List<String> columnName, List<Object> newValue, List<QueryTerm> queryTermList);
+	public List<Course> getAll() throws SQLException;
 }

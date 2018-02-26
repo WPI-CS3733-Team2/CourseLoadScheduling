@@ -329,5 +329,12 @@ public class SectionServiceImpl implements SectionService {
 		rowsAffectedList.add(sectionsDao.update(updateColumnName, null, queryTermList));
 		return rowsAffectedList;
 	}
+	
+	@Override
+	public List<Integer> searchCRNs() throws SQLException{
+		List<Integer> crnList = customDao.findAllCRNs();
+		
+		return crnList;
+	}
 
 }

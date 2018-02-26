@@ -33,11 +33,11 @@ WHERE users.id IN
 (
 	SELECT users.id
 	FROM users
-	WHERE UPPER(users.first_name) LIKE UPPER('%'||:searchTerm||'%')
+	WHERE (UPPER(users.first_name) LIKE UPPER('%'||:searchTerm||'%')
 	OR UPPER(users.last_name) LIKE UPPER('%'||:searchTerm||'%')
 	OR UPPER(users.user_name) LIKE UPPER('%'||:searchTerm||'%')
 	OR UPPER(users.wpi_id) LIKE UPPER('%'||:searchTerm||'%')
-	OR UPPER(users.email) LIKE UPPER('%'||:searchTerm||'%')
+	OR UPPER(users.email) LIKE UPPER('%'||:searchTerm||'%'))
 	AND users.deleted = false
 )
 ORDER BY users.id ASC;

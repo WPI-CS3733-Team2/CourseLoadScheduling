@@ -8,6 +8,7 @@ import org.dselent.scheduling.server.requests.GetCourseFaculties;
 import org.dselent.scheduling.server.requests.ModifyCourse;
 import org.dselent.scheduling.server.requests.SearchCourse;
 import org.dselent.scheduling.server.requests.SearchUnassignedCourseSection;
+import org.dselent.scheduling.server.requests.SearchCourseNumbers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,9 @@ public interface CourseController
 
 	@RequestMapping(method=RequestMethod.POST, value=SearchUnassignedCourseSection.REQUEST_NAME)
 	public ResponseEntity<String> searchUnassignedCourseSection(@RequestBody Map<String, String> request) throws Exception;
+	
+	@RequestMapping(method=RequestMethod.POST, value=SearchCourseNumbers.REQUEST_NAME)
+	public ResponseEntity<String> searchCourseNumbers(@RequestBody Map<String, String> request) throws Exception;
 }
 
 	

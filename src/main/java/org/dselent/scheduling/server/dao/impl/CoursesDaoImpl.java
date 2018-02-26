@@ -8,9 +8,11 @@ import java.util.Map;
 
 import org.dselent.scheduling.server.dao.CoursesDao;
 import org.dselent.scheduling.server.extractor.CoursesExtractor;
+import org.dselent.scheduling.server.extractor.ScheduleExtractor;
 import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.sqlutils.ColumnOrder;
 import org.dselent.scheduling.server.sqlutils.ComparisonOperator;
 import org.dselent.scheduling.server.sqlutils.QueryStringBuilder;
@@ -332,4 +334,18 @@ public class CoursesDaoImpl extends BaseDaoImpl<Course> implements CoursesDao
 	    
 		return rowsAffected;
 	}
+	
+	@Override
+	public List<Course> getAll() throws SQLException {
+		CoursesExtractor extractor = new CoursesExtractor();
+
+		List<Object> objectList = new ArrayList<Object>();
+		
+	    Object[] parameters = objectList.toArray();
+		 
+	    List<Course> courseList = jdbcTemplate.query("SELECT * FROM courses", extractor, parameters);
+	    
+	    return courseList;
+	}
+	
 }
