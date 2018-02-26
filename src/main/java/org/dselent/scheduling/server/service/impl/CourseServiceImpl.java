@@ -21,6 +21,7 @@ import org.dselent.scheduling.server.miscellaneous.Pair;
 import org.dselent.scheduling.server.model.Calendar;
 import org.dselent.scheduling.server.model.Course;
 import org.dselent.scheduling.server.model.Faculty;
+import org.dselent.scheduling.server.model.Schedule;
 import org.dselent.scheduling.server.model.Section;
 import org.dselent.scheduling.server.model.User;
 import org.dselent.scheduling.server.model.UserFacultyAssociation;
@@ -119,31 +120,24 @@ public class CourseServiceImpl implements CourseService
 		String number = dto.getNumber();
 		String freqString = dto.getFrequency();										
     	
-		List<String> courseColumnNameList = new ArrayList<>();
+		List<Course> matchingName = new ArrayList<Course>();
+		List<Course> matchingNumber = new ArrayList<Course>();
+		List<Course> frequencyCourses = new ArrayList<Course>();
+		
+		if (name != null) {
+			matchingName = customDao.getCourseSearch(name);
+    	}
+		if (number != null) {
+			matchingNumber = customDao.getCourseSearch(number);
+		}
+    	
+    	List<String> courseColumnNameList = new ArrayList<>();
     	
 		courseColumnNameList.addAll(Course.getColumnNameList());
 		
     	List<QueryTerm> queryTermList = new ArrayList<>();
     	boolean firstTerm = true;
     	
-    	if (name != null) {
-			String queryColumnName = Course.getColumnName(Course.Columns.NAME);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, name, LogicalOperator.AND);
-			if(firstTerm) {
-				queryTerm.setLogicalOperator(null);
-				firstTerm = false;
-			}
-			queryTermList.add(queryTerm);
-		}
-    	if (number != null) {
-			String queryColumnName = Course.getColumnName(Course.Columns.NUMBER);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, number, LogicalOperator.AND);
-			if(firstTerm) {
-				queryTerm.setLogicalOperator(null);
-				firstTerm = false;
-			}
-			queryTermList.add(queryTerm);
-		}
     	if (freqString != null) {
     		int frequency = Integer.parseInt(freqString);
 			String queryColumnName = Course.getColumnName(Course.Columns.FREQUENCY);
@@ -153,15 +147,22 @@ public class CourseServiceImpl implements CourseService
 				firstTerm = false;
 			}
 			queryTermList.add(queryTerm);
-		}
     	
-    	List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.ID), ColumnOrder.ASC);
-    	orderByList.add(orderBy);
+			List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+			Pair<String, ColumnOrder> orderBy = new Pair(Course.getColumnName(Course.Columns.FREQUENCY), ColumnOrder.ASC);
+			orderByList.add(orderBy);
+			frequencyCourses = coursesDao.select(courseColumnNameList, queryTermList, orderByList);
     	
-    	List<Course> selectedCourses = new ArrayList<Course>();
-    	selectedCourses = coursesDao.select(courseColumnNameList, queryTermList, orderByList);
-    			
+    	}
+    	
+    	List<Course> selectedCourses = new ArrayList<Course>(matchingName);
+    	selectedCourses.addAll(matchingNumber);
+    	selectedCourses.addAll(frequencyCourses);
+    	
+    	if (name == null && freqString  == null && number == null) {
+    		selectedCourses = coursesDao.getAll();
+    	}
+		
 		return selectedCourses;
     }
 

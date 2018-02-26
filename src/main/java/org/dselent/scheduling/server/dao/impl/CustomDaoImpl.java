@@ -349,6 +349,15 @@ public class CustomDaoImpl implements CustomDao
 	}
 	
 	@Override
+	public List<Course> getCourseSearch(String searchTerm){
+		CoursesExtractor extractor = new CoursesExtractor();
+		String queryTemplate = new String(QueryPathConstants.GET_COURSE_SEARCH_QUERY);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+	    parameters.addValue("searchTerm", searchTerm);
+	    List<Course> courseMatchList = namedParameterJdbcTemplate.query(queryTemplate, parameters, extractor);
+	    return courseMatchList;
+	}
+	@Override
 	public List<String> findAllCourseNumbers(){
 		List<String> courseNumList = new ArrayList<String>();
 		CoursesExtractor extractor = new CoursesExtractor();

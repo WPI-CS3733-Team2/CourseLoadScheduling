@@ -52,6 +52,7 @@ public interface CustomDao
 	public List<User> getUsersByFacultyIds();
 	public User getFacultyUser(int facultyId);
 	public List<UserInfo> getUserFromSearch(String searchTerm);
+	public List<Course> getCourseSearch(String searchTerm);
 	public List<String> findAllCourseNumbers();
 	public List<Integer> findAllCRNs();
 }
