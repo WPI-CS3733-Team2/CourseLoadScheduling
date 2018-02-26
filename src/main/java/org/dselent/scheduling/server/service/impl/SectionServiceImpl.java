@@ -291,28 +291,22 @@ public class SectionServiceImpl implements SectionService {
 	
 	@Override
 	public List<Calendar> view_calendars(List<Integer> calendarIds) throws SQLException {
+		List<Calendar> selectedCalendars = new ArrayList<>();
+		
 		List<String> calendarColumnNameList = new ArrayList<>();
-    	
-    	calendarColumnNameList.addAll(Calendar.getColumnNameList());
-    	
-    	List<QueryTerm> queryTermList = new ArrayList<>();
-    	
-    	for(int i = 0; i < calendarIds.size(); i++) {
+		calendarColumnNameList.addAll(Calendar.getColumnNameList());
+		
+		for(int i = 0; i < calendarIds.size(); i++) {
+
+			List<QueryTerm> queryTermList = new ArrayList<>();
+
 			String queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
-			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, calendarIds.get(i), LogicalOperator.OR);
-			if(i == 0) {
-				queryTerm.setLogicalOperator(null);
-			}
+			QueryTerm queryTerm = new QueryTerm(queryColumnName, ComparisonOperator.EQUAL, calendarIds.get(i), null);
 			queryTermList.add(queryTerm);
-    	}
+
+			selectedCalendars.addAll(calendarDao.select(calendarColumnNameList, queryTermList, null));
+		}		
     	
-    	/*List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
-    	Pair<String, ColumnOrder> orderBy = new Pair(Calendar.getColumnName(Calendar.Columns.ID), ColumnOrder.ASC);
-    	orderByList.add(orderBy);*/
-    
-    	List<Calendar> selectedCalendars = new ArrayList<>();
-    	selectedCalendars = calendarDao.select(calendarColumnNameList, queryTermList, null);
-    			
 		return selectedCalendars;
 	}
 
