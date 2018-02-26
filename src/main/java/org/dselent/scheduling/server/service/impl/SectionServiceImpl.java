@@ -74,7 +74,6 @@ public class SectionServiceImpl implements SectionService {
 		section1.setExpectedPopulation(Integer.valueOf(dto.getExpectedPopulation()));
 		section1.setCourseId(Integer.valueOf(dto.getCourseId()));
 		section1.setCalendarId(calendarId);
-		section1.setScheduleId(Integer.valueOf(dto.getScheduleId()));
 
 		List<String> insertColumnNameList_sec = new ArrayList<>();
 		List<String> keyHolderColumnNameList_sec = new ArrayList<>();
@@ -302,6 +301,13 @@ public class SectionServiceImpl implements SectionService {
 
 		rowsAffectedList.add(sectionsDao.update(updateColumnName, null, queryTermList));
 		return rowsAffectedList;
+	}
+	
+	@Override
+	public List<Integer> searchCRNs() throws SQLException{
+		List<Integer> crnList = customDao.findAllCRNs();
+		
+		return crnList;
 	}
 
 }
