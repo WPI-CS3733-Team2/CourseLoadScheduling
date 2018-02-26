@@ -47,6 +47,7 @@ public class QueryPathConstants
 	private static String GET_USERS_BY_FACULTY_IDS_PATH = BASE_QUERY_PATH + "GetUsersByFacultyIds" + SQL_EXTENSION;
 	private static String GET_FACULTY_USER_PATH = BASE_QUERY_PATH + "GetFacultyUser" + SQL_EXTENSION;
 	private static String GET_USER_FROM_SEARCH_PATH = BASE_QUERY_PATH + "GetUserFromSearch" + SQL_EXTENSION;
+	private static String GET_COURSE_SEARCH_PATH = BASE_QUERY_PATH + "GetCourseSearch" + SQL_EXTENSION;
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -79,6 +80,7 @@ public class QueryPathConstants
 	public static String GET_USERS_BY_FACULTY_IDS_QUERY = readFile(GET_USERS_BY_FACULTY_IDS_PATH);
 	public static String GET_FACULTY_USER_QUERY = readFile(GET_FACULTY_USER_PATH);
 	public static String GET_USER_FROM_SEARCH_QUERY = readFile(GET_USER_FROM_SEARCH_PATH);
+	public static String GET_COURSE_SEARCH_QUERY = readFile(GET_COURSE_SEARCH_PATH);
 	
 	private QueryPathConstants()
 	{
