@@ -11,6 +11,7 @@ import org.dselent.scheduling.server.dto.ModifySectionTypeNamePopDto;
 import org.dselent.scheduling.server.miscellaneous.JsonResponseCreator;
 import org.dselent.scheduling.server.requests.CreateSection;
 import org.dselent.scheduling.server.requests.SelectSection;
+import org.dselent.scheduling.server.requests.ViewCalendars;
 import org.dselent.scheduling.server.requests.ViewSectionCalendarsOfCourse;
 import org.dselent.scheduling.server.requests.ViewSectionsOfCourse;
 import org.dselent.scheduling.server.requests.ModifySectionCalendar;
@@ -233,6 +234,21 @@ public class SectionControllerImpl implements SectionController
 
 		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
 				sectionService.view_sections_of_course(course_ids));
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<String> view_calendars(@RequestBody Map<String, List<Integer>> request) throws Exception {
+		// Print is for testing purposes
+		System.out.println("controller reached");
+
+		// add any objects that need to be returned to the success list
+		String response = "";
+		List<Integer> calendar_ids = request.get(ViewCalendars.getBodyName(ViewCalendars.BodyKey.CALENDAR_IDS));
+
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS,
+				sectionService.view_calendars(calendar_ids));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

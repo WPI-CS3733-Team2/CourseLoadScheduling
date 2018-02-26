@@ -288,6 +288,33 @@ public class SectionServiceImpl implements SectionService {
     	
     	return sections;
 	}
+	
+	@Override
+	public List<Calendar> view_calendars(List<Integer> calendarIds) throws SQLException {
+		List<String> calendarColumnNameList = new ArrayList<>();
+    	
+    	calendarColumnNameList.addAll(Calendar.getColumnNameList());
+    	
+    	List<QueryTerm> queryTermList = new ArrayList<>();
+    	
+    	for(int i = 0; i < calendarIds.size(); i++) {
+			String queryColumnName = Calendar.getColumnName(Calendar.Columns.ID);
+			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, calendarIds.get(i), LogicalOperator.OR);
+			if(i == 0) {
+				queryTerm.setLogicalOperator(null);
+			}
+			queryTermList.add(queryTerm);
+    	}
+    	
+    	/*List<Pair<String, ColumnOrder>> orderByList = new ArrayList<>();
+    	Pair<String, ColumnOrder> orderBy = new Pair(Calendar.getColumnName(Calendar.Columns.ID), ColumnOrder.ASC);
+    	orderByList.add(orderBy);*/
+    
+    	List<Calendar> selectedCalendars = new ArrayList<>();
+    	selectedCalendars = calendarDao.select(calendarColumnNameList, queryTermList, null);
+    			
+		return selectedCalendars;
+	}
 
 	@Override
 	public List<Integer> dislinkAll(Integer scheduleId) throws SQLException {
