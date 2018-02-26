@@ -81,7 +81,7 @@ public class SectionControllerTest
     
 	
 	//@Test
-	public void testSectionRemove() throws Exception
+	/*public void testSectionRemove() throws Exception
     
     {
     	
@@ -99,7 +99,7 @@ public class SectionControllerTest
         .andExpect(status().isOk());
         //.andExpect(content().contentType("application/json"));
         
-    }
+    }*/
 	
 	//@Test
 	public void testSectionModifyCalendar() throws Exception

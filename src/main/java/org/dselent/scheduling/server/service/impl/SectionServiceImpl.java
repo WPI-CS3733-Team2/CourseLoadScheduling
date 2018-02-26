@@ -93,19 +93,22 @@ public class SectionServiceImpl implements SectionService {
 		return rowAffected;
 	}
 
-	public List<Integer> remove_section(Integer id) throws SQLException {
+	public List<Integer> remove_section(List<Integer> section_ids) throws SQLException {
 		List<Integer> affectedRowsList = new ArrayList<>();
 
 		String updateColumnName = Section.getColumnName(Section.Columns.DELETED);
 		Boolean state = true;
 
+		for(int i = 0; i < section_ids.size(); i++) {
+			int id = section_ids.get(i);
+			
+			List<QueryTerm> queryTermList = new ArrayList<>();
+			String queryColumnName = Course.getColumnName(Course.Columns.ID);
+			QueryTerm idTerm = new QueryTerm(queryColumnName, ComparisonOperator.EQUAL, id, null);
+			queryTermList.add(idTerm);
 
-		List<QueryTerm> queryTermList = new ArrayList<>();
-		String queryColumnName = Course.getColumnName(Course.Columns.ID);
-		QueryTerm idTerm = new QueryTerm(queryColumnName, ComparisonOperator.EQUAL, id, null);
-		queryTermList.add(idTerm);
-
-		affectedRowsList.add(sectionsDao.update(updateColumnName, state, queryTermList));
+			affectedRowsList.add(sectionsDao.update(updateColumnName, state, queryTermList));
+		}
 		return affectedRowsList;
 	}
 	
@@ -281,6 +284,10 @@ public class SectionServiceImpl implements SectionService {
 	    	
 	    	String queryColumnName = Section.getColumnName(Section.Columns.COURSE_ID);
 			QueryTerm queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, courseIds.get(i), null);
+			queryTermList.add(queryTerm);
+			
+			queryColumnName = Section.getColumnName(Section.Columns.DELETED);
+			queryTerm = new QueryTerm (queryColumnName, ComparisonOperator.EQUAL, false, LogicalOperator.AND);
 			queryTermList.add(queryTerm);
 	    	
 	    	sections.addAll(sectionsDao.select(sectionColumnNameList, queryTermList, orderByList));

@@ -94,7 +94,7 @@ public class SectionControllerImpl implements SectionController
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 	
-	public ResponseEntity<String> remove_section(@RequestBody Map<String, Object> request) throws Exception 
+	public ResponseEntity<String> remove_section(@RequestBody Map<String, List<Integer>> request) throws Exception 
     {
     	// Print is for testing purposes
 		System.out.println("controller reached");
@@ -103,10 +103,10 @@ public class SectionControllerImpl implements SectionController
 		String response = "";
 		//List<Object> success = new ArrayList<Object>();
 		
-		Integer id = Integer.valueOf(request.get(RemoveSection.getBodyName(RemoveSection.BodyKey.ID)).toString());
+		List<Integer> section_ids = request.get(RemoveSection.getBodyName(RemoveSection.BodyKey.SECTION_IDS));
 		
 		//success.add((sectionService.remove_section(id);
-		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(id));
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.remove_section(section_ids));
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
     }

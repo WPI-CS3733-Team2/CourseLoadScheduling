@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RemoveSection
 {
 	public static final RequestMethod REQUEST_TYPE = RequestMethod.POST;
-	public static final String REQUEST_NAME = "remove_section";
+	public static final String REQUEST_NAME = "remove_sections";
 	private static final List<HeaderKey> HEADER_KEY_LIST;
 	private static final List<ParameterKey> PARAMETER_KEY_LIST;
 	private static final List<BodyKey> BODY_KEY_LIST;
@@ -33,7 +33,7 @@ public class RemoveSection
 	
 	public static enum BodyKey
 	{
-		ID;
+		SECTION_IDS;
 	}
 	
 

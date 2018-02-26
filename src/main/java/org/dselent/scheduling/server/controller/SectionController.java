@@ -26,7 +26,7 @@ public interface SectionController
 	public ResponseEntity<String> create_section(@RequestBody Map<String, Object> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=RemoveSection.REQUEST_NAME)
-	public ResponseEntity<String> remove_section(@RequestBody Map<String,Object> request) throws Exception;
+	public ResponseEntity<String> remove_section(@RequestBody Map<String,List<Integer>> request) throws Exception;
 	
 	@RequestMapping(method=RequestMethod.POST, value=SelectSection.REQUEST_NAME)
 	public ResponseEntity<String> select_section(@RequestBody Map<String,Object> request) throws Exception;
@@ -48,7 +48,6 @@ public interface SectionController
 	
 	@RequestMapping(method=RequestMethod.POST, value=SearchCRNs.REQUEST_NAME)
 	public ResponseEntity<String> search_crns(@RequestBody Map<String, List<Integer>> request) throws Exception;
-
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewCalendars.REQUEST_NAME)
 	public ResponseEntity<String> view_calendars(@RequestBody Map<String, List<Integer>> request) throws Exception;
