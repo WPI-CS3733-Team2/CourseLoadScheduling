@@ -233,5 +233,13 @@ public class CourseServiceImpl implements CourseService
 		}	
 		return returnCourseList;
 	}
+	
+	@Override
+	public List<String> searchCourseNumbers() throws SQLException{
+		
+		List<String> courseNumList = customDao.findAllCourseNumbers();
+		
+		return courseNumList;
+	}
     
 }

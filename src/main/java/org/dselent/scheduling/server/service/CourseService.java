@@ -27,5 +27,6 @@ public interface CourseService
 	public int deleteCourse(String id) throws SQLException;
 	public List<UserFaculty> getCourseFaculties(String courseId) throws SQLException;
 	public List<CourseInfo> getUnassignedCourseSection(String searchTerm) throws SQLException;
+	public List<String> searchCourseNumbers() throws SQLException;
 
 }

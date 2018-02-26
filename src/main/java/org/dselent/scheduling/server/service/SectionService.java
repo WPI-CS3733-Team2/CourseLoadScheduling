@@ -30,5 +30,6 @@ public interface SectionService
 	public List<Calendar> view_section_calendars_of_course(String course_id) throws SQLException;
 	public List<Section> view_sections_of_course(List<Integer> course_id) throws SQLException;
 	public List<Integer> dislinkAll(Integer scheduleId) throws SQLException;
+	public List<Integer> searchCRNs() throws SQLException;
 	
 }

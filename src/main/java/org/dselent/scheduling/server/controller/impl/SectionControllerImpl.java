@@ -236,6 +236,16 @@ public class SectionControllerImpl implements SectionController
 
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
+	
+	@Override
+	public ResponseEntity<String> search_crns(@RequestBody Map<String, List<Integer>> request) throws Exception{
+		System.out.println("search CRNs controller reached");
+		
+		String response = "";
+		response = JsonResponseCreator.getJSONResponse(JsonResponseCreator.ResponseKey.SUCCESS, sectionService.searchCRNs());
+
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
 
     	
 }

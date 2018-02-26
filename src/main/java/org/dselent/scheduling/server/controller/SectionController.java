@@ -12,6 +12,7 @@ import org.dselent.scheduling.server.requests.RemoveSection;
 import org.dselent.scheduling.server.requests.SelectSection;
 import org.dselent.scheduling.server.requests.ViewSectionCalendarsOfCourse;
 import org.dselent.scheduling.server.requests.ViewSectionsOfCourse;
+import org.dselent.scheduling.server.requests.SearchCRNs;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,10 @@ public interface SectionController
 
 	@RequestMapping(method=RequestMethod.POST, value=ViewSectionsOfCourse.REQUEST_NAME)
 	public ResponseEntity<String> view_sections_of_course(@RequestBody Map<String, List<Integer>> request) throws Exception;
+	
+	@RequestMapping(method=RequestMethod.POST, value=SearchCRNs.REQUEST_NAME)
+	public ResponseEntity<String> search_crns(@RequestBody Map<String, List<Integer>> request) throws Exception;
+
 
 }
 
